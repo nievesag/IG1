@@ -73,6 +73,23 @@ public:
 	void render(const glm::mat4& modelViewMat) const override;
 };
 
+class SingleColorEntity : public Abs_Entity
+{
+public:
+	explicit SingleColorEntity(glm::dvec4 color); // explicit es para que no se pueda hacer una conversion implicita. Ej.: (int)algo.
+	glm::dvec4 color() { return mColor; }
+	void setColor(const glm::dvec4 &c) { mColor = c; } // & para q no se copie y const porque no se modifica dentro.
+	void render(const glm::mat4& modelViewMat) const override;
+
+private:
+	glm::dvec4 mColor = { 1.0, 1.0, 1.0, 1.0 }; // predefinido.
+};
+
+class RegularPolygon : public SingleColorEntity
+{
+	
+};
+
 class RGBAxes : public EntityWithColors
 {
 public:

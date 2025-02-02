@@ -121,7 +121,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	// Establecemos primitiva GL_LINE_LOOP.
 	mesh->mPrimitive = GL_LINE_LOOP;
 
-	// Establecemos numero de vertices y crea un array de tamaño num (para los vertices).
+	// Establecemos numero de vertices y crea un array de tamano num (para los vertices).
 	mesh->mNumVertices = num;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 

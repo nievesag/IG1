@@ -51,3 +51,20 @@ RGBAxes::RGBAxes(GLdouble l)
 	mMesh = Mesh::createRGBAxes(l);
 	load();
 }
+
+SingleColorEntity::SingleColorEntity(glm::dvec4 color)
+{
+	mColor = color;
+	mShader = Shader::get("simple");
+}
+
+void SingleColorEntity::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->setUniform("color", &mColor);
+		mShader->use();
+		upload(aMat);
+		mMesh->render();
+	}
+}

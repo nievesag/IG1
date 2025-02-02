@@ -68,3 +68,9 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		mMesh->render();
 	}
 }
+
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, const glm::dvec4 &color) : SingleColorEntity(color)
+{
+	mMesh = Mesh::generateRegularPolygon(num, r);
+	load();
+}

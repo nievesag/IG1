@@ -87,7 +87,8 @@ private:
 
 class RegularPolygon : public SingleColorEntity
 {
-	
+public:
+	explicit RegularPolygon(GLuint num, GLdouble r, const glm::dvec4 &color);
 };
 
 class RGBAxes : public EntityWithColors

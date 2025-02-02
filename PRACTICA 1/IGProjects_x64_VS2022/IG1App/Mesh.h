@@ -1,6 +1,26 @@
 #ifndef _H_Mesh_H_
 #define _H_Mesh_H_
 
+// - Se encarga de manejar las mallas del programa -
+// Malla (mesh): Coordenadas de los vertices, componentes del color,
+// coordenadas de vectores normales, coordenadas de textura
+
+// GUARDA (atributos):
+// mPrimitive -> primitiva con la que trazar la malla (punto, linea, triangulo, ...)
+// mNumVertices -> numero de vertices
+// vVertices de tipo vec3 -> arrays de vertices
+// vColors de tipo vec4 -> colores
+// mVAO -> el identificador del vertex array object(VAO) de la malla en la GPU
+// mVBO -> el identificador de los vertex buffer objects(VBO) de vertices
+// mCBO -> el identificador de los vertex buffer objects(VBO) de colores
+
+// La malla puede estar o no cargada en la GPU (no cargada -> identificadores NONE)
+
+// METODOS:
+// load / unload -> carga / descarga
+// render / draw -> pintar
+// createRGBAxes -> construccion de mallas
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
@@ -9,6 +29,7 @@
 class Mesh
 {
 public:
+	// Tipicamente construyen un objeto malla vacio (new Mesh) y modifican sus atributos
 	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D-RGB axes mesh
 
 	Mesh();

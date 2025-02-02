@@ -1,6 +1,35 @@
 #ifndef _H_Entities_H_
 #define _H_Entities_H_
 
+// - Abs_Entity -
+
+// GUARDA:
+// mModelMat -> matriz de modelado (traslacion, escala y rotaciones)
+// mShader -> shader que utiliza
+// mMesh -> puntero a su malla
+
+// METODOS:
+// render -> void render(const glm::mat4& modelViewMat) const es virtual puro. Las subclases lo definiran.
+// carga matriz vista ->
+/* void Abs_Entity::upload(const mat4& modelViewMat) const
+{
+	mShader->setUniform("modelView", modelViewMat);
+} */
+
+// - EntityWithColors -
+// => Extiende Abs_Entity con un render concreto para entidades con color asociado a cada vertice
+// => Su constructor fija mShader = Shader::get("vcolors")
+// => Su render se programa asi ->
+/* void EntityWithColors::render(
+	glm::mat4 const& modelViewMat) const
+{
+	if (mMesh == nullptr) return;
+	mat4 aMat = modelViewMat * mModelMat;
+	mShader->use();
+	upload(aMat);
+	mMesh->render();
+}*/
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 

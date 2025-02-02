@@ -1,6 +1,28 @@
 #ifndef _H_Camera_H_
 #define _H_Camera_H_
 
+// GUARDA (atributos):
+// mViewPort -> puntero al viewport
+// mViewMat -> puntero a matrices de vista (recoge la inversa de la transformacion que establece la camara de la escena)
+// mProjMat -> puntero a proyeccion
+// los limites del volumen de la escana
+// mScaleFact -> el factor de zoom
+// bOrto -> si se utiliza proyeccion ortogonal
+// ...
+
+// METODOS: 
+// Metodos para cargar las matrices en la GPU ->
+
+/*
+void Camera::uploadPM() const {
+Shader::setUniform4All("projection", mProjMat);
+}
+
+void Camera::uploadVM() const {
+Shader::setUniform4All("modelView", mViewMat);
+}
+*/
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 

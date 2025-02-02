@@ -24,6 +24,7 @@ IG1App::close()
 	glfwSetWindowShouldClose(mWindow, true); // stops main loop
 }
 
+// ejecuta el bucle principal
 void
 IG1App::run() // enters the main event processing loop
 {
@@ -32,13 +33,13 @@ IG1App::run() // enters the main event processing loop
 
 	// IG1App main loop
 	while (!glfwWindowShouldClose(mWindow)) {
-		// Redisplay the window if needed
+		// Repinta si hace falta
 		if (mNeedsRedisplay) {
 			display();
 			mNeedsRedisplay = false;
 		}
 
-		// Stop and wait for new events
+		// Para hasta recibir nuevos eventos
 		glfwWaitEvents();
 	}
 

@@ -1,6 +1,25 @@
 #ifndef _H_IG1App_H_
 #define _H_IG1App_H_
 
+// - Se crea directamente en el main y se encarga de manejar la ventana, la entrada / salida y el control general del programa -
+
+// GUARDA (atributos):
+// mWindow de tipo GLFWwindow* -> el puntero a la ventana de GLFW
+// mWinW / mWinH -> dimensiones de la ventana
+// mViewport -> puntero al viewport
+// mCamera -> puntero a la camara
+// mNeedsResdisplay -> para indicar a los manejadores de eventos si se ha de repintar la ventana
+// mScenes -> vector de escenas de tipo vector<Scene*>
+// mCurrentScene -> indice de escena actual
+// => Las teclas numericas estan configuradas para seleccionar las escenas de este vector de escenas
+
+// METODOS:
+// run -> ejecuta el bucle principal
+// init e iniWinOpengGL -> inicializan OpenGL, sus extensiones con GLEW y la ventana con GLFW
+// resize -> maneja cambios en el tamaño de la ventana
+// key ->  maneja pulsaciones de caracteres en el teclado y specialkey hace lo propio con teclas especiales(flechas, escape, etc.)
+// destroy -> cierra ordenadamente el programa
+
 #include <GL/glew.h>     // OpenGL Extension Wrangler
 #include <GLFW/glfw3.h>  // OpenGL Library
 #include <glm/glm.hpp>   // OpenGL Mathematics

@@ -1,6 +1,14 @@
 #ifndef _H_Viewport_H_
 #define _H_Viewport_H_
 
+// GUARDA (atributos):
+// xWidth / xHeight -> dimensiones del viewport
+// xLeft / xTop -> posicion del viewport
+
+// METODOS:
+// metodos para consultar y modificar dimensiones y posicion del viewport
+// upload -> para cargarlo en la GPU
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 

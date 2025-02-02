@@ -16,9 +16,61 @@
 // METODOS:
 // run -> ejecuta el bucle principal
 // init e iniWinOpengGL -> inicializan OpenGL, sus extensiones con GLEW y la ventana con GLFW
-// resize -> maneja cambios en el tamaño de la ventana
+// resize -> maneja cambios en la dimension de la ventana
 // key ->  maneja pulsaciones de caracteres en el teclado y specialkey hace lo propio con teclas especiales(flechas, escape, etc.)
 // destroy -> cierra ordenadamente el programa
+
+
+// ---- EJEMPLOS PROGRAMAS ----
+// - SIMPLE -
+/*
+=> El programa simple se ocupa de renderizar entidades con un unico color fijo.
+   Este se pasa a traves del parametro uniforme vec4 color.
+
+=> El shader de vertices se limita a multiplicar el vertice por la
+   matriz de modelado/vista y la de proyeccion.
+
+=> El shader de fragmentos devuelve como color el parametro
+
+	// codigo:
+   uniform vec4 color; // uniform color for all vertices
+   out vec4 FragColor; // fixed-name color variable
+					   // used by OpenGL
+   void main()
+   {
+	  FragColor = color;
+   }
+ */
+
+// - VCOLORS-
+/*
+=> El programa vcolors se ocupa de renderizar entidades con colores
+asociados a cada vertice (como el RGBAxis).
+
+=> El shader de vertices transforma el vertice como simple ys
+pasa el color al shader de fragmentos.
+
+	layout (location = 0) in vec3 aPos;
+	layout (location = 1) in vec4 aColor;
+	uniform mat4 modelView; // model-view matrix
+	uniform mat4 projection;
+	out vec4 vertexColor;
+	void main()
+	{
+		gl_Position = projection * modelView * vec4(aPos, 1.0);
+		vertexColor = aColor;
+	}
+
+=> El shader de fragmentos toma el color recibido como color del fragmento.
+
+	in vec4 vertexColor; // color assigned to this vertex
+	out vec4 FragColor; // fixed-name color variable
+	// used by OpenGL
+	void main()
+	{
+		FragColor = vertexColor;
+	}
+*/
 
 #include <GL/glew.h>     // OpenGL Extension Wrangler
 #include <GLFW/glfw3.h>  // OpenGL Library

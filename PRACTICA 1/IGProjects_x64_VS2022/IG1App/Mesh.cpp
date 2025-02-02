@@ -126,7 +126,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	// (x, y, z, 1 -> punto 0 -> vector) -> (Cx + R * cos(alpha), Cy + R * sin(alpha), 0, punto).
-	mesh->vVertices.emplace_back(0.0, r, 0.0, 1.0);
+	mesh->vVertices.emplace_back(0.0, r, 0.0);
 
 	// Se van guardando en sentido antihorario.
 	double alpha = 90.0;
@@ -134,7 +134,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 		double x = r * glm::cos(glm::radians(alpha));
 		double y = r * glm::sin(glm::radians(alpha));
 		alpha += 360.0 / num;
-		mesh->vVertices.emplace_back(x, y, 0.0, 1.0);
+		mesh->vVertices.emplace_back(x, y, 0.0);
 	}
 
 	return mesh;

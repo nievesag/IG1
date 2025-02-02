@@ -16,6 +16,12 @@ Scene::init()
 
 	// Graphics objects (entities) of the scene
 	gObjects.push_back(new RGBAxes(400.0));
+
+	// Triangulo cian.
+	gObjects.push_back(new RegularPolygon(3, 200, { 0.0, 1.0, 1.0, 1.0 }));
+
+	// Circulo magenta.
+	gObjects.push_back(new RegularPolygon(40, 200, { 1.0, 0.0, 1.0, 1.0 }));
 }
 
 Scene::~Scene()

@@ -29,7 +29,7 @@ Abs_Entity::unload()
 	mMesh->unload();
 }
 
-EntityWithColors::EntityWithColors()
+EntityWithColors::EntityWithColors() 
 {
 	mShader = Shader::get("vcolors");
 }
@@ -69,7 +69,7 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 	}
 }
 
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r, const glm::dvec4 &color) : SingleColorEntity(color)
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : SingleColorEntity(color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
 	load();

@@ -7,6 +7,7 @@ CHULETAS
 Colores|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/TablaDeColoresHTML-HEX-RGB.jpg)
 Colores 1-0|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/colores_1.0.jpg)
 Planos|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/planosa.png)
+Crear obj|[txt]()
 
 PRÁCTICAS
 | Enunciado | Código |

@@ -1,7 +1,7 @@
 # IG1-GDV
 Prácticas. Curso 2024-2025.
 
-[Colores]([https://github.com/nievesag/IG1/blob/main/PRACTICA%201/IG_p1.pdf](https://github.com/nievesag/IG1/blob/main/TablaDeColoresHTML-HEX-RGB.jpg))
+[Colores](https://github.com/nievesag/IG1/blob/main/TablaDeColoresHTML-HEX-RGB.jpg)
 
 | Práctica | Código |
 |:--:|:--:|

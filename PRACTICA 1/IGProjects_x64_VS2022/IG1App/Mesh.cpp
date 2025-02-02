@@ -6,6 +6,7 @@ using namespace glm;
 // Placeholder for the pending index of a GPU object
 constexpr GLuint NONE = numeric_limits<GLuint>::max();
 
+
 Mesh::Mesh()
  : mVAO(NONE)
  , mVBO(NONE)
@@ -108,6 +109,22 @@ Mesh::createRGBAxes(GLdouble l)
 	// Z axis color: blue
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
+{
+	// Creamos el mesh.
+	Mesh* mesh = new Mesh(); // cuando haces new -> puntero.
+
+	// Establecemos primitiva GL_LINE_LOOP.
+	mesh->mPrimitive = GL_LINE_LOOP;
+
+	// Establecemos numero de vertices y crea un array de tamaño num (para los vertices).
+	mesh->mNumVertices = num;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
 
 	return mesh;
 }

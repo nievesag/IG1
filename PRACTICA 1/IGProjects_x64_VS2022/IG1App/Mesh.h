@@ -31,6 +31,9 @@ class Mesh
 public:
 	// Tipicamente construyen un objeto malla vacio (new Mesh) y modifican sus atributos
 	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D-RGB axes mesh
+	
+	// Genera los num vertices que forman el polígono regular inscrito en la circunferencia de radio ??, sobre el plano ?? = 0, centrada en el origen.
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r); 
 
 	Mesh();
 	virtual ~Mesh();
@@ -46,6 +49,7 @@ public:
 
 	void load();
 	void unload();
+
 
 protected:
 	GLuint mPrimitive =

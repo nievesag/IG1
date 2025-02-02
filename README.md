@@ -3,6 +3,7 @@ Prácticas. Curso 2024-2025.
 
 CHULETAS
 | Chuleta | Fotillo |
+|:--:|:--:|
 Colores|[fotillo](https://github.com/nievesag/IG1/blob/main/TablaDeColoresHTML-HEX-RGB.jpg)
 Planos|[fotillo]()
 

@@ -73,7 +73,7 @@ public:
 	void render(const glm::mat4& modelViewMat) const override;
 };
 
-class SingleColorEntity : public Abs_Entity
+class SingleColorEntity : public Abs_Entity // clase padre que hereda de abs entity (entidad con color single).
 {
 public:
 	explicit SingleColorEntity(glm::dvec4 color); // explicit es para que no se pueda hacer una conversion implicita. Ej.: (int)algo.
@@ -85,7 +85,7 @@ private:
 	glm::dvec4 mColor = { 1.0, 1.0, 1.0, 1.0 }; // predefinido.
 };
 
-class RegularPolygon : public SingleColorEntity
+class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.
 {
 public:
 	explicit RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);

@@ -1,0 +1,10 @@
+PASOS PARA CREAR UN OBJETO IG1
+
+1. Creamos el Mesh, que sería como el esqueleto del objeto (Mesh.h, Mesh.cpp). APARTADO 2.
+
+2. Creamos la clase del objeto (el objeto) con su constructora y sus cositas (Entity.h, Entity.cpp). APARTADO 3.
+	- Clase abuelo:  Abs_Entity (?).
+	- Clase padre: SingleColorEntity (objeto que tiene un color solo y renderiza).
+	- Clase hijo: RegularPolygon (crea poligono regular y tiene sus cosas dentro de poligono regular).
+
+3. Lo metemos con push_back en la escena para que se vea todo (Scene.h, Scene.cpp). APARTADOS 4 y 5.

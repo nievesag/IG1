@@ -20,6 +20,8 @@ public:
 
 	void init();
 
+	void initScene(int i);
+
 	void render(Camera const& cam) const;
 
 	// load or unload scene data into the GPU
@@ -30,6 +32,8 @@ protected:
 	void destroy();
 	void setGL();
 	void resetGL();
+
+	void reset();
 
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 };

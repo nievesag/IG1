@@ -15,13 +15,29 @@ Scene::init()
 	// Textures
 
 	// Graphics objects (entities) of the scene
-	gObjects.push_back(new RGBAxes(400.0));
+	gObjects.push_back(new RGBAxes(400.0)); // EJES XYZ.
+}
 
-	// Triangulo cian.
-	gObjects.push_back(new RegularPolygon(3, 200, { 0.0, 1.0, 1.0, 1.0 }));
+void Scene::initScene(int i)
+{
+	reset(); // limpia la cosa.
+	switch (i)
+	{
+		case 0: {
+			// Triangulo cian.
+			gObjects.push_back(new RegularPolygon(3, 200, { 0.0, 1.0, 1.0, 1.0 }));
 
-	// Circulo magenta.
-	gObjects.push_back(new RegularPolygon(40, 200, { 1.0, 0.0, 1.0, 1.0 }));
+			// Circulo magenta.
+			gObjects.push_back(new RegularPolygon(40, 200, { 1.0, 0.0, 1.0, 1.0 }));
+		}break;
+
+		case 1: {
+			gObjects.push_back(new RegularPolygon(5, 200, { 0.0, 1.0, 1.0, 1.0 }));
+		}break;
+
+		default:
+			break;
+	}
 }
 
 Scene::~Scene()
@@ -66,6 +82,14 @@ Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);     // disable Depth test
+}
+
+// Para borrar las cosas al cambiar de una escena a otra (ponerla en blanco otra vez).
+void Scene::reset()
+{
+	destroy(); // libera memoria.
+	resetGL(); // resetea OpenGL.
+	init(); // pinta ejes.
 }
 
 void

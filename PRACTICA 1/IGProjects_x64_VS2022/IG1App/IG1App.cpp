@@ -57,14 +57,12 @@ IG1App::init()
 	mViewPort = new Viewport(mWinW, mWinH);
 	mCamera = new Camera(mViewPort);
 	Scene* scene0 = new Scene();
-	scene0->initScene(0);
 	Scene* scene1 = new Scene();
-	scene1->initScene(1);
 	mScenes.push_back(scene0);
 	mScenes.push_back(scene1);
+	mScenes[mCurrentScene]->initScene(mCurrentScene);
 
 	mCamera->set2D();
-	
 }
 
 void
@@ -230,9 +228,10 @@ IG1App::changeScene(size_t sceneNr)
 
 	// Change only if a different scene
 	if (sceneNr != mCurrentScene) {
-		mScenes[mCurrentScene]->unload();
+		//mScenes[mCurrentScene]->unload();
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->load();
+		mScenes[mCurrentScene]->initScene(mCurrentScene);
+		//mScenes[mCurrentScene]->load();
 	}
 
 	return true;

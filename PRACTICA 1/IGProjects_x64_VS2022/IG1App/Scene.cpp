@@ -32,7 +32,8 @@ void Scene::initScene(int i)
 		}break;
 
 		case 1: {
-			gObjects.push_back(new RegularPolygon(5, 200, { 0.0, 1.0, 1.0, 1.0 }));
+			gObjects.push_back(new RGBTriangle());
+
 		}break;
 
 		default:

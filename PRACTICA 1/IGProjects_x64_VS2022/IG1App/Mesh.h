@@ -32,8 +32,17 @@ public:
 	// Tipicamente construyen un objeto malla vacio (new Mesh) y modifican sus atributos
 	static Mesh* createRGBAxes(GLdouble l); // creates a new 3D-RGB axes mesh
 	
-	// Genera los num vertices que forman el polígono regular inscrito en la circunferencia de radio ??, sobre el plano ?? = 0, centrada en el origen.
-	static Mesh* generateRegularPolygon(GLuint num, GLdouble r); 
+	// Genera los num vertices que forman el poligono regular inscrito en la circunferencia de radio ??, sobre el plano z = 0, centrada en el origen.
+	static Mesh* generateRegularPolygon(GLuint num, GLdouble r);
+
+	// Genera un triangulo de colores RGB de radio 200 sobre el plano z = 0, centrado en el origen de 
+	static Mesh* generateRGBTriangle();
+
+	// Genera los cuatro vertices del rectangulo centrado en el origen, sobre el plano z = 0, de ancho w y alto h
+	static Mesh* generateRectangle(GLdouble w, GLdouble h);
+
+	// Mete un color primario a cada vertice de un rectangle
+	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 
 	Mesh();
 	virtual ~Mesh();

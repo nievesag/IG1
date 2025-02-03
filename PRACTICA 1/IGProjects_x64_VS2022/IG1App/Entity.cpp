@@ -5,6 +5,7 @@
 
 using namespace glm;
 
+// ---- ABS ENTITY ----
 void
 Abs_Entity::upload(const mat4& modelViewMat) const
 {
@@ -29,6 +30,7 @@ Abs_Entity::unload()
 	mMesh->unload();
 }
 
+// ---- ENTITY WITH COLORS ----
 EntityWithColors::EntityWithColors() 
 {
 	mShader = Shader::get("vcolors");
@@ -45,6 +47,7 @@ EntityWithColors::render(mat4 const& modelViewMat) const
 	}
 }
 
+// ---- RGB AXES ----
 RGBAxes::RGBAxes(GLdouble l)
 {
 	mShader = Shader::get("vcolors");
@@ -52,6 +55,7 @@ RGBAxes::RGBAxes(GLdouble l)
 	load();
 }
 
+// ---- SINGLE COLOR ENTITY ----
 SingleColorEntity::SingleColorEntity(glm::dvec4 color)
 {
 	mColor = color;
@@ -69,8 +73,27 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 	}
 }
 
+// ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : SingleColorEntity(color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
 	load();
+}
+
+// ---- RGB TRIANGLE ----
+RGBTriangle::RGBTriangle()
+{
+	mShader = Shader::get("vcolors");
+	mMesh = Mesh::generateRGBTriangle();
+	load();
+}
+
+void RGBTriangle::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->use();
+		upload(aMat);
+		mMesh->render();
+	}
 }

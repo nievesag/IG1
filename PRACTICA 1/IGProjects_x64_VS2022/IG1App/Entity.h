@@ -91,6 +91,13 @@ public:
 	explicit RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);
 };
 
+class RGBTriangle : public EntityWithColors
+{
+public:
+	explicit RGBTriangle();
+	void render(const glm::mat4& modelViewMat) const override;
+};
+
 class RGBAxes : public EntityWithColors
 {
 public:

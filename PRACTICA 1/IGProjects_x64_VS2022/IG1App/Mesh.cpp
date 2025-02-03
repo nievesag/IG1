@@ -7,6 +7,7 @@ using namespace glm;
 constexpr GLuint NONE = numeric_limits<GLuint>::max();
 
 
+
 Mesh::Mesh()
  : mVAO(NONE)
  , mVBO(NONE)
@@ -135,6 +136,82 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 		// (x, y, z, 1 -> punto 0 -> vector) -> (Cx + R * cos(alpha), Cy + R * sin(alpha), 0, punto).
 		mesh->vVertices.emplace_back(x, y, 0.0);
 	}
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRGBTriangle()
+{
+	Mesh* mesh = generateRegularPolygon(3, 200);
+
+	// COLORES
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	// X axis color: red
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// Y axis color: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// Z axis color: blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+
+	// Establecemos primitiva GL_TRIANGLE_STRIP
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 4;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	double x = (w / 2);
+	double y = (h / 2);
+
+	// 0
+	mesh->vVertices.emplace_back(-x, y, 0.0);
+
+	// 1
+	mesh->vVertices.emplace_back(-x, -y, 0.0);
+
+	// 2
+	mesh->vVertices.emplace_back(x, y, 0.0);
+
+	// 3
+	mesh->vVertices.emplace_back(x, -y, 0.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
+{
+	Mesh* mesh = generateRectangle(w,h);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	// COLORES
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	// 0: red
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// 1: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// 2: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// 3: blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
 
 	return mesh;
 }

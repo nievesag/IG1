@@ -98,6 +98,13 @@ public:
 	void render(const glm::mat4& modelViewMat) const override;
 };
 
+class RGBRectangle : public EntityWithColors
+{
+public:
+	explicit RGBRectangle(GLdouble w, GLdouble h);
+	void render(const glm::mat4& modelViewMat) const override;
+};
+
 class RGBAxes : public EntityWithColors
 {
 public:

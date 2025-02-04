@@ -92,6 +92,28 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		//glPolygonMode(GL_BACK, GL_FILL);
+		glPolygonMode(GL_BACK, GL_POINT);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		mShader->use();
+		upload(aMat);
+		mMesh->render();
+	}
+}
+
+RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
+{
+	mShader = Shader::get("vcolors");
+	mMesh = Mesh::generateRGBRectangle(w, h);
+	load();
+}
+
+void RGBRectangle::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		glPolygonMode(GL_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT, GL_POINT);
 		mShader->use();
 		upload(aMat);
 		mMesh->render();

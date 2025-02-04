@@ -32,8 +32,8 @@ void Scene::initScene(int i)
 		}break;
 
 		case 1: {
-			gObjects.push_back(new RGBTriangle());
-
+			//gObjects.push_back(new RGBTriangle());
+			gObjects.push_back(new RGBRectangle(200, 100));
 		}break;
 
 		default:

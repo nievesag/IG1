@@ -193,7 +193,7 @@ Mesh* Mesh::generateRectangle(GLdouble w, GLdouble h)
 
 Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 {
-	Mesh* mesh = generateRectangle(w,h);
+	Mesh* mesh = generateRectangle(w, h);
 
 	/*
 	0---------2

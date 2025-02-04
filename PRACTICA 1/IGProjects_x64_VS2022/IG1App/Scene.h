@@ -13,14 +13,12 @@ class Scene
 {
 public:
 	Scene() = default;
-	~Scene();
+	virtual ~Scene(); // los hijos al no tener destructora definida van a llamar directamente a la del padre
 
 	Scene(const Scene& s) = delete;            // no copy constructor
 	Scene& operator=(const Scene& s) = delete; // no copy assignment
 
-	void init();
-
-	void initScene(int i);
+	virtual void init();
 
 	void render(Camera const& cam) const;
 
@@ -35,7 +33,36 @@ protected:
 
 	void reset();
 
+	void craftScene(); // prepara la escena en inicio para ser usada
+
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
+};
+
+// --- ESCENAS HIJAS ---
+// Scene0, Scene1, Scene2 ...
+
+class Scene0 : public Scene
+{
+public:
+	Scene0() = default;
+
+	void init() override;
+};
+
+class Scene1 : public Scene
+{
+public:
+	Scene1() = default;
+
+	void init() override;
+};
+
+class Scene2 : public Scene
+{
+public:
+	Scene2() = default;
+
+	void init() override;
 };
 
 #endif //_H_Scene_H_

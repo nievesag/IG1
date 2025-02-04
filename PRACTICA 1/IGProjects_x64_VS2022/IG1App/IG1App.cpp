@@ -56,11 +56,19 @@ IG1App::init()
 	// allocate memory and resources
 	mViewPort = new Viewport(mWinW, mWinH);
 	mCamera = new Camera(mViewPort);
-	Scene* scene0 = new Scene();
-	Scene* scene1 = new Scene();
+
+	// Crea las escenas
+	Scene0* scene0 = new Scene0();
+	Scene1* scene1 = new Scene1();
+	Scene2* scene2 = new Scene2();
+
+	// Mete las escenas en el vector de escenas
 	mScenes.push_back(scene0);
 	mScenes.push_back(scene1);
-	mScenes[mCurrentScene]->initScene(mCurrentScene);
+	mScenes.push_back(scene2);
+
+	// inicializa la mCurrentScene
+	mScenes[mCurrentScene]->init();
 
 	mCamera->set2D();
 }
@@ -228,9 +236,9 @@ IG1App::changeScene(size_t sceneNr)
 
 	// Change only if a different scene
 	if (sceneNr != mCurrentScene) {
-		//mScenes[mCurrentScene]->unload();
+		mScenes[mCurrentScene]->unload();
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->initScene(mCurrentScene);
+		mScenes[mCurrentScene]->init();
 		//mScenes[mCurrentScene]->load();
 	}
 

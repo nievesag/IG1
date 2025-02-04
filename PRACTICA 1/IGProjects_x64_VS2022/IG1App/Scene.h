@@ -45,7 +45,6 @@ class Scene0 : public Scene
 {
 public:
 	Scene0() = default;
-
 	void init() override;
 };
 
@@ -53,7 +52,6 @@ class Scene1 : public Scene
 {
 public:
 	Scene1() = default;
-
 	void init() override;
 };
 
@@ -61,7 +59,6 @@ class Scene2 : public Scene
 {
 public:
 	Scene2() = default;
-
 	void init() override;
 };
 

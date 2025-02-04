@@ -142,7 +142,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 
 Mesh* Mesh::generateRGBTriangle()
 {
-	Mesh* mesh = generateRegularPolygon(3, 200);
+	Mesh* mesh = generateRegularPolygon(3, 50);
 
 	// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);

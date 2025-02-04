@@ -6,17 +6,7 @@
 using namespace glm;
 
 void
-Scene::init() // NO SE USA PERO HAY QUE TENERLO DEFINIDO PARA QUE LOS INITS DE LOS HIJOS VAYAN.
-{
-	setGL(); // OpenGL settings
-
-	// allocate memory and load resources
-	// Lights
-	// Textures
-
-	// Graphics objects (entities) of the scene
-	gObjects.push_back(new RGBAxes(400.0)); // EJES XYZ.
-}
+Scene::init() {} // NO SE USA PERO HAY QUE TENERLO DEFINIDO PARA QUE LOS INITS DE LOS HIJOS VAYAN.
 
 Scene::~Scene()
 {
@@ -67,7 +57,7 @@ void Scene::reset()
 {
 	destroy(); // libera memoria.
 	resetGL(); // resetea OpenGL.
-	init(); // pinta ejes.
+	craftScene();
 }
 
 void Scene::craftScene()
@@ -111,13 +101,18 @@ void Scene1::init()
 {
 	craftScene();
 
+	// Triangulo RGB
 	gObjects.push_back(new RGBTriangle());
-	//gObjects.push_back(new RGBRectangle(200, 100));
+
+	// Rectangulo RGB
+	gObjects.push_back(new RGBRectangle(200, 100));
+
+	// Circulo blanco.
+	gObjects.push_back(new RegularPolygon(40, 100, { 1.0, 1.0, 1.0, 1.0 }));
 }
 
 // ---- SCENE 2 ----
 void Scene2::init()
 {
 	craftScene();
-
 }

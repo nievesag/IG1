@@ -236,10 +236,10 @@ IG1App::changeScene(size_t sceneNr)
 
 	// Change only if a different scene
 	if (sceneNr != mCurrentScene) {
-		mScenes[mCurrentScene]->unload();
+		mScenes[mCurrentScene]->unload(); // descarga cosas internas
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->init();
-		//mScenes[mCurrentScene]->load();
+		mScenes[mCurrentScene]->init(); 
+		mScenes[mCurrentScene]->load(); // carga cosas internas
 	}
 
 	return true;

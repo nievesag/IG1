@@ -6,7 +6,7 @@
 using namespace glm;
 
 void
-Scene::init()
+Scene::init() // NO SE USA PERO HAY QUE TENERLO DEFINIDO PARA QUE LOS INITS DE LOS HIJOS VAYAN.
 {
 	setGL(); // OpenGL settings
 

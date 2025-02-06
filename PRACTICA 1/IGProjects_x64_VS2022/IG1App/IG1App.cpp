@@ -172,7 +172,7 @@ IG1App::key(unsigned int key)
 		mCamera->set2D();
 		break;
 	default:
-		if (key >= '0' && key <= '9' && !changeScene(key - '0'))
+		if (key >= '0' && key <= '9' && changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta eso no se pone a true al cambiar
 			cout << "[NOTE] There is no scene " << char(key) << ".\n";
 		else
 			need_redisplay = false;

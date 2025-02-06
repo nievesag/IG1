@@ -66,7 +66,7 @@ void Scene::reset()
 {
 	destroy(); // libera memoria.
 	resetGL(); // resetea OpenGL.
-	craftScene();
+	init();
 }
 
 void

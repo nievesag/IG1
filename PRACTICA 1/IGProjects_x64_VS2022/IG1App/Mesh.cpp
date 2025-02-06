@@ -143,7 +143,7 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 
 Mesh* Mesh::generateRGBTriangle()
 {
-	Mesh* mesh = generateRegularPolygon(3, 50);
+	Mesh* mesh = generateRegularPolygon(3, 20);
 
 	mesh->mPrimitive = GL_TRIANGLES;
 

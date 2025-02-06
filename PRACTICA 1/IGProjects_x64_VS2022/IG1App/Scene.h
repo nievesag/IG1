@@ -33,8 +33,6 @@ protected:
 
 	void reset();
 
-	void craftScene(); // prepara la escena en inicio para ser usada
-
 	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
 };
 

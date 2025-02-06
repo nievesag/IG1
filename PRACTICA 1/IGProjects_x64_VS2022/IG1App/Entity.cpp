@@ -66,16 +66,19 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		mShader->setUniform("color", &mColor);
 		mShader->use();
-		upload(aMat);
+		mShader->setUniform("color", &mColor);
+		mShader->setUniform("modelView", aMat);
+		glLineWidth(2);
 		mMesh->render();
+		glLineWidth(1);
 	}
 }
 
 // ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : SingleColorEntity(color)
 {
+	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRegularPolygon(num, r);
 	//load();
 }

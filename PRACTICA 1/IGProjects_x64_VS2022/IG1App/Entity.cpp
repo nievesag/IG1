@@ -50,15 +50,15 @@ EntityWithColors::render(mat4 const& modelViewMat) const
 // ---- RGB AXES ----
 RGBAxes::RGBAxes(GLdouble l)
 {
-	mShader = Shader::get("vcolors");
+	//mShader = Shader::get("vcolors");
 	mMesh = Mesh::createRGBAxes(l);
-	load();
+	//load();
 }
 
 // ---- SINGLE COLOR ENTITY ----
-SingleColorEntity::SingleColorEntity(glm::dvec4 color)
+SingleColorEntity::SingleColorEntity(const vec4& color)
+	: mColor(color)
 {
-	mColor = color;
 	mShader = Shader::get("simple");
 }
 
@@ -77,7 +77,7 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : SingleColorEntity(color)
 {
 	mMesh = Mesh::generateRegularPolygon(num, r);
-	load();
+	//load();
 }
 
 // ---- RGB TRIANGLE ----
@@ -85,7 +85,7 @@ RGBTriangle::RGBTriangle()
 {
 	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRGBTriangle();
-	load();
+	//load();
 }
 
 void RGBTriangle::render(const glm::mat4& modelViewMat) const
@@ -104,7 +104,7 @@ RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
 {
 	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRGBRectangle(w, h);
-	load();
+	//load();
 }
 
 void RGBRectangle::render(const glm::mat4& modelViewMat) const

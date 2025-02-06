@@ -68,6 +68,7 @@ IG1App::init()
 
 	mCamera->set2D();
 	mScenes[mCurrentScene]->init();
+	mScenes[mCurrentScene]->load(); // !! HACER LOAD, para cargar los objetos a la escena
 }
 
 void

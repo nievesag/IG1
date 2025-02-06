@@ -5,6 +5,18 @@
 
 using namespace glm;
 
+void Scene::init()
+{
+	setGL(); // OpenGL settings
+
+	// allocate memory and load resources
+	// Lights
+	// Textures
+
+	// Graphics objects (entities) of the scene
+	gObjects.push_back(new RGBAxes(400.0)); // EJES XYZ.
+}
+
 Scene::~Scene()
 {
 	destroy();
@@ -57,18 +69,6 @@ void Scene::reset()
 	craftScene();
 }
 
-void Scene::craftScene()
-{
-	setGL(); // OpenGL settings
-
-	// allocate memory and load resources
-	// Lights
-	// Textures
-
-	// Graphics objects (entities) of the scene
-	gObjects.push_back(new RGBAxes(400.0)); // EJES XYZ.
-}
-
 void
 Scene::render(Camera const& cam) const
 {
@@ -84,7 +84,7 @@ Scene::render(Camera const& cam) const
 // ---- SCENE 0 ----
 void Scene0::init()
 {
-	craftScene();
+	Scene::init();
 
 	// Triangulo cian.
 	gObjects.push_back(new RegularPolygon(3, 200, { 0.0, 1.0, 1.0, 1.0 }));
@@ -96,7 +96,7 @@ void Scene0::init()
 // ---- SCENE 1 ----
 void Scene1::init()
 {
-	craftScene();
+	Scene::init();
 
 	// Triangulo RGB
 	gObjects.push_back(new RGBTriangle());
@@ -111,5 +111,5 @@ void Scene1::init()
 // ---- SCENE 2 ----
 void Scene2::init()
 {
-	craftScene();
+	Scene::init();
 }

@@ -128,10 +128,11 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 
 	// Se van guardando en sentido antihorario.
 	GLdouble alpha = 90.0;
+	GLdouble incremento = 360.0 / num;
 	for (GLuint i = 0; i < num + 2; i++) {
 		GLdouble x = r * glm::cos(glm::radians(alpha));
 		GLdouble y = r * glm::sin(glm::radians(alpha));
-		alpha += 360.0 / num;
+		alpha += incremento;
 
 		// (x, y, z, 1 -> punto 0 -> vector) -> (Cx + R * cos(alpha), Cy + R * sin(alpha), 0, punto).
 		mesh->vVertices.emplace_back(x, y, 0.0);
@@ -143,6 +144,8 @@ Mesh* Mesh::generateRegularPolygon(GLuint num, GLdouble r)
 Mesh* Mesh::generateRGBTriangle()
 {
 	Mesh* mesh = generateRegularPolygon(3, 50);
+
+	mesh->mPrimitive = GL_TRIANGLES;
 
 	// COLORES
 	mesh->vColors.reserve(mesh->mNumVertices);

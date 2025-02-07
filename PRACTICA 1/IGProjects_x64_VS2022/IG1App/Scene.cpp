@@ -17,6 +17,12 @@ void Scene::init()
 	gObjects.push_back(new RGBAxes(400.0)); // EJES XYZ.
 }
 
+void Scene::update()
+{
+	for (Abs_Entity* obj : gObjects)
+		obj->update();
+}
+
 Scene::~Scene()
 {
 	destroy();
@@ -96,16 +102,24 @@ void Scene0::init()
 // ---- SCENE 1 ----
 void Scene1::init()
 {
+	// -- llama a init del padre
 	Scene::init();
 
+	// -- crea y mete los objetos en la escena
+	RGBTriangle* triangulo = new RGBTriangle(1);
+
 	// Triangulo RGB
-	gObjects.push_back(new RGBTriangle());
+	gObjects.push_back(triangulo);
 
 	// Rectangulo RGB
 	gObjects.push_back(new RGBRectangle(200, 100));
 
 	// Circulo blanco.
-	gObjects.push_back(new RegularPolygon(40, 100, { 1.0, 1.0, 1.0, 1.0 }));
+	GLdouble r = 100.0;
+	gObjects.push_back(new RegularPolygon(40, r, { 1.0, 1.0, 1.0, 1.0 }));
+
+	// -- traslaciones, escalas y rotaciones
+	triangulo->setModelMat(translate(glm::dmat4(1), glm::dvec3(r, 0, 0)));
 }
 
 // ---- SCENE 2 ----

@@ -48,6 +48,7 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete; // no copy assignment
 
 	virtual void render(const glm::mat4& modelViewMat) const = 0; // abstract method
+	virtual void update();
 
 	// modeling matrix
 	glm::mat4 const& modelMat() const { return mModelMat; };
@@ -95,8 +96,11 @@ public:
 class RGBTriangle : public EntityWithColors
 {
 public:
-	explicit RGBTriangle();
+	explicit RGBTriangle(int s);
 	void render(const glm::mat4& modelViewMat) const override;
+	void update() override;
+private:
+	int scene = 0;
 };
 
 class RGBRectangle : public EntityWithColors

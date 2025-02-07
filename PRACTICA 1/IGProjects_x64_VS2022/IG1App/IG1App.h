@@ -133,6 +133,11 @@ protected:
 	GLFWwindow* mWindow = nullptr; // window's handle
 	int mWinW = 800;               // window's width
 	int mWinH = 600;               // window's height
+
+	// Control de tiempo
+	const GLint FRAME_DURATION = 0;
+	bool mUpdateEnabled = true;
+	GLdouble mNextUpdate = 0.0;
 };
 
 #endif //_H_IG1App_H_

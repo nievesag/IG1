@@ -38,6 +38,12 @@ IG1App::run() // enters the main event processing loop
 			mNeedsRedisplay = false;
 		}
 
+		if (mUpdateEnabled) {
+			glfwGetTime();
+			// mScenes[mCurrentScene]->update(); // llamarlo cada FRAME_DURATION segundos
+			//glfwWaitEventsTimeout();
+		}
+
 		// Stop and wait for new events
 		glfwWaitEvents();
 	}
@@ -67,7 +73,12 @@ IG1App::init()
 	mScenes.push_back(scene2);
 
 	mCamera->set2D();
-	mScenes[mCurrentScene]->init();
+	
+	for (int i = 0; i < mScenes.size(); i++) 
+	{
+		mScenes[i]->init();
+	}
+	
 	mScenes[mCurrentScene]->load(); // !! HACER LOAD, para cargar los objetos a la escena
 }
 
@@ -171,6 +182,10 @@ IG1App::key(unsigned int key)
 	case 'o':
 		mCamera->set2D();
 		break;
+	case 'u':
+		mUpdateEnabled = !mUpdateEnabled;
+		cout << "Update toggled" << endl;
+		break;
 	default:
 		if (key >= '0' && key <= '9' && changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta eso no se pone a true al cambiar
 			cout << "[NOTE] There is no scene " << char(key) << ".\n";
@@ -236,7 +251,7 @@ IG1App::changeScene(size_t sceneNr)
 	if (sceneNr != mCurrentScene) {
 		mScenes[mCurrentScene]->unload(); // descarga cosas internas
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->init(); // ??
+		mScenes[mCurrentScene]->init(); 
 		mScenes[mCurrentScene]->load(); // carga cosas internas
 	}
 

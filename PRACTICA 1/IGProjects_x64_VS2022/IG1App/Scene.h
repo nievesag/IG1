@@ -19,6 +19,7 @@ public:
 	Scene& operator=(const Scene& s) = delete; // no copy assignment
 
 	virtual void init();
+	virtual void update();
 
 	void render(Camera const& cam) const;
 

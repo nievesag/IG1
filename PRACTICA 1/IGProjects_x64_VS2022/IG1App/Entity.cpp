@@ -94,7 +94,7 @@ RGBTriangle::RGBTriangle(int s)
 
 	// se usa la matriz de modelado porque es una traslacion
 	// mueve el triangulo al punto (R, 0, 0) siendo 
-	mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0)); 
+	//mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0)); 
 }
 
 void RGBTriangle::render(const glm::mat4& modelViewMat) const

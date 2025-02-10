@@ -93,7 +93,7 @@ RGBTriangle::RGBTriangle(int s)
 
 	// se usa la matriz de modelado porque es una traslacion
 	// mueve el triangulo al punto (R, 0, 0) siendo 
-	//mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0)); 
+	mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0));
 }
 
 void RGBTriangle::render(const glm::mat4& modelViewMat) const
@@ -101,6 +101,8 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
+		
+		//mShader->setUniform("modelView", aMat);
 		
 		glEnable(GL_CULL_FACE);
 			// CARA DE DELANTE
@@ -114,7 +116,6 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 			mMesh->render();
 		glDisable(GL_CULL_FACE);
 
-		// Después de cullear añadir el setUniform.
 		//mShader->setUniform("modelView", aMat);
 	}
 }

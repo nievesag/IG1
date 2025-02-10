@@ -90,7 +90,7 @@ private:
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.
 {
 public:
-	explicit RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color);
+	explicit RegularPolygon(GLuint num, GLdouble r);
 };
 
 class RGBTriangle : public EntityWithColors

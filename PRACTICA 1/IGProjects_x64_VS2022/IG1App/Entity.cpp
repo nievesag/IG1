@@ -71,7 +71,6 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("color", &mColor);
-		mShader->setUniform("modelView", aMat);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
@@ -79,7 +78,7 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 }
 
 // ---- REGULAR POLYGON ----
-RegularPolygon::RegularPolygon(GLuint num, GLdouble r, glm::dvec4 color) : SingleColorEntity(color)
+RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : SingleColorEntity(vec4(1))
 {
 	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRegularPolygon(num, r);
@@ -102,7 +101,6 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
-		//mShader->setUniform
 
 		glEnable(GL_CULL_FACE);
 			// CARA DE DELANTE
@@ -115,6 +113,9 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
 			mMesh->render();
 		glDisable(GL_CULL_FACE);
+
+		// Después de cullear añadir el setUniform.
+		mShader->setUniform("modelView", aMat);
 	}
 }
 

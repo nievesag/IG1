@@ -93,10 +93,9 @@ void Scene0::init()
 	Scene::init();
 
 	// Triangulo cian.
-	gObjects.push_back(new RegularPolygon(3, 200, { 0.0, 1.0, 1.0, 1.0 }));
-
+	gObjects.push_back(new RegularPolygon(3, 200));
 	// Circulo magenta.
-	gObjects.push_back(new RegularPolygon(40, 200, { 1.0, 0.0, 1.0, 1.0 }));
+	gObjects.push_back(new RegularPolygon(40, 200));
 }
 
 // ---- SCENE 1 ----
@@ -116,7 +115,7 @@ void Scene1::init()
 
 	// Circulo blanco.
 	GLdouble r = 100.0;
-	gObjects.push_back(new RegularPolygon(40, r, { 1.0, 1.0, 1.0, 1.0 }));
+	gObjects.push_back(new RegularPolygon(40, r));
 
 	// -- traslaciones, escalas y rotaciones
 	triangulo->setModelMat(translate(glm::dmat4(1), glm::dvec3(r, 0, 0)));

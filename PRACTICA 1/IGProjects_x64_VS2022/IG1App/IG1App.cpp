@@ -187,7 +187,7 @@ IG1App::key(unsigned int key)
 		cout << "Update toggled" << endl;
 		break;
 	default:
-		if (key >= '0' && key <= '9' && changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta negado no se pone a true al cambiar
+		if (key >= '0' && key <= '9' && !changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta negado no se pone a true al cambiar
 			cout << "[NOTE] There is no scene " << char(key) << ".\n";
 		else
 			need_redisplay = false;
@@ -253,6 +253,7 @@ IG1App::changeScene(size_t sceneNr)
 		mCurrentScene = sceneNr;
 		mScenes[mCurrentScene]->init();
 		mScenes[mCurrentScene]->load(); // carga cosas internas
+		mNeedsRedisplay = true;
 	}
 
 	return true;

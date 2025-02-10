@@ -80,11 +80,11 @@ public:
 	explicit SingleColorEntity(const glm::vec4& color = glm::vec4(1)); // explicit es para que no se pueda hacer una conversion implicita. Ej.: (int)algo.
 	void render(const glm::mat4& modelViewMat) const override;
 
-	glm::dvec4 const getColor() { return mColor; }
-	void setColor(glm::dvec4 const &c) { mColor = c; } // & para q no se copie y const porque no se modifica dentro.
+	glm::vec4 const getColor() { return mColor; }
+	void setColor(glm::vec4 const &c) { mColor = c; } // & para q no se copie y const porque no se modifica dentro.
 
 private:
-	glm::dvec4 mColor; // predefinido.
+	glm::vec4 mColor; // predefinido.
 };
 
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.

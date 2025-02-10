@@ -70,7 +70,7 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
-		mShader->setUniform("color", &mColor);
+		mShader->setUniform("color", mColor);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);

@@ -9,7 +9,7 @@ IG1App IG1App::s_ig1app; // default constructor (constructor with no parameters)
 
 // Print OpenGL errors and warnings
 void GLAPIENTRY debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
-	GLsizei length, const GLchar* message, const void* userParam)
+                   GLsizei length, const GLchar* message, const void* userParam)
 {
 	const char* prefix = (type == GL_DEBUG_TYPE_ERROR)
 		? "\x1b[31m[ERROR]\x1b[0m "
@@ -38,25 +38,6 @@ IG1App::run() // enters the main event processing loop
 			mNeedsRedisplay = false;
 		}
 
-		// si se permite la actualizacion
-		if (mUpdateEnabled) 
-		{
-			// tiempo transcurrido desde que abres la ventana en segundos
-			mStartTime = glfwGetTime();
-
-			// tiempo que se ha tardado en ejecutar lo anterior
-			mNextUpdate = glfwGetTime() - mStartTime;
-
-			// duerme el resto de la duracion del frame
-			if (mNextUpdate < FRAME_DURATION)
-			{
-				update(); // llama al metodo update de cada objeto de la escena
-
-				// con el tiempo restante para llegar a mNextUpdate
-				glfwWaitEventsTimeout(FRAME_DURATION - mNextUpdate);
-			}
-		}
-
 		// Stop and wait for new events
 		glfwWaitEvents();
 	}
@@ -74,30 +55,10 @@ IG1App::init()
 	// allocate memory and resources
 	mViewPort = new Viewport(mWinW, mWinH);
 	mCamera = new Camera(mViewPort);
-	
-	// Crea las escenas
-	Scene0* scene0 = new Scene0();
-	Scene1* scene1 = new Scene1();
-	Scene2* scene2 = new Scene2();
-
-	// Mete las escenas en el vector de escenas
-	mScenes.push_back(scene0);
-	mScenes.push_back(scene1);
-	mScenes.push_back(scene2);
+	mScenes.push_back(new Scene);
 
 	mCamera->set2D();
-	
-	for (int i = 0; i < mScenes.size(); i++) 
-	{
-		mScenes[i]->init();
-	}
-	
-	mScenes[mCurrentScene]->load(); // !! HACER LOAD, para cargar los objetos a la escena
-}
-
-void IG1App::update()
-{
-	mScenes[mCurrentScene]->update();
+	mScenes[0]->init();
 }
 
 void
@@ -125,7 +86,7 @@ IG1App::iniWinOpenGL()
 	if (GLenum err = glewInit(); err != GLEW_OK) {
 		glfwTerminate();
 		throw std::logic_error("Error while loading extensions: "s +
-			reinterpret_cast<const char*>(glewGetErrorString(err)));
+		                       reinterpret_cast<const char*>(glewGetErrorString(err)));
 	}
 
 	// Callback registration
@@ -188,33 +149,28 @@ IG1App::key(unsigned int key)
 	bool need_redisplay = true;
 
 	switch (key) {
-	case '+':
-		mCamera->setScale(+0.01); // zoom in  (increases the scale)
-		break;
-	case '-':
-		mCamera->setScale(-0.01); // zoom out (decreases the scale)
-		break;
-	case 'l':
-		mCamera->set3D();
-		break;
-	case 'o':
-		mCamera->set2D();
-		break;
-	case 'u':
-		mUpdateEnabled = !mUpdateEnabled;
-		cout << "Update toggled" << endl;
-		break;
-	default:
-		if (key >= '0' && key <= '9' && !changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta negado no se pone a true al cambiar
-			cout << "[NOTE] There is no scene " << char(key) << ".\n";
-		else
-			need_redisplay = false;
-		break;
+		case '+':
+			mCamera->setScale(+0.01); // zoom in  (increases the scale)
+			break;
+		case '-':
+			mCamera->setScale(-0.01); // zoom out (decreases the scale)
+			break;
+		case 'l':
+			mCamera->set3D();
+			break;
+		case 'o':
+			mCamera->set2D();
+			break;
+		default:
+			if (key >= '0' && key <= '9' && !changeScene(key - '0'))
+				cout << "[NOTE] There is no scene " << char(key) << ".\n";
+			else
+				need_redisplay = false;
+			break;
 	} // switch
 
 	if (need_redisplay)
 		mNeedsRedisplay = true;
-	
 }
 
 void
@@ -229,30 +185,30 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 	// Handle keyboard input
 	// (key reference: https://www.glfw.org/docs/3.4/group__keys.html)
 	switch (key) {
-	case GLFW_KEY_ESCAPE:                     // Escape key
-		glfwSetWindowShouldClose(mWindow, true); // stops main loop
-		break;
-	case GLFW_KEY_RIGHT:
-		if (mods == GLFW_MOD_CONTROL)
-			mCamera->pitch(-1); // rotates -1 on the X axis
-		else
-			mCamera->pitch(1); // rotates 1 on the X axis
-		break;
-	case GLFW_KEY_LEFT:
-		if (mods == GLFW_MOD_CONTROL)
-			mCamera->yaw(1); // rotates 1 on the Y axis
-		else
-			mCamera->yaw(-1); // rotate -1 on the Y axis
-		break;
-	case GLFW_KEY_UP:
-		mCamera->roll(1); // rotates 1 on the Z axis
-		break;
-	case GLFW_KEY_DOWN:
-		mCamera->roll(-1); // rotates -1 on the Z axis
-		break;
-	default:
-		need_redisplay = false;
-		break;
+		case GLFW_KEY_ESCAPE:                     // Escape key
+			glfwSetWindowShouldClose(mWindow, true); // stops main loop
+			break;
+		case GLFW_KEY_RIGHT:
+			if (mods == GLFW_MOD_CONTROL)
+				mCamera->pitch(-1); // rotates -1 on the X axis
+			else
+				mCamera->pitch(1); // rotates 1 on the X axis
+			break;
+		case GLFW_KEY_LEFT:
+			if (mods == GLFW_MOD_CONTROL)
+				mCamera->yaw(1); // rotates 1 on the Y axis
+			else
+				mCamera->yaw(-1); // rotate -1 on the Y axis
+			break;
+		case GLFW_KEY_UP:
+			mCamera->roll(1); // rotates 1 on the Z axis
+			break;
+		case GLFW_KEY_DOWN:
+			mCamera->roll(-1); // rotates -1 on the Z axis
+			break;
+		default:
+			need_redisplay = false;
+			break;
 	} // switch
 
 	if (need_redisplay)
@@ -268,11 +224,9 @@ IG1App::changeScene(size_t sceneNr)
 
 	// Change only if a different scene
 	if (sceneNr != mCurrentScene) {
-		mScenes[mCurrentScene]->unload(); // descarga cosas internas
+		mScenes[mCurrentScene]->unload();
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->init();
-		mScenes[mCurrentScene]->load(); // carga cosas internas
-		mNeedsRedisplay = true;
+		mScenes[mCurrentScene]->load();
 	}
 
 	return true;

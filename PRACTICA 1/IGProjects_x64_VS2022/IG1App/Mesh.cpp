@@ -29,6 +29,7 @@ Mesh::draw() const
 	  size()); // primitive graphic, first index and number of elements to be rendered
 }
 
+
 void
 Mesh::load()
 {
@@ -215,6 +216,69 @@ Mesh* Mesh::generateRGBRectangle(GLdouble w, GLdouble h)
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 	// 3: blue
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateCube(GLdouble length)
+{
+	Mesh* mesh = new Mesh();
+
+	// Establecemos primitiva GL_TRIANGLE_STRIP
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 14;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	GLdouble distFromCenter = length/2;
+
+	// 0
+	mesh->vVertices.emplace_back(-distFromCenter, -distFromCenter, -distFromCenter);
+
+	// 1
+	mesh->vVertices.emplace_back(distFromCenter, -distFromCenter, -distFromCenter);
+
+	// 2
+	mesh->vVertices.emplace_back(-distFromCenter, -distFromCenter, distFromCenter);
+
+	// 3
+	mesh->vVertices.emplace_back(distFromCenter, -distFromCenter, distFromCenter);
+
+	// 4
+	mesh->vVertices.emplace_back(distFromCenter, distFromCenter, distFromCenter);
+
+	// 5 == 1
+	mesh->vVertices.push_back(mesh->vVertices[1]);
+
+	// 6
+	mesh->vVertices.emplace_back(distFromCenter, distFromCenter, -distFromCenter);
+
+	// 7 == 0
+	mesh->vVertices.push_back(mesh->vVertices[0]);
+
+	// 8
+	mesh->vVertices.emplace_back(-distFromCenter, distFromCenter, -distFromCenter);
+
+	// 9 == 2
+	mesh->vVertices.push_back(mesh->vVertices[2]);
+
+	// 10
+	mesh->vVertices.emplace_back(-distFromCenter, distFromCenter, distFromCenter);
+
+	// 11 == 4
+	mesh->vVertices.push_back(mesh->vVertices[4]);
+
+	// 12 == 8
+	mesh->vVertices.push_back(mesh->vVertices[8]);
+
+	// 13 == 6
+	mesh->vVertices.push_back(mesh->vVertices[6]); 
 
 	return mesh;
 }

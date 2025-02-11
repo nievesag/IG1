@@ -87,6 +87,12 @@ private:
 	glm::vec4 mColor; // predefinido.
 };
 
+class Cube: public SingleColorEntity
+{
+public:
+	explicit Cube(GLdouble length);
+};
+
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.
 {
 public:

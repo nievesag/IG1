@@ -71,10 +71,30 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("color", mColor);
+
 		glLineWidth(2);
+
+		glEnable(GL_CULL_FACE);
+		// CARA DE DELANTE
+		glCullFace(GL_BACK);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		mMesh->render();
+
+		// CARA DE ATRAS
+		glCullFace(GL_FRONT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+
+		glDisable(GL_CULL_FACE);
 		glLineWidth(1);
 	}
+}
+
+// ---- CUBE ----
+Cube::Cube(GLdouble length) : SingleColorEntity(vec4(1))
+{
+	mShader = Shader::get("vcolors");
+	mMesh = Mesh::generateCube(length);
 }
 
 // ---- REGULAR POLYGON ----

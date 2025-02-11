@@ -44,6 +44,8 @@ public:
 	// Mete un color primario a cada vertice de un rectangle
 	static Mesh* generateRGBRectangle(GLdouble w, GLdouble h);
 
+	static Mesh* generateCube(GLdouble length);
+
 	Mesh();
 	virtual ~Mesh();
 
@@ -73,6 +75,7 @@ protected:
 private:
 	GLuint mVBO;  // vertex buffer object
 	GLuint mCBO;  // color buffer object
+
 };
 
 #endif //_H_Scene_H_

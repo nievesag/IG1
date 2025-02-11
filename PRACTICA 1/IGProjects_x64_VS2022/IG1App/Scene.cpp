@@ -124,5 +124,8 @@ void Scene1::init()
 // ---- SCENE 2 ----
 void Scene2::init()
 {
+	// -- llama a init del padre
 	Scene::init();
+
+	gObjects.push_back(new Cube(200));
 }

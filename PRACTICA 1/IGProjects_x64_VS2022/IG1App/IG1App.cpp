@@ -38,13 +38,23 @@ IG1App::run() // enters the main event processing loop
 			mNeedsRedisplay = false;
 		}
 
-		if (mUpdateEnabled) {
-			// glfwGetTime -> tiempo transcurrido desde que abres la ventana en segundos.
-			// mete el tiempo actual en mNextUpdate
-			mNextUpdate = glfwGetTime();
-			cout << "Next Update in: " << mNextUpdate;
-			//mScenes[mCurrentScene]->update(); // llamarlo cada FRAME_DURATION segundos
-			//glfwWaitEventsTimeout();
+		// si se permite la actualizacion
+		if (mUpdateEnabled) 
+		{
+			// tiempo transcurrido desde que abres la ventana en segundos
+			mStartTime = glfwGetTime();
+
+			// tiempo que se ha tardado en ejecutar lo anterior
+			mNextUpdate = glfwGetTime() - mStartTime;
+
+			// duerme el resto de la duracion del frame
+			if (mNextUpdate < FRAME_DURATION)
+			{
+				update(); // llama al metodo update de cada objeto de la escena
+
+				// con el tiempo restante para llegar a mNextUpdate
+				glfwWaitEventsTimeout(FRAME_DURATION - mNextUpdate);
+			}
 		}
 
 		// Stop and wait for new events
@@ -83,6 +93,11 @@ IG1App::init()
 	}
 	
 	mScenes[mCurrentScene]->load(); // !! HACER LOAD, para cargar los objetos a la escena
+}
+
+void IG1App::update()
+{
+	mScenes[mCurrentScene]->update();
 }
 
 void

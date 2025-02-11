@@ -142,12 +142,11 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 
 void RGBTriangle::update()
 {
-	//if(scene == 1)
+	if (scene == 1)
 	{
 		// se usa la matriz de modelado porque es una rotacion
 		mModelMat = rotate(glm::dmat4(1), radians(45.0), glm::dvec3(0, 0, 1));
 	}
-	
 }
 
 RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)

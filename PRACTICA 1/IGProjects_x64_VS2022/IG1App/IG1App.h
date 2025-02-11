@@ -107,6 +107,8 @@ protected:
 	~IG1App() { close(); };
 
 	void init();
+	void update();
+
 	void iniWinOpenGL();
 	void destroy();
 
@@ -138,6 +140,7 @@ protected:
 	const GLint FRAME_DURATION = 1000/60; // segun internet frame time = 1000/FPS
 	bool mUpdateEnabled = true;
 	double mNextUpdate = 0.0;
+	double mStartTime = 0.0;
 };
 
 #endif //_H_IG1App_H_

@@ -46,6 +46,8 @@ public:
 
 	static Mesh* generateCube(GLdouble length);
 
+	static Mesh* generateRGBCube(GLdouble length);
+
 	Mesh();
 	virtual ~Mesh();
 

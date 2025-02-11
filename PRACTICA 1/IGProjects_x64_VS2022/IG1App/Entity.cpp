@@ -97,6 +97,38 @@ Cube::Cube(GLdouble length) : SingleColorEntity(vec4(1))
 	mMesh = Mesh::generateCube(length);
 }
 
+// ---- RGBCUBE ----.
+RGBCube::RGBCube(GLdouble length) 
+{
+	mShader = Shader::get("vcolors");
+	mMesh = Mesh::generateRGBCube(length);
+	
+}
+
+void RGBCube::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->use();
+
+		//mShader->setUniform("modelView", aMat);
+
+		glEnable(GL_CULL_FACE);
+		// CARA DE DELANTE
+		glCullFace(GL_BACK);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		mMesh->render();
+
+		// CARA DE ATRAS
+		glCullFace(GL_FRONT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		mMesh->render();
+		glDisable(GL_CULL_FACE);
+
+		//mShader->setUniform("modelView", aMat);
+	}
+}
+
 // ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : SingleColorEntity(vec4(1))
 {

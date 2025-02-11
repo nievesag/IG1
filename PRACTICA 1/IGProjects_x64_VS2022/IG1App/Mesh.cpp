@@ -282,3 +282,45 @@ Mesh* Mesh::generateCube(GLdouble length)
 
 	return mesh;
 }
+
+Mesh* Mesh::generateRGBCube(GLdouble length)
+{
+	Mesh* mesh = generateCube(length);
+
+	// COLORES
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	/*// 0: red
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	// 1: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// 2: green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	// 3: blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);*/
+
+	// HAY Q REVISAR LO DE LOS COLORES QUE SE HACE CON DEGRADAO.
+	// 0, 1, 2, 3 -> blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	// 4, 5, 6 -> green
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+
+	// 7, 8 -> red
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
+	// 11, 12, 13 -> blue
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+
+
+
+	return mesh;
+}

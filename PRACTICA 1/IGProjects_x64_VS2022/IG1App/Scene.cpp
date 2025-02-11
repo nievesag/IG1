@@ -127,5 +127,5 @@ void Scene2::init()
 	// -- llama a init del padre
 	Scene::init();
 
-	gObjects.push_back(new Cube(200));
+	gObjects.push_back(new RGBCube(200));
 }

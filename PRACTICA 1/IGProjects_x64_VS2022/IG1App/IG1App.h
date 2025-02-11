@@ -135,9 +135,9 @@ protected:
 	int mWinH = 600;               // window's height
 
 	// Control de tiempo
-	const GLint FRAME_DURATION = 0;
+	const GLint FRAME_DURATION = 1000/60; // segun internet frame time = 1000/FPS
 	bool mUpdateEnabled = true;
-	GLdouble mNextUpdate = 0.0;
+	double mNextUpdate = 0.0;
 };
 
 #endif //_H_IG1App_H_

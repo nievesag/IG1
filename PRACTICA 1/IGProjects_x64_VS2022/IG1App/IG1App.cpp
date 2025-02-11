@@ -39,8 +39,11 @@ IG1App::run() // enters the main event processing loop
 		}
 
 		if (mUpdateEnabled) {
-			glfwGetTime();
-			// mScenes[mCurrentScene]->update(); // llamarlo cada FRAME_DURATION segundos
+			// glfwGetTime -> tiempo transcurrido desde que abres la ventana en segundos.
+			// mete el tiempo actual en mNextUpdate
+			mNextUpdate = glfwGetTime();
+			cout << "Next Update in: " << mNextUpdate;
+			//mScenes[mCurrentScene]->update(); // llamarlo cada FRAME_DURATION segundos
 			//glfwWaitEventsTimeout();
 		}
 
@@ -196,6 +199,7 @@ IG1App::key(unsigned int key)
 
 	if (need_redisplay)
 		mNeedsRedisplay = true;
+	
 }
 
 void

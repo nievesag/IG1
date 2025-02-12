@@ -224,7 +224,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 {
 	Mesh* mesh = new Mesh();
 
-	// Establecemos primitiva GL_TRIANGLE_STRIP
+	/*// Establecemos primitiva GL_TRIANGLE_STRIP
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 
 	mesh->mNumVertices = 14;
@@ -234,7 +234,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	0---------2
 	|    /    |
 	1---------3
-	*/
+	
 
 	GLdouble distFromCenter = length/2;
 
@@ -278,14 +278,7 @@ Mesh* Mesh::generateCube(GLdouble length)
 	mesh->vVertices.push_back(mesh->vVertices[8]);
 
 	// 13 == 6
-	mesh->vVertices.push_back(mesh->vVertices[6]); 
-
-	return mesh;
-}
-
-Mesh* Mesh::generateRGBCube(GLdouble length)
-{
-	Mesh* mesh = new Mesh();
+	mesh->vVertices.push_back(mesh->vVertices[6]); */
 
 	// ---- VÉRTICES ----.
 	// Establecemos primitiva GL_TRIANGLE_STRIP
@@ -293,7 +286,6 @@ Mesh* Mesh::generateRGBCube(GLdouble length)
 
 	mesh->mNumVertices = 36;
 	mesh->vVertices.reserve(mesh->mNumVertices);
-
 
 	GLdouble r = length / 2;
 
@@ -313,23 +305,83 @@ Mesh* Mesh::generateRGBCube(GLdouble length)
 	mesh->vVertices.emplace_back(r, r, -r); // 7.
 	mesh->vVertices.push_back(mesh->vVertices[0]); // 8 (misma pos que el 0).
 
-	
-	
+	mesh->vVertices.emplace_back(-r, r, -r); // 9.
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 10 (misma pos que el 7).
+	mesh->vVertices.push_back(mesh->vVertices[0]); // 11 (misma pos que el 0).
 
+	// ---- CARA 3.
+	mesh->vVertices.push_back(mesh->vVertices[0]); // 12 (misma pos que el 0).
+	mesh->vVertices.push_back(mesh->vVertices[9]); // 13 (misma pos que el 9).
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 14 (misma pos que el 1).
 
+	mesh->vVertices.emplace_back(-r, r, r); // 15.
+	mesh->vVertices.push_back(mesh->vVertices[9]); // 16 (misma pos que el 9).
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 17 (misma pos que el 1).
 
+	// ---- CARA 4 (PARALELA A CARA 1).
+	mesh->vVertices.push_back(mesh->vVertices[9]); // 18 (misma pos que el 9).
+	mesh->vVertices.push_back(mesh->vVertices[15]); // 19 (misma pos que el 15).
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 20 (misma pos que el 7).
 
-	
-	
+	mesh->vVertices.emplace_back(r, r, r); // 21.
+	mesh->vVertices.push_back(mesh->vVertices[15]); // 22 (misma pos que el 15).
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 23 (misma pos que el 7).
 
-	// 0: red (1.0, 0.0, 0.0, 1.0);
-	// 1: green (0.0, 1.0, 0.0, 1.0);
-	// 2: green (0.0, 1.0, 0.0, 1.0);
-	// 3: blue (0.0, 0.0, 1.0, 1.0);
+	// ---- CARA 5 (PARALELA A CARA 2).
+	mesh->vVertices.push_back(mesh->vVertices[3]); // 24 (misma pos que el 3).
+	mesh->vVertices.push_back(mesh->vVertices[21]); // 25 (misma pos que el 21).
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 26 (misma pos que el 1).
+
+	mesh->vVertices.push_back(mesh->vVertices[15]); // 27 (misma pos que el 15).
+	mesh->vVertices.push_back(mesh->vVertices[21]); // 28 (misma pos que el 21).
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 29 (misma pos que el 1).
+
+	// ---- CARA 6 (PARALELA A CARA 3).
+	mesh->vVertices.push_back(mesh->vVertices[2]); // 30 (misma pos que el 2).
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 31 (misma pos que el 7).
+	mesh->vVertices.push_back(mesh->vVertices[3]); // 32 (misma pos que el 3).
+
+	mesh->vVertices.push_back(mesh->vVertices[21]); // 33 (misma pos que el 21).
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 34 (misma pos que el 7).
+	mesh->vVertices.push_back(mesh->vVertices[3]); // 35 (misma pos que el 3).
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRGBCube(GLdouble length)
+{
+	Mesh* mesh = generateCube(length);
 
 	// ---- COLORES ----.
-	//mesh->vColors.reserve(mesh->mNumVertices);
+	/* 0: red (1.0, 0.0, 0.0, 1.0);
+	   1: green (0.0, 1.0, 0.0, 1.0);
+	   2: green (0.0, 1.0, 0.0, 1.0);
+	   3: blue (0.0, 0.0, 1.0, 1.0) */
+	mesh->vColors.reserve(mesh->mNumVertices);
 
+	// ---- CARA 1 AZUL.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	// ---- CARA 2 ROJO.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
+	// ---- CARA 3 VERDE.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+
+	// ---- CARA 4 AZUL.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	// ---- CARA 5 ROJO.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
+	// ---- CARA 6 VERDE.
+	for (int i = 0; i < 6; i++)
+		mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
 
 	return mesh;
 }

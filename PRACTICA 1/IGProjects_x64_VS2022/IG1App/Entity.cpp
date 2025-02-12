@@ -175,7 +175,9 @@ void RGBTriangle::update()
 	{
 		angle += 4.0;
 		// se usa la matriz de modelado porque es una rotacion
-		mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) * rotate(glm::dmat4(1), radians(angle), glm::dvec3(0, 0, 1));
+		mModelMat = rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1)) // rotacion sobre
+			* translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) // traslacioon fuera del origen
+			* rotate(glm::dmat4(1), radians(-angle), glm::dvec3(0, 0, 1)); // rotacion sobre si mismo;
 	}
 }
 

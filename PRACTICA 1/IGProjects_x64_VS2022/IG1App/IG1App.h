@@ -129,7 +129,7 @@ protected:
 	Camera* mCamera = nullptr;
 	// Graphics objects are in the scenes
 	std::vector<Scene*> mScenes;
-	size_t mCurrentScene = 0;
+	size_t mCurrentScene = 1;
 
 	bool mNeedsRedisplay = true;  // main event processing loop
 	GLFWwindow* mWindow = nullptr; // window's handle

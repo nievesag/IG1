@@ -97,8 +97,11 @@ IG1App::init()
 
 void IG1App::update()
 {
-	mNeedsRedisplay = true;
+	//mScenes[mCurrentScene]->unload();
+	//mScenes[mCurrentScene]->load();
 	mScenes[mCurrentScene]->update();
+	mNeedsRedisplay = true;
+	display();
 }
 
 void

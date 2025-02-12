@@ -285,41 +285,50 @@ Mesh* Mesh::generateCube(GLdouble length)
 
 Mesh* Mesh::generateRGBCube(GLdouble length)
 {
-	Mesh* mesh = generateCube(length);
+	Mesh* mesh = new Mesh();
 
-	// COLORES
-	mesh->vColors.reserve(mesh->mNumVertices);
+	// ---- VÉRTICES ----.
+	// Establecemos primitiva GL_TRIANGLE_STRIP
+	mesh->mPrimitive = GL_TRIANGLES;
 
-	/*// 0: red
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	// 1: green
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	// 2: green
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	// 3: blue
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);*/
-
-	// HAY Q REVISAR LO DE LOS COLORES QUE SE HACE CON DEGRADAO.
-	// 0, 1, 2, 3 -> blue
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-
-	// 4, 5, 6 -> green
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
-
-	// 7, 8 -> red
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-
-	// 11, 12, 13 -> blue
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
-	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->mNumVertices = 36;
+	mesh->vVertices.reserve(mesh->mNumVertices);
 
 
+	GLdouble r = length / 2;
+
+	// ¡¡¡ MIRAR DIBUJO CHULETA PARA ENTENDER !!!
+
+	// ---- CARA 1.
+	mesh->vVertices.emplace_back(-r, -r, -r); // 0.
+	mesh->vVertices.emplace_back(-r, -r, r); // 1.
+	mesh->vVertices.emplace_back(r, -r, -r); // 2.
+
+	mesh->vVertices.emplace_back(r, -r, r); // 3.
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 4 (misma pos que el 1).
+	mesh->vVertices.push_back(mesh->vVertices[2]); // 5 (misma pos que el 2).
+
+	// ---- CARA 2.
+	mesh->vVertices.push_back(mesh->vVertices[2]); // 6 (misma pos que el 2).
+	mesh->vVertices.emplace_back(r, r, -r); // 7.
+	mesh->vVertices.push_back(mesh->vVertices[0]); // 8 (misma pos que el 0).
+
+	
+	
+
+
+
+
+	
+	
+
+	// 0: red (1.0, 0.0, 0.0, 1.0);
+	// 1: green (0.0, 1.0, 0.0, 1.0);
+	// 2: green (0.0, 1.0, 0.0, 1.0);
+	// 3: blue (0.0, 0.0, 1.0, 1.0);
+
+	// ---- COLORES ----.
+	//mesh->vColors.reserve(mesh->mNumVertices);
 
 
 	return mesh;

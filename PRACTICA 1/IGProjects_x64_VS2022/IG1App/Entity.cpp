@@ -76,15 +76,15 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		glLineWidth(2);
 
 		glEnable(GL_CULL_FACE);
-		// CARA DE DELANTE
-		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		mMesh->render();
+			// CARA DE DELANTE
+			glCullFace(GL_BACK);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			mMesh->render();
 
-		// CARA DE ATRAS
-		glCullFace(GL_FRONT);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		mMesh->render();
+			// CARA DE ATRAS
+			glCullFace(GL_FRONT);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			mMesh->render();
 
 		glDisable(GL_CULL_FACE);
 		glLineWidth(1);
@@ -133,7 +133,7 @@ void RGBCube::render(const glm::mat4& modelViewMat) const
 // ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : SingleColorEntity(vec4(1))
 {
-	mShader = Shader::get("vcolors");
+	mShader = Shader::get("simple");
 	mMesh = Mesh::generateRegularPolygon(num, r);
 }
 

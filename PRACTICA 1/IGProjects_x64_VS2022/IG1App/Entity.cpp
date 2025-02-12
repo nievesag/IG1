@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,7 +21,6 @@ Abs_Entity::~Abs_Entity()
 
 void Abs_Entity::update()
 {
-	// setModelMat(mModelMat);
 }
 
 void
@@ -173,8 +173,9 @@ void RGBTriangle::update()
 {
 	if (scene == 1)
 	{
+		angle += 4.0;
 		// se usa la matriz de modelado porque es una rotacion
-		mModelMat = rotate(glm::dmat4(1), radians(45.0), glm::dvec3(0, 0, 1));
+		mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) * rotate(glm::dmat4(1), radians(angle), glm::dvec3(0, 0, 1));
 	}
 }
 

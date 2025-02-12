@@ -114,6 +114,7 @@ public:
 	void update() override;
 private:
 	int scene = 0;
+	double angle = 0.0;
 };
 
 class RGBRectangle : public EntityWithColors

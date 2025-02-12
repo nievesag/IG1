@@ -97,6 +97,7 @@ IG1App::init()
 
 void IG1App::update()
 {
+	mNeedsRedisplay = true;
 	mScenes[mCurrentScene]->update();
 }
 

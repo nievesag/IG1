@@ -117,12 +117,12 @@ void RGBCube::render(const glm::mat4& modelViewMat) const
 		glEnable(GL_CULL_FACE);
 		// CARA DE DELANTE
 		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		mMesh->render();
 
 		// CARA DE ATRAS
 		glCullFace(GL_FRONT);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		mMesh->render();
 		glDisable(GL_CULL_FACE);
 

@@ -100,7 +100,8 @@ Cube::Cube(GLdouble length) : SingleColorEntity(vec4(1))
 
 // ---- RGBCUBE ----.
 RGBCube::RGBCube(GLdouble length, int s)
-: scene(s)
+: scene(s), 
+  l(length) // para la animación del cubo.
 {
 	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRGBCube(length);
@@ -134,14 +135,36 @@ void RGBCube::update()
 {
 	if (scene == 2)
 	{
-		angle += 4.0;
+		
+		int rotationCounter = 0; // segun el counter rota en un eje u otro.
 
 		/*// se usa la matriz de modelado porque es una rotacion
 		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1)) // rotacion sobre
 			* translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) // traslacioon fuera del origen
 			* rotate(glm::dmat4(1), radians(-angle), glm::dvec3(0, 0, 1)); // rotacion sobre si mismo;*/
 
+		/*mModelMat = rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(1, 0, 0));
+		mModelMat = glm::translate(glm::dmat4(1), glm::dvec3(l / 2, l / 2, -l / 2));*/
+
+		if (angle < 180 && rotationCounter == 0) { // rota en x.
+			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(1, 0, 0));
+			angle++;
+		}
 		
+		
+		if (angle < 360 && rotationCounter == 1) {
+			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0));
+			angle++;
+		}
+
+		if (angle < 540 && rotationCounter == 2) {
+			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1));
+			angle++;
+		}
+
+		//if (angle >= 540) angle = 0;
+
+
 	}
 }
 

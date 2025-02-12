@@ -103,6 +103,7 @@ public:
 private:
 	int scene = 0;
 	double angle = 0.0;
+	GLdouble l; // length
 };
 
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.

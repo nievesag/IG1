@@ -22,6 +22,11 @@ IG1App::close()
 {
 	cout << "Closing GLFW...\n";
 	glfwSetWindowShouldClose(mWindow, true); // stops main loop
+
+	delete mViewPort;
+	delete mCamera;
+	for (auto scene : mScenes)
+		delete scene;
 }
 
 void
@@ -274,7 +279,6 @@ IG1App::changeScene(size_t sceneNr)
 	if (sceneNr != mCurrentScene) {
 		mScenes[mCurrentScene]->unload(); // descarga cosas internas
 		mCurrentScene = sceneNr;
-		mScenes[mCurrentScene]->init();
 		mScenes[mCurrentScene]->load(); // carga cosas internas
 		mNeedsRedisplay = true;
 	}

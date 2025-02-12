@@ -93,10 +93,16 @@ void Scene0::init()
 {
 	Scene::init();
 
+	auto triang = new RegularPolygon(3, 200);
+	auto circ = new RegularPolygon(40, 200);
+	triang->setColor({0,1,1,1});
+	circ->setColor({1,0,1,1});
+
 	// Triangulo cian.
-	gObjects.push_back(new RegularPolygon(3, 200));
+	gObjects.push_back(triang);
+
 	// Circulo magenta.
-	gObjects.push_back(new RegularPolygon(40, 200));
+	gObjects.push_back(circ);
 }
 
 // ---- SCENE 1 ----

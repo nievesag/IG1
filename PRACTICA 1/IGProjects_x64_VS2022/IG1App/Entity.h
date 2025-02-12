@@ -80,7 +80,7 @@ public:
 	explicit SingleColorEntity(const glm::vec4& color = glm::vec4(1)); // explicit es para que no se pueda hacer una conversion implicita. Ej.: (int)algo.
 	void render(const glm::mat4& modelViewMat) const override;
 
-	glm::vec4 const getColor() { return mColor; }
+	glm::vec4 getColor() const { return mColor; }
 	void setColor(glm::vec4 const &c) { mColor = c; } // & para q no se copie y const porque no se modifica dentro.
 
 private:

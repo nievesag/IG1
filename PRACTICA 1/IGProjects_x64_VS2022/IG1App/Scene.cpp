@@ -135,5 +135,11 @@ void Scene2::init()
 	// -- llama a init del padre
 	Scene::init();
 
-	gObjects.push_back(new RGBCube(200));
+	double length = 200;
+	RGBCube* cube = new RGBCube(length, 2);
+
+	gObjects.push_back(cube);
+
+	// Inicialmente se coloca la CARA 5 en el plano XY (pasa del centro a ese sitio) para empezar la animación ahí.
+	cube->setModelMat(translate(glm::dmat4(1), glm::dvec3(length/2, length/2, -length/2)));
 }

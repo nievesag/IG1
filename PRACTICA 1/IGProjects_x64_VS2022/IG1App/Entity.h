@@ -96,8 +96,13 @@ public:
 class RGBCube : public EntityWithColors
 {
 public:
-	explicit RGBCube(GLdouble length);
+	explicit RGBCube(GLdouble length, int s);
 	void render(const glm::mat4& modelViewMat) const override;
+	void update() override;
+
+private:
+	int scene = 0;
+	double angle = 0.0;
 };
 
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.

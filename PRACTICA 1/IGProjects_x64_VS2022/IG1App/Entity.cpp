@@ -99,11 +99,11 @@ Cube::Cube(GLdouble length) : SingleColorEntity(vec4(1))
 }
 
 // ---- RGBCUBE ----.
-RGBCube::RGBCube(GLdouble length) 
+RGBCube::RGBCube(GLdouble length, int s)
+: scene(s)
 {
 	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRGBCube(length);
-	
 }
 
 void RGBCube::render(const glm::mat4& modelViewMat) const
@@ -129,6 +129,22 @@ void RGBCube::render(const glm::mat4& modelViewMat) const
 		//mShader->setUniform("modelView", aMat);
 	}
 }
+
+void RGBCube::update()
+{
+	if (scene == 2)
+	{
+		angle += 4.0;
+
+		/*// se usa la matriz de modelado porque es una rotacion
+		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1)) // rotacion sobre
+			* translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) // traslacioon fuera del origen
+			* rotate(glm::dmat4(1), radians(-angle), glm::dvec3(0, 0, 1)); // rotacion sobre si mismo;*/
+
+		
+	}
+}
+
 
 // ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : SingleColorEntity(vec4(1))

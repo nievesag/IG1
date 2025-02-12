@@ -71,6 +71,7 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("color", mColor);
+		upload(aMat);
 
 		glLineWidth(2);
 
@@ -110,7 +111,7 @@ void RGBCube::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
-
+		upload(aMat);
 		//mShader->setUniform("modelView", aMat);
 
 		glEnable(GL_CULL_FACE);
@@ -153,7 +154,7 @@ void RGBTriangle::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
-		
+		upload(aMat);
 		glEnable(GL_CULL_FACE);
 			// CARA DE DELANTE
 			glCullFace(GL_BACK);
@@ -188,6 +189,7 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
+		upload(aMat);
 
 		glEnable(GL_CULL_FACE);
 			// CARA DE DELANTE

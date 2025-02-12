@@ -1,5 +1,6 @@
 #include "Scene.h"
 
+#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -112,13 +113,14 @@ void Scene1::init()
 
 	// Rectangulo RGB
 	gObjects.push_back(new RGBRectangle(200, 100));
-
 	// Circulo blanco.
+
 	GLdouble r = 100.0;
 	gObjects.push_back(new RegularPolygon(40, r));
 
 	// -- traslaciones, escalas y rotaciones
 	triangulo->setModelMat(translate(glm::dmat4(1), glm::dvec3(r, 0, 0)));
+
 }
 
 // ---- SCENE 2 ----

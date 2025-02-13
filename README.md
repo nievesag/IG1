@@ -13,3 +13,4 @@ PRÁCTICAS
 | Enunciado | Código |
 |:--:|:--:|
 [Práctica 1](https://github.com/nievesag/IG1/blob/main/PRACTICA%201/IG_p1.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%201/IGProjects_x64_VS2022)|
+[Práctica 2](https://github.com/nievesag/IG1/blob/main/PRACTICA%201/IG_p1.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%201/IGProjects_x64_VS2022)|

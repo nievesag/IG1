@@ -50,7 +50,7 @@ IG1App::run() // enters the main event processing loop
 			// tiempo transcurrido desde que abres la ventana en segundos
 			mStartTime = glfwGetTime();
 
-			// tiempo que se ha tardado en ejecutar lo anterior
+			// tiempo que se ha tardado en ejecutar lo anterior (si tarda aunque sea mu poquitillo mu poquitillo cosa de na se lo quita 2ms o menos o lo que sea para que sea preciso).
 			mNextUpdate = glfwGetTime() - mStartTime;
 		
 			update(); // llama al metodo update de cada objeto de la escena
@@ -63,7 +63,6 @@ IG1App::run() // enters the main event processing loop
 			// Stop and wait for new events
 			glfwWaitEvents();
 		}
-
 	}
 
 	destroy();

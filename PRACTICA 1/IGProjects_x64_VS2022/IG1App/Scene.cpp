@@ -93,15 +93,14 @@ void Scene0::init()
 {
 	Scene::init();
 
-	auto triang = new RegularPolygon(3, 200);
-	auto circ = new RegularPolygon(40, 200);
-	triang->setColor({0,1,1,1});
-	circ->setColor({1,0,1,1});
-
 	// Triangulo cian.
+	auto triang = new RegularPolygon(3, 200);
+	triang->setColor({ 0,1,1,1 });
 	gObjects.push_back(triang);
 
 	// Circulo magenta.
+	auto circ = new RegularPolygon(40, 200);
+	circ->setColor({1,0,1,1});
 	gObjects.push_back(circ);
 }
 
@@ -139,7 +138,4 @@ void Scene2::init()
 	RGBCube* cube = new RGBCube(length, 2);
 
 	gObjects.push_back(cube);
-
-	// Inicialmente se coloca la CARA 5 en el plano XY (pasa del centro a ese sitio) para empezar la animación ahí.
-	cube->setModelMat(translate(glm::dmat4(1), glm::dvec3(length/2, length/2, -length/2)));
 }

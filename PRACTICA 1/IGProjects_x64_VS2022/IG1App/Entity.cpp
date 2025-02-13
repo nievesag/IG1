@@ -115,6 +115,7 @@ void RGBCube::render(const glm::mat4& modelViewMat) const
 		upload(aMat);
 		//mShader->setUniform("modelView", aMat);
 
+		// Hay que poner glFIll en los dos porque con el gl triangles se va generando un triangulo de cara, otro de culo, otro de cara... y así sucesivamente.
 		glEnable(GL_CULL_FACE);
 		// CARA DE DELANTE
 		glCullFace(GL_BACK);
@@ -135,36 +136,43 @@ void RGBCube::update()
 {
 	if (scene == 2)
 	{
-		
-		int rotationCounter = 0; // segun el counter rota en un eje u otro.
+		// Como empieza en 0, hace la animacion en X inicialmente.
+		rotateOnAxis(axisState);
 
-		/*// se usa la matriz de modelado porque es una rotacion
-		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1)) // rotacion sobre
-			* translate(glm::dmat4(1), glm::dvec3(100, 0, 0)) // traslacioon fuera del origen
-			* rotate(glm::dmat4(1), radians(-angle), glm::dvec3(0, 0, 1)); // rotacion sobre si mismo;*/
-
-		/*mModelMat = rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(1, 0, 0));
-		mModelMat = glm::translate(glm::dmat4(1), glm::dvec3(l / 2, l / 2, -l / 2));*/
-
-		if (angle < 180 && rotationCounter == 0) { // rota en x.
-			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(1, 0, 0));
-			angle++;
-		}
-		
-		
-		if (angle < 360 && rotationCounter == 1) {
-			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0));
-			angle++;
+		// ¡¡¡OJO!!! como en rotateOnAxis hacemos angle/2 para que sea 180, aquí lo tenemos que hacer 360.
+		if (angle >= 360) 
+		{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
+			angle = 0;
+			axisState++;
 		}
 
-		if (angle < 540 && rotationCounter == 2) {
-			mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1));
-			angle++;
-		}
+		// Cuando se complete la animacion se reinicia el estado y vuelta a empezar.
+		if (axisState == 3) axisState = 0;
 
-		//if (angle >= 540) angle = 0;
+		angle++; // va iterando el angle tio
+	}
+}
 
+void RGBCube::rotateOnAxis(GLint n)
+{
+	switch (n)
+	{
+	case 0: // x
+		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(1, 0, 0))
+			* translate(glm::dmat4(1), glm::dvec3(l / 2, l / 2, -l / 2));
+		break;
 
+	case 1: // z
+		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1))
+			* translate(glm::dmat4(1), glm::dvec3(l / 2, -l / 2, l / 2));
+		break;
+
+	case 2: // y
+		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0))
+			* translate(glm::dmat4(1), glm::dvec3(-l / 2, l / 2, l / 2));
+		break;
+
+	default:break;
 	}
 }
 

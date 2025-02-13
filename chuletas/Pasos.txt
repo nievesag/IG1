@@ -8,3 +8,7 @@ PASOS PARA CREAR UN OBJETO IG1
 	- Clase hijo: RegularPolygon (crea poligono regular y tiene sus cosas dentro de poligono regular).
 
 3. Lo metemos con push_back en la escena para que se vea todo (Scene.h, Scene.cpp). APARTADOS 4 y 5.
+
+4. ROT POS SCALE desde la escena, Scene.cpp.
+
+5. Si no hay upload(aMat) en el render de la entidad (Entity.cpp), no hay animaciones.

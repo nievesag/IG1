@@ -104,6 +104,14 @@ private:
 	int scene = 0;
 	double angle = 0.0;
 	GLdouble l; // length
+	int axisState = 0; // comienza en el EJE X.
+
+	// ESTE ES ORDEN QUE TIENE QUE SEGUIR LA ANIMACIÓN.
+	// 0 -> eje X.
+	// 1 -> eje Z.
+	// 2 -> eje Y.
+	void rotateOnAxis(GLint n);
+
 };
 
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.

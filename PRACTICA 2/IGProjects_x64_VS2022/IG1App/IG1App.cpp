@@ -83,11 +83,13 @@ IG1App::init()
 	Scene0* scene0 = new Scene0();
 	Scene1* scene1 = new Scene1();
 	Scene2* scene2 = new Scene2();
+	Scene3* scene3 = new Scene3();
 
 	// Mete las escenas en el vector de escenas
 	mScenes.push_back(scene0);
 	mScenes.push_back(scene1);
 	mScenes.push_back(scene2);
+	mScenes.push_back(scene3);
 
 	mCamera->set2D();
 	

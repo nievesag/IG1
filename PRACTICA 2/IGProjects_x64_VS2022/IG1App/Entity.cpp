@@ -254,3 +254,29 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 		glDisable(GL_CULL_FACE);
 	}
 }
+
+Ground::Ground(GLdouble w, GLdouble h) // tiene que ser cuadrado??? PREGUNTAR A M.E.
+{
+	mShader = Shader::get("vcolors");
+	mMesh = Mesh::generateRGBRectangle(w, h);
+
+	mModelMat = rotate(dmat4(1), radians(-90.0), glm::dvec3(1, 0, 0));
+}
+
+EntityWithTexture::EntityWithTexture(const Texture* texture, GLboolean modulate)
+{
+	mShader = Shader::get("texture");
+}
+
+void EntityWithTexture::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		if (mTexture != nullptr) {
+
+		}
+		mShader->use();
+		upload(aMat);
+		mMesh->render();
+	}
+}

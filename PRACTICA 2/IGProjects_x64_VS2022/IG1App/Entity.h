@@ -35,6 +35,7 @@
 
 #include "Mesh.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class Abs_Entity // abstract class
 {
@@ -144,4 +145,20 @@ public:
 	explicit RGBAxes(GLdouble l);
 };
 
+class Ground : public EntityWithColors 
+{
+public:
+	explicit Ground(GLdouble w, GLdouble h);
+};
+
+class EntityWithTexture : public Abs_Entity
+{
+public:
+	explicit EntityWithTexture(const Texture* texture, GLboolean modulate = false);
+	void render(const glm::mat4& modelViewMat) const override;
+
+protected:
+	Texture* mTexture;
+	GLboolean mModulate; 
+};
 #endif //_H_Entities_H_

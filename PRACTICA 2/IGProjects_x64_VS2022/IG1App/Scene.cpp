@@ -20,7 +20,7 @@ void Scene::init()
 
 void Scene::update()
 {
-	for (Abs_Entity* obj : gObjects)
+	for (auto obj : gObjects)
 		obj->update();
 }
 
@@ -138,4 +138,16 @@ void Scene2::init()
 	RGBCube* cube = new RGBCube(length, 2);
 
 	gObjects.push_back(cube);
+}
+
+// ---- SCENE 3 ----
+
+void Scene3::init()
+{
+	// -- llama a init del padre
+	Scene::init();
+
+	Ground* ground = new Ground(200.0, 200.0);
+
+	gObjects.push_back(ground);
 }

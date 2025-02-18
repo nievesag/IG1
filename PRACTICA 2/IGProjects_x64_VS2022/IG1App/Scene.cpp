@@ -148,7 +148,7 @@ void Scene3::init()
 	Scene::init();
 
 	std::string tex = "../assets/images/baldosaC.png";
-	Ground* ground = new Ground(200.0, 200.0, tex, false);
+	Ground* ground = new Ground(200.0,200.0, tex, false);
 
 	gObjects.push_back(ground);
 }

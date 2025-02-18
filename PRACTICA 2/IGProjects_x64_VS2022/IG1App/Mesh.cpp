@@ -12,6 +12,7 @@ Mesh::Mesh()
  : mVAO(NONE)
  , mVBO(NONE)
  , mCBO(NONE)
+ , mTCO(NONE)
 {
 }
 
@@ -53,6 +54,19 @@ Mesh::load()
 			glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(vec4), nullptr);
 			glEnableVertexAttribArray(1);
 		}
+
+		// cargar en la GPU el array de coordenadas de textura
+		if (!vTexCoords.empty())
+		{
+			glGenBuffers(1, &mTCO);
+			glBindBuffer(GL_ARRAY_BUFFER, mTCO);
+			glBufferData(GL_ARRAY_BUFFER,
+				vTexCoords.size() * sizeof(vec2),
+				vTexCoords.data(), GL_STATIC_DRAW);
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+				sizeof(vec2), nullptr);
+			glEnableVertexAttribArray(2);
+		}
 	}
 }
 
@@ -69,6 +83,10 @@ Mesh::unload()
 			glDeleteBuffers(1, &mCBO);
 			mCBO = NONE;
 		}
+
+		// eliminar las coordenadas de textura de la GPU
+		if (mTCO != NONE) 
+			glDeleteBuffers(1, &mTCO);
 	}
 }
 
@@ -390,7 +408,7 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	Mesh* mesh = generateRectangle(w, h);
 
-	mesh->vTexCoords.reserve(mesh->mNumVertices);
+	//mesh->vTexCoords.reserve(mesh->mNumVertices);
 
 	/*
 	0---------2
@@ -398,20 +416,25 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 	1---------3
 	*/
 
-	double x = (w / 2);
-	double y = (h / 2);
+	//double x = (w / 2);
+	//double y = (h / 2);
 
-	// 0
-	mesh->vTexCoords.emplace_back(0, y);
+	//// 0
+	//mesh->vTexCoords.emplace_back(0, y);
 
-	// 1
+	//// 1
+	//mesh->vTexCoords.emplace_back(0, 0);
+
+	//// 2
+	//mesh->vTexCoords.emplace_back(x, y);
+
+	//// 3
+	//mesh->vTexCoords.emplace_back(x, 0);
+
 	mesh->vTexCoords.emplace_back(0, 0);
-
-	// 2
-	mesh->vTexCoords.emplace_back(x, y);
-
-	// 3
-	mesh->vTexCoords.emplace_back(x, 0);
+	mesh->vTexCoords.emplace_back(1, 0);
+	mesh->vTexCoords.emplace_back(0, 1);
+	mesh->vTexCoords.emplace_back(1, 1);
 
 	return mesh;
 }

@@ -18,10 +18,10 @@ public:
 	          GLubyte alpha = 255); // load from file and upload to GPU
 
 	void bind();
-	void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); };
+	void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 
-	GLuint width() const { return mWidth; };
-	GLuint height() const { return mHeight; };
+	GLuint width() const { return mWidth; }
+	GLuint height() const { return mHeight; }
 
 	void setWrap(GLuint wp); // GL_REPEAT, GL_CLAMP_TO_EDGE, ...
 

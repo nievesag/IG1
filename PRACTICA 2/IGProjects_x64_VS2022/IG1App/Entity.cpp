@@ -68,17 +68,17 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		glLineWidth(2);
 
 		glEnable(GL_CULL_FACE);
-		// CARA DE DELANTE
-		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		mMesh->render();
+			// CARA DE DELANTE
+			glCullFace(GL_BACK);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			mMesh->render();
 
-		// CARA DE ATRAS
-		glCullFace(GL_FRONT);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		mMesh->render();
-
+			// CARA DE ATRAS
+			glCullFace(GL_FRONT);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			mMesh->render();
 		glDisable(GL_CULL_FACE);
+
 		glLineWidth(1);
 	}
 }
@@ -100,6 +100,9 @@ void EntityWithTexture::render(const glm::mat4& modelViewMat) const
 
 		mShader->use();
 		upload(aMat);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//mMesh->render();
 
 		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
 		{
@@ -287,12 +290,7 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
 	: EntityWithTexture(texture, modulate)
 {
-	std::cout << (texture) << std::endl;
-
-	mShader = Shader::get("vcolors");
 	mMesh = Mesh::generateRectangleTexCor(w, h);
-
 	mModelMat = rotate(dmat4(1), radians(-90.0), glm::dvec3(1, 0, 0));
 }
-
 #pragma endregion

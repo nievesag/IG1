@@ -6,6 +6,7 @@
 
 using namespace glm;
 
+#pragma region ENTIDADES PADRES WARLORDS
 // ---- ABS ENTITY ----
 void
 Abs_Entity::upload(const mat4& modelViewMat) const
@@ -23,14 +24,12 @@ void Abs_Entity::update()
 {
 }
 
-void
-Abs_Entity::load()
+void Abs_Entity::load()
 {
 	mMesh->load();
 }
 
-void
-Abs_Entity::unload()
+void Abs_Entity::unload()
 {
 	mMesh->unload();
 }
@@ -41,8 +40,7 @@ EntityWithColors::EntityWithColors()
 	mShader = Shader::get("vcolors");
 }
 
-void
-EntityWithColors::render(mat4 const& modelViewMat) const
+void EntityWithColors::render(mat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
@@ -50,12 +48,6 @@ EntityWithColors::render(mat4 const& modelViewMat) const
 		upload(aMat);
 		mMesh->render();
 	}
-}
-
-// ---- RGB AXES ----
-RGBAxes::RGBAxes(GLdouble l)
-{
-	mMesh = Mesh::createRGBAxes(l);
 }
 
 // ---- SINGLE COLOR ENTITY ----
@@ -76,19 +68,54 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 		glLineWidth(2);
 
 		glEnable(GL_CULL_FACE);
-			// CARA DE DELANTE
-			glCullFace(GL_BACK);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			mMesh->render();
+		// CARA DE DELANTE
+		glCullFace(GL_BACK);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
 
-			// CARA DE ATRAS
-			glCullFace(GL_FRONT);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			mMesh->render();
+		// CARA DE ATRAS
+		glCullFace(GL_FRONT);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
 
 		glDisable(GL_CULL_FACE);
 		glLineWidth(1);
 	}
+}
+
+// ---- ENTITY WITH TEXTURE ----
+EntityWithTexture::EntityWithTexture(const std::string& texture, GLboolean modulate)
+	: mModulate(modulate)
+{
+	mShader = Shader::get("texture");
+
+	mTexture = new Texture();
+	mTexture->load(texture, 255);
+}
+
+void EntityWithTexture::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+
+		mShader->use();
+		upload(aMat);
+
+		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
+		{
+			mTexture->bind();	 // activa la textura en la gpu
+			mMesh->render();
+			mTexture->unbind();  // desactiva la textura en la gpu
+		}
+	}
+}
+#pragma endregion
+
+#pragma region PRACTICA 1
+// ---- RGB AXES ----
+RGBAxes::RGBAxes(GLdouble l)
+{
+	mMesh = Mesh::createRGBAxes(l);
 }
 
 // ---- CUBE ----
@@ -176,7 +203,6 @@ void RGBCube::rotateOnAxis(GLint n)
 	}
 }
 
-
 // ---- REGULAR POLYGON ----
 RegularPolygon::RegularPolygon(GLuint num, GLdouble r) : SingleColorEntity(vec4(1))
 {
@@ -254,29 +280,19 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 		glDisable(GL_CULL_FACE);
 	}
 }
+#pragma endregion
 
-Ground::Ground(GLdouble w, GLdouble h) // tiene que ser cuadrado??? PREGUNTAR A M.E.
+#pragma region PRACTICA 2
+// tiene que ser cuadrado??? PREGUNTAR A M.E.
+Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
+	: EntityWithTexture(texture, modulate)
 {
+	std::cout << (texture) << std::endl;
+
 	mShader = Shader::get("vcolors");
-	mMesh = Mesh::generateRGBRectangle(w, h);
+	mMesh = Mesh::generateRectangleTexCor(w, h);
 
 	mModelMat = rotate(dmat4(1), radians(-90.0), glm::dvec3(1, 0, 0));
 }
 
-EntityWithTexture::EntityWithTexture(const Texture* texture, GLboolean modulate)
-{
-	mShader = Shader::get("texture");
-}
-
-void EntityWithTexture::render(const glm::mat4& modelViewMat) const
-{
-	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-		if (mTexture != nullptr) {
-
-		}
-		mShader->use();
-		upload(aMat);
-		mMesh->render();
-	}
-}
+#pragma endregion

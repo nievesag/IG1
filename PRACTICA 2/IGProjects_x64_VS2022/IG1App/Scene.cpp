@@ -147,7 +147,8 @@ void Scene3::init()
 	// -- llama a init del padre
 	Scene::init();
 
-	Ground* ground = new Ground(200.0, 200.0);
+	std::string tex = "../assets/images/baldosaC.png";
+	Ground* ground = new Ground(200.0, 200.0, tex, false);
 
 	gObjects.push_back(ground);
 }

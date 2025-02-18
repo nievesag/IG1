@@ -37,6 +37,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
+// ---------- ENTIDADES ----------
+
 class Abs_Entity // abstract class
 {
 public:
@@ -88,6 +90,19 @@ private:
 	glm::vec4 mColor; // predefinido.
 };
 
+class EntityWithTexture : public Abs_Entity
+{
+public:
+	explicit EntityWithTexture(const std::string& texture, GLboolean modulate = false);
+	void render(const glm::mat4& modelViewMat) const override;
+
+protected:
+	Texture* mTexture;
+	GLboolean mModulate;
+};
+
+// -----------------
+
 class Cube: public SingleColorEntity
 {
 public:
@@ -112,7 +127,6 @@ private:
 	// 1 -> eje Z.
 	// 2 -> eje Y.
 	void rotateOnAxis(GLint n);
-
 };
 
 class RegularPolygon : public SingleColorEntity // clase hija que hereda SingleColorEntity con sus propias cosas de poligono regular.
@@ -145,20 +159,9 @@ public:
 	explicit RGBAxes(GLdouble l);
 };
 
-class Ground : public EntityWithColors 
+class Ground : public EntityWithTexture
 {
 public:
-	explicit Ground(GLdouble w, GLdouble h);
-};
-
-class EntityWithTexture : public Abs_Entity
-{
-public:
-	explicit EntityWithTexture(const Texture* texture, GLboolean modulate = false);
-	void render(const glm::mat4& modelViewMat) const override;
-
-protected:
-	Texture* mTexture;
-	GLboolean mModulate; 
+	explicit Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate);
 };
 #endif //_H_Entities_H_

@@ -385,3 +385,33 @@ Mesh* Mesh::generateRGBCube(GLdouble length)
 
 	return mesh;
 }
+
+Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
+{
+	Mesh* mesh = generateRectangle(w, h);
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	double x = (w / 2);
+	double y = (h / 2);
+
+	// 0
+	mesh->vTexCoords.emplace_back(0, y);
+
+	// 1
+	mesh->vTexCoords.emplace_back(0, 0);
+
+	// 2
+	mesh->vTexCoords.emplace_back(x, y);
+
+	// 3
+	mesh->vTexCoords.emplace_back(x, 0);
+
+	return mesh;
+}

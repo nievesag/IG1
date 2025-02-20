@@ -293,4 +293,11 @@ Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
 	mModelMat =rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
+
+
+BoxOutline::BoxOutline(GLdouble length) : SingleColorEntity(vec4(1))
+{
+	mMesh = Mesh::generateBoxOutline(length);
+}
+
 #pragma endregion

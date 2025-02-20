@@ -52,6 +52,8 @@ public:
 
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 
+	static Mesh* generateBoxOutline(GLdouble length);
+
 
 	Mesh();
 	virtual ~Mesh();

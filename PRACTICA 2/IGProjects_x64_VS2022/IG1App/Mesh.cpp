@@ -6,8 +6,6 @@ using namespace glm;
 // Placeholder for the pending index of a GPU object
 constexpr GLuint NONE = numeric_limits<GLuint>::max();
 
-
-
 Mesh::Mesh()
  : mVAO(NONE)
  , mVBO(NONE)
@@ -445,6 +443,82 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh
 	mesh->vTexCoords.emplace_back(rh, rw);
 	// 3
 	mesh->vTexCoords.emplace_back(rh, 0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateBoxOutline(GLdouble length)
+{
+	Mesh* mesh = new Mesh();
+
+	// Establecemos primitiva GL_TRIANGLE_STRIP
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 15;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	GLdouble r = length/2;
+
+	// CARA 1 (PLANO XY).
+	mesh->vVertices.emplace_back(r, r, -r); // 0.
+	mesh->vVertices.emplace_back(r, -r, -r); // 1.
+	mesh->vVertices.emplace_back(-r, r, -r); // 2.
+	mesh->vVertices.emplace_back(-r, -r, -r); // 3.
+
+	// CARA 2 (PLANO YZ).
+	mesh->vVertices.push_back(mesh->vVertices[2]); // 4 == 2.
+	mesh->vVertices.push_back(mesh->vVertices[3]); // 5 == 3.
+	mesh->vVertices.emplace_back(-r, r, r); // 6.
+	mesh->vVertices.emplace_back(-r, -r, r); // 7.
+
+	// CARA 3 (PARALELA A LA 1).
+	mesh->vVertices.push_back(mesh->vVertices[6]); // 8 == 6.
+	mesh->vVertices.push_back(mesh->vVertices[7]); // 9 == 7.
+	mesh->vVertices.emplace_back(r, r, r); // 10.
+	mesh->vVertices.emplace_back(r, -r, r); // 11.
+
+	// CARA 4 (PARALELA A LA 2).
+	mesh->vVertices.push_back(mesh->vVertices[10]); // 12 == 10.
+	mesh->vVertices.push_back(mesh->vVertices[11]); // 13 == 11.
+	mesh->vVertices.push_back(mesh->vVertices[0]); // 14 == 0.
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 15 == 1.
+
+	/*// 0
+	mesh->vVertices.emplace_back(-r, -r, -r);
+	// 1
+	mesh->vVertices.emplace_back(r, -r, -r);
+	// 2
+	mesh->vVertices.emplace_back(-r, -r, r);
+	// 3
+	mesh->vVertices.emplace_back(r, -r, r);
+	// 4
+	mesh->vVertices.emplace_back(r, r, r);
+	// 5 == 1
+	mesh->vVertices.push_back(mesh->vVertices[1]);
+	// 6
+	mesh->vVertices.emplace_back(r, r, -r);
+	// 7 == 0
+	mesh->vVertices.push_back(mesh->vVertices[0]);
+	// 8
+	mesh->vVertices.emplace_back(-r, r, -r);
+	// 9 == 2
+	mesh->vVertices.push_back(mesh->vVertices[2]);
+	// 10
+	mesh->vVertices.emplace_back(-r, r, r);
+	// 11 == 4
+	mesh->vVertices.push_back(mesh->vVertices[4]);
+	// 12 == 8
+	mesh->vVertices.push_back(mesh->vVertices[8]);
+	// 13 == 6
+	mesh->vVertices.push_back(mesh->vVertices[6]);*/
+
+
 
 	return mesh;
 }

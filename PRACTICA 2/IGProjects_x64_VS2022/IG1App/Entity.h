@@ -44,7 +44,9 @@ class Abs_Entity // abstract class
 public:
 	Abs_Entity()
 	  : mModelMat(1.0)  // 4x4 identity matrix
-	  , mShader(nullptr) {};
+	  , mShader(nullptr)
+	  , mTexture(nullptr) {}
+
 	virtual ~Abs_Entity();
 
 	Abs_Entity(const Abs_Entity& e) = delete;            // no copy constructor
@@ -54,17 +56,22 @@ public:
 	virtual void update();
 
 	// modeling matrix
-	glm::mat4 const& modelMat() const { return mModelMat; };
-	void setModelMat(glm::mat4 const& aMat) { mModelMat = aMat; };
+	glm::mat4 const& modelMat() const { return mModelMat; }
+	void setModelMat(glm::mat4 const& aMat) { mModelMat = aMat; }
+
+	// texture
+	Texture* const& getTexture() const { return mTexture; }
+	void setTexture(Texture* tex) { mTexture = tex; }
 
 	// load or unload entity data into the GPU
 	void load();
 	void unload();
 
 protected:
-	Mesh* mMesh = nullptr; // the mesh
-	glm::mat4 mModelMat;  // modeling matrix
-	Shader* mShader; // shader
+	Mesh* mMesh = nullptr;		 // the mesh
+	glm::mat4 mModelMat;		 // modeling matrix
+	Shader* mShader;			 // shader
+	Texture* mTexture = nullptr; // texture
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(const glm::mat4& mModelViewMat) const;
@@ -93,11 +100,10 @@ private:
 class EntityWithTexture : public Abs_Entity
 {
 public:
-	explicit EntityWithTexture(const std::string& texture, GLboolean modulate = false);
+	explicit EntityWithTexture(GLboolean modulate = false);
 	void render(const glm::mat4& modelViewMat) const override;
 
 protected:
-	Texture* mTexture;
 	GLboolean mModulate;
 };
 
@@ -162,6 +168,6 @@ public:
 class Ground : public EntityWithTexture
 {
 public:
-	explicit Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate);
+	explicit Ground(GLdouble w, GLdouble h, GLboolean modulate);
 };
 #endif //_H_Entities_H_

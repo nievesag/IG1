@@ -290,7 +290,7 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
 	: EntityWithTexture(texture, modulate)
 {
-	mMesh = Mesh::generateRectangleTexCor(w, h);
-	mModelMat = rotate(dmat4(1), radians(-90.0), glm::dvec3(1, 0, 0));
+	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
+	mModelMat =rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 #pragma endregion

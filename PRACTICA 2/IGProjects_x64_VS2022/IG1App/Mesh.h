@@ -50,6 +50,8 @@ public:
 
 	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h);
 
+	static Mesh* generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+
 
 	Mesh();
 	virtual ~Mesh();

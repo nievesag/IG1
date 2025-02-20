@@ -408,7 +408,7 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 {
 	Mesh* mesh = generateRectangle(w, h);
 
-	//mesh->vTexCoords.reserve(mesh->mNumVertices);
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
 
 	/*
 	0---------2
@@ -416,25 +416,35 @@ Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h)
 	1---------3
 	*/
 
-	//double x = (w / 2);
-	//double y = (h / 2);
-
-	//// 0
-	//mesh->vTexCoords.emplace_back(0, y);
-
-	//// 1
-	//mesh->vTexCoords.emplace_back(0, 0);
-
-	//// 2
-	//mesh->vTexCoords.emplace_back(x, y);
-
-	//// 3
-	//mesh->vTexCoords.emplace_back(x, 0);
-
 	mesh->vTexCoords.emplace_back(0, 0);
 	mesh->vTexCoords.emplace_back(1, 0);
 	mesh->vTexCoords.emplace_back(0, 1);
 	mesh->vTexCoords.emplace_back(1, 1);
+
+	return mesh;
+}
+
+Mesh* Mesh::generateRectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	Mesh* mesh = generateRectangle(w, h);
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+	// repite la textura rw veces a lo ancho y rh a lo alto
+
+	// 0
+	mesh->vTexCoords.emplace_back(0, rw);
+	// 1
+	mesh->vTexCoords.emplace_back(0, 0);
+	// 2 
+	mesh->vTexCoords.emplace_back(rh, rw);
+	// 3
+	mesh->vTexCoords.emplace_back(rh, 0);
 
 	return mesh;
 }

@@ -38,6 +38,11 @@ Scene::destroy()
 		delete el;
 
 	gObjects.clear();
+
+	for (Texture* t : gTextures)
+		delete t;
+
+	gTextures.clear();
 }
 
 void
@@ -58,14 +63,16 @@ void
 Scene::setGL()
 {
 	// OpenGL basic setting
-	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha=1 -> opaque)
-	glEnable(GL_DEPTH_TEST);          // enable Depth test
+	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha = 1 -> opaque)
+	glEnable(GL_DEPTH_TEST);							  // enable Depth test
+	glEnable(GL_TEXTURE_2D);							  // activar uso de texturas
 }
 void
 Scene::resetGL()
 {
-	glClearColor(.0, .0, .0, .0); // background color (alpha=1 -> opaque)
-	glDisable(GL_DEPTH_TEST);     // disable Depth test
+	glClearColor(.0, .0, .0, .0); // background color (alpha = 1 -> opaque)
+	glDisable(GL_DEPTH_TEST);					  // disable Depth test
+	glDisable(GL_TEXTURE_2D);					  // desactivar uso de texturas
 }
 
 // Para borrar las cosas al cambiar de una escena a otra (ponerla en blanco otra vez).
@@ -141,7 +148,6 @@ void Scene2::init()
 }
 
 // ---- SCENE 3 ----
-
 void Scene3::init()
 {
 	// -- llama a init del padre
@@ -149,6 +155,16 @@ void Scene3::init()
 
 	/*std::string tex = "../assets/images/baldosaC.png";
 	Ground* ground = new Ground(200.0,200.0, tex, false);
+
+	// creamos y cargamos (con load()) las texturas de los objetos de la escena
+	Texture* tex = new Texture();
+	const std::string name = "../assets/images/baldosaC.png";
+	tex->load(name, 255);
+	gTextures.push_back(tex); // lo metemos en el vector de texturas de la escena para poder eliminarlos luego
+
+	Ground* ground = new Ground(200.0, 200.0, false);
+	ground->setTexture(tex);
+
 
 	gObjects.push_back(ground);*/
 

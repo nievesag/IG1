@@ -84,13 +84,10 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 }
 
 // ---- ENTITY WITH TEXTURE ----
-EntityWithTexture::EntityWithTexture(const std::string& texture, GLboolean modulate)
+EntityWithTexture::EntityWithTexture(GLboolean modulate)
 	: mModulate(modulate)
 {
 	mShader = Shader::get("texture");
-
-	mTexture = new Texture();
-	mTexture->load(texture, 255);
 }
 
 void EntityWithTexture::render(const glm::mat4& modelViewMat) const
@@ -287,8 +284,8 @@ void RGBRectangle::render(const glm::mat4& modelViewMat) const
 
 #pragma region PRACTICA 2
 // tiene que ser cuadrado??? PREGUNTAR A M.E.
-Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
-	: EntityWithTexture(texture, modulate)
+Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
+	: EntityWithTexture(modulate)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
 	mModelMat =rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));

@@ -522,3 +522,44 @@ Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
 	return mesh;
 }
 
+Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
+{
+	// Creamos el mesh.
+	Mesh* mesh = new Mesh();
+
+	// Establecemos primitiva GL_TRIANGLE_FAN
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+
+	// el doble de vertices del nupero de puntas (para los vertices interiores) + el vertice del origen + el vertice para cerrar
+	mesh->mNumVertices = np * 2 + 2; 
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	mesh->vVertices.emplace_back(0,0,0);
+
+	// Se van guardando en sentido antihorario.
+	GLdouble alpha = 90.0;
+	GLdouble incremento = 90.0 / np * 2;
+	GLdouble ri = re / 2;
+	GLdouble r;
+	for (GLuint i = 0; i < np*2+1; i++) 
+	{
+		if (i % 2 == 0) 
+		{
+			r = re;
+		}
+		else 
+		{
+			r = ri;
+		}
+
+		GLdouble x = r * glm::cos(glm::radians(alpha));
+		GLdouble y = r * glm::sin(glm::radians(alpha));
+
+		alpha += incremento;
+
+		// (x, y, z, 1 -> punto 0 -> vector) -> (Cx + R * cos(alpha), Cy + R * sin(alpha), 0, punto).
+		mesh->vVertices.emplace_back(x, y, h);
+	}
+
+	return mesh;
+}

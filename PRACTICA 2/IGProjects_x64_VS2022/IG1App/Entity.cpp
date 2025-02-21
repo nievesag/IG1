@@ -334,3 +334,13 @@ void BoxOutline::render(const glm::mat4& modelViewMat) const
 	}
 }
 #pragma endregion
+
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h)
+{
+	mMesh = Mesh::generateStar3D(re, np, h);
+}
+
+void Star3D::render(const glm::mat4& modelViewMat) const
+{
+	SingleColorEntity::render(modelViewMat);
+}

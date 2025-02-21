@@ -190,6 +190,7 @@ void Scene3::init()
 	*/
 
 	// ----- ESTRELLA -----
-
+	Star3D* estrella = new Star3D(200.0, 8.0, 100.0);
+	gObjects.push_back(estrella);
 
 }

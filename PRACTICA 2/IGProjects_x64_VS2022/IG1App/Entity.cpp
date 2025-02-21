@@ -297,4 +297,40 @@ BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
 	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }
 
+void BoxOutline::render(const glm::mat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(aMat);
+
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
+		{
+			//mTexture->bind();	 // activa la textura en la gpu
+			//mMesh->render();
+
+			glEnable(GL_CULL_FACE);
+				// CARA DE DELANTE
+				mTexture->bind();
+				glCullFace(GL_BACK);
+				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				mMesh->render();
+				mTexture->unbind();
+
+				// CARA DE ATRAS
+				mTextureInterior->bind();
+				glCullFace(GL_FRONT);
+				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				mMesh->render();
+				mTextureInterior->unbind();
+
+			glDisable(GL_CULL_FACE);
+
+			//mTexture->unbind();  // desactiva la textura en la gpu
+		}
+	}
+}
 #pragma endregion

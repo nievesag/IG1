@@ -175,5 +175,10 @@ class BoxOutline : public EntityWithTexture
 {
 public:
 	explicit BoxOutline(GLdouble length, GLboolean modulate);
+	void render(const glm::mat4& modelViewMat) const override;
+	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }
+
+protected:
+	Texture* mTextureInterior = nullptr; // texture
 };
 #endif //_H_Entities_H_

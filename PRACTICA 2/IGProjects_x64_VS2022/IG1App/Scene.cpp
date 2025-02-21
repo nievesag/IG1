@@ -153,6 +153,7 @@ void Scene3::init()
 	// -- llama a init del padre
 	Scene::init();
 
+	/*
 	// ----- SUELO -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
@@ -169,13 +170,26 @@ void Scene3::init()
 	// ----- CUBO -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
+	//
+	// ----> textura por fuera <----
 	Texture* texC = new Texture();								// crea nueva textura
 	const std::string con = "../assets/images/container.jpg";	// ruta de la textura
 	texC->load(con, 255);										// carga la textura con su alfa
 	gTextures.push_back(texC);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
+	// ----> textura por dentro <---
+	Texture* texP = new Texture();								// crea nueva textura
+	const std::string pap = "../assets/images/papelE.png";	// ruta de la textura
+	texP->load(pap, 255);										// carga la textura con su alfa
+	gTextures.push_back(texP);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
 	BoxOutline* bo = new BoxOutline(200, false);
 	bo->setTexture(texC);	// establece la textura de esta entidad
+	bo->setTextureInterior(texP); // textura para el interior
 	gObjects.push_back(bo); // mete la entidad en la escena
+	*/
+
+	// ----- ESTRELLA -----
+
+
 }

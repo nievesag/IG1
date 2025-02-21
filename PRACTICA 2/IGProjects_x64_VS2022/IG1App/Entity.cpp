@@ -94,12 +94,11 @@ void EntityWithTexture::render(const glm::mat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
-
 		mShader->use();
+		mShader->setUniform("modulate", mModulate);
 		upload(aMat);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//mMesh->render();
 
 		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
 		{
@@ -292,8 +291,8 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 }
 
 
-BoxOutline::BoxOutline(GLdouble length, std::string& texture, GLboolean modulate)
-	: EntityWithTexture(texture, modulate)
+BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
+	: EntityWithTexture(modulate)
 {
 	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }

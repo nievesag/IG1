@@ -104,7 +104,7 @@ public:
 	void render(const glm::mat4& modelViewMat) const override;
 
 protected:
-	GLboolean mModulate;
+	bool mModulate;
 };
 
 // -----------------
@@ -174,6 +174,6 @@ public:
 class BoxOutline : public EntityWithTexture
 {
 public:
-	explicit BoxOutline(GLdouble length, std::string& texture, GLboolean modulate);
+	explicit BoxOutline(GLdouble length, GLboolean modulate);
 };
 #endif //_H_Entities_H_

@@ -10,14 +10,14 @@ class Texture
 	// utiliza la clase PixMap32RGBA para el metodo load
 public:
 	Texture() = default;
+	~Texture();
 	Texture(const Texture& tex) = delete;            // no copy constructor
 	Texture& operator=(const Texture& tex) = delete; // no copy assignment
 
 	// cargar y transferir a GPU
 	void load(const std::string& BMP_Name,GLubyte alpha); // load from file and upload to GPU
 
-	// mixMode: GL_REPLACE | MODULATE | ADD
-	void bind(GLuint mixMode);
+	void bind();
 
 	void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); }
 

@@ -162,6 +162,7 @@ IG1App::destroy()
 
 	delete mCamera;
 	mCamera = nullptr;
+
 	delete mViewPort;
 	mViewPort = nullptr;
 

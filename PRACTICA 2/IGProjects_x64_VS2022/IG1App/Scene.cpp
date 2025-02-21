@@ -153,22 +153,29 @@ void Scene3::init()
 	// -- llama a init del padre
 	Scene::init();
 
-	/*std::string tex = "../assets/images/baldosaC.png";
-	Ground* ground = new Ground(200.0,200.0, tex, false);
-
+	// ----- SUELO -----
+	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
-	Texture* tex = new Texture();
-	const std::string name = "../assets/images/baldosaC.png";
-	tex->load(name, 255);
-	gTextures.push_back(tex); // lo metemos en el vector de texturas de la escena para poder eliminarlos luego
+	Texture* texB = new Texture();								// crea nueva textura
+	const std::string bal = "../assets/images/baldosaC.png";	// ruta de la textura
+	texB->load(bal, 255);										// carga la textura con su alfa
+	gTextures.push_back(texB);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
+	// --- entidad
 	Ground* ground = new Ground(200.0, 200.0, false);
-	ground->setTexture(tex);
+	ground->setTexture(texB);	// establece la textura de esta entidad
+	gObjects.push_back(ground); // mete la entidad en la escena
 
+	// ----- CUBO -----
+	// --- texturas
+	// creamos y cargamos (con load()) las texturas de los objetos de la escena
+	Texture* texC = new Texture();								// crea nueva textura
+	const std::string con = "../assets/images/container.jpg";	// ruta de la textura
+	texC->load(con, 255);										// carga la textura con su alfa
+	gTextures.push_back(texC);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
-	gObjects.push_back(ground);*/
-
-	std::string tex = "../assets/images/container.jpg";
-	BoxOutline* bo = new BoxOutline(200, tex, false);
-	gObjects.push_back(bo);
+	// --- entidad
+	BoxOutline* bo = new BoxOutline(200, false);
+	bo->setTexture(texC);	// establece la textura de esta entidad
+	gObjects.push_back(bo); // mete la entidad en la escena
 }

@@ -28,49 +28,40 @@ Texture::init()
 }
 
 void
-Texture::bind(GLuint mixMode)
+Texture::bind()
 {
-	// mixMode: modo para la mezcla los colores
-
-	glBindTexture(GL_TEXTURE_2D, mId); // activa la textura
-
-	// el modo de mezcla de colores no queda
-	// guardado en el objeto de textura
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mixMode);
-		// mixMode: GL_REPLACE, GL_MODULATE, GL_ADD...
+	glBindTexture(GL_TEXTURE_2D, mId);
 }
 
 void
-Texture::load(const std::string& BMP_Name, GLubyte alpha)
+Texture::load(const std::string& name, GLubyte alpha)
 {
-	if (mId == 0) init();
+	if (mId == 0)
+		init();
 
-	// variable para cargar la imagen del archivo
-	PixMap32RGBA pixMap;
+	Image image;
+	image.load(name);
 
-	pixMap.load_bmp24BGR(BMP_Name); // carga y mete alpha = 255
+	if (alpha != 255)
+		image.setAlpha(alpha);
 
-	// carga correcta? -> exception
+	mWidth = image.width();
+	mHeight = image.height();
 
-	if (alpha != 255) pixMap.set_alpha(alpha);
-
-	mWidth = pixMap.width();
-	mHeight = pixMap.height();
+	GLint level = 0;  // Base image level
+	GLint border = 0; // No border
 
 	glBindTexture(GL_TEXTURE_2D, mId);
+	glTexImage2D(GL_TEXTURE_2D,
+		level,
+		GL_RGBA,
+		mWidth,
+		mHeight,
+		border,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		image.data());
 
-	// transferir a GPU
-	glTexImage2D(GL_TEXTURE_2D,			// 1D o 2D
-				0,						// mipmap level
-				GL_RGBA,				// formato interno (GPU) de los datos de la textura
-				mWidth,					// Potencias de 2?
-				mHeight,				//	   "
-				0,						// border
-				GL_RGBA,				// formato de los datos de la imagen (data)
-				GL_UNSIGNED_BYTE,		// tipo de datos de los datos de data
-				pixMap.data());   // puntero a la variable CPU con la imagen
-
-	// la textura queda desactivada?
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

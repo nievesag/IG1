@@ -295,9 +295,10 @@ Ground::Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate)
 }
 
 
-BoxOutline::BoxOutline(GLdouble length) : SingleColorEntity(vec4(1))
+BoxOutline::BoxOutline(GLdouble length, std::string& texture, GLboolean modulate)
+	: EntityWithTexture(texture, modulate)
 {
-	mMesh = Mesh::generateBoxOutline(length);
+	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }
 
 #pragma endregion

@@ -472,53 +472,53 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	mesh->vVertices.emplace_back(-r, -r, -r); // 3.
 
 	// CARA 2 (PLANO YZ).
-	mesh->vVertices.push_back(mesh->vVertices[2]); // 4 == 2.
-	mesh->vVertices.push_back(mesh->vVertices[3]); // 5 == 3.
-	mesh->vVertices.emplace_back(-r, r, r); // 6.
-	mesh->vVertices.emplace_back(-r, -r, r); // 7.
+	mesh->vVertices.emplace_back(-r, r, r); // 4.
+	mesh->vVertices.emplace_back(-r, -r, r); // 5.
 
-	// CARA 3 (PARALELA A LA 1).
-	mesh->vVertices.push_back(mesh->vVertices[6]); // 8 == 6.
-	mesh->vVertices.push_back(mesh->vVertices[7]); // 9 == 7.
-	mesh->vVertices.emplace_back(r, r, r); // 10.
-	mesh->vVertices.emplace_back(r, -r, r); // 11.
+	// CARA 3 (PARALELO A XY).
+	mesh->vVertices.emplace_back(r, r, r); // 6.
+	mesh->vVertices.emplace_back(r, -r, r); // 7.
 
-	// CARA 4 (PARALELA A LA 2).
-	mesh->vVertices.push_back(mesh->vVertices[10]); // 12 == 10.
-	mesh->vVertices.push_back(mesh->vVertices[11]); // 13 == 11.
-	mesh->vVertices.push_back(mesh->vVertices[0]); // 14 == 0.
-	mesh->vVertices.push_back(mesh->vVertices[1]); // 15 == 1.
+	// CARA 4 (PARALELO A YZ).
+	mesh->vVertices.emplace_back(r, r, -r); // 8.
+	mesh->vVertices.emplace_back(r, -r, -r); // 9.
 
-	/*// 0
-	mesh->vVertices.emplace_back(-r, -r, -r);
-	// 1
-	mesh->vVertices.emplace_back(r, -r, -r);
-	// 2
-	mesh->vVertices.emplace_back(-r, -r, r);
-	// 3
-	mesh->vVertices.emplace_back(r, -r, r);
-	// 4
-	mesh->vVertices.emplace_back(r, r, r);
-	// 5 == 1
-	mesh->vVertices.push_back(mesh->vVertices[1]);
-	// 6
-	mesh->vVertices.emplace_back(r, r, -r);
-	// 7 == 0
-	mesh->vVertices.push_back(mesh->vVertices[0]);
-	// 8
-	mesh->vVertices.emplace_back(-r, r, -r);
-	// 9 == 2
-	mesh->vVertices.push_back(mesh->vVertices[2]);
-	// 10
-	mesh->vVertices.emplace_back(-r, r, r);
-	// 11 == 4
-	mesh->vVertices.push_back(mesh->vVertices[4]);
-	// 12 == 8
-	mesh->vVertices.push_back(mesh->vVertices[8]);
-	// 13 == 6
-	mesh->vVertices.push_back(mesh->vVertices[6]);*/
-
-
+	// Vertice de cierre.
+	mesh->vVertices.emplace_back(r, -r, -r); // 10.
 
 	return mesh;
 }
+
+Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
+{
+	Mesh* mesh = generateBoxOutline(length);
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	/*
+	0---------2
+	|    /    |
+	1---------3
+	*/
+
+
+	// Cara 1.
+	mesh->vTexCoords.emplace_back(0, 1); // 0.
+	mesh->vTexCoords.emplace_back(0, 0); // 1.
+	mesh->vTexCoords.emplace_back(1, 1); // 2.
+	mesh->vTexCoords.emplace_back(1, 0); // 3.
+
+	// Cara 2.
+	mesh->vTexCoords.emplace_back(0, 1); // 4.
+	mesh->vTexCoords.emplace_back(0, 0); // 5.
+
+	// Cara 3.
+	mesh->vTexCoords.emplace_back(1, 1); // 6.
+	mesh->vTexCoords.emplace_back(1, 0); // 7.
+
+	// Cara 4.
+	mesh->vTexCoords.emplace_back(0, 1); // 8.
+	mesh->vTexCoords.emplace_back(0, 0); // 9.
+
+	return mesh;
+}
+

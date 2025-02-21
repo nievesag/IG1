@@ -152,6 +152,7 @@ void Scene3::init()
 
 	gObjects.push_back(ground);*/
 
-	BoxOutline* bo = new BoxOutline(200);
+	std::string tex = "../assets/images/container.jpg";
+	BoxOutline* bo = new BoxOutline(200, tex, false);
 	gObjects.push_back(bo);
 }

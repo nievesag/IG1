@@ -165,9 +165,9 @@ public:
 	explicit Ground(GLdouble w, GLdouble h, std::string& texture, GLboolean modulate);
 };
 
-class BoxOutline : public SingleColorEntity
+class BoxOutline : public EntityWithTexture
 {
 public:
-	explicit BoxOutline(GLdouble length);
+	explicit BoxOutline(GLdouble length, std::string& texture, GLboolean modulate);
 };
 #endif //_H_Entities_H_

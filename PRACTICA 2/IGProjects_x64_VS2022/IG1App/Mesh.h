@@ -58,6 +58,8 @@ public:
 
 	static Mesh* generateStar3D(GLdouble re, GLuint np, GLdouble h);
 
+	static Mesh* generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h);
+
 	Mesh();
 	virtual ~Mesh();
 

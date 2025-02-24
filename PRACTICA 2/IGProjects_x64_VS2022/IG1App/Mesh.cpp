@@ -1,4 +1,6 @@
 #include "Mesh.h"
+#include <queue>
+#include <vector>
 
 using namespace std;
 using namespace glm;
@@ -560,6 +562,76 @@ Mesh* Mesh::generateStar3D(GLdouble re, GLuint np, GLdouble h)
 		// (x, y, z, 1 -> punto 0 -> vector) -> (Cx + R * cos(alpha), Cy + R * sin(alpha), 0, punto).
 		mesh->vVertices.emplace_back(x, y, h);
 	}
+
+	return mesh;
+}
+
+Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
+{
+	Mesh* mesh = generateStar3D(re, np, h);
+
+	/*mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	std:vector<pair<int, int>> v = { {0,1}, {0,0}, {1,1},{1,0} };
+
+	std::queue<int, int> cola;
+	cola.push(v[0]);
+	cola.push(v[1]);
+	cola.push(v[2]);
+	cola.push(v[3]);
+
+	mesh->vTexCoords.emplace_back(cola.front());
+	cola.pop();
+	cola.push(0, 1);
+	
+
+	//mesh->vTexCoords.emplace_back(0, 1); // 0.
+	//mesh->vTexCoords.emplace_back(0, 0); // 1.
+	//mesh->vTexCoords.emplace_back(1, 1); // 2.
+	//mesh->vTexCoords.emplace_back(1, 0); // 3.
+
+	// Se van guardando en sentido antihorario.
+	GLdouble alpha = 90.0;
+	GLdouble incremento = 90.0 / np * 2;
+	GLdouble ri = re / 2;
+	GLdouble r;
+	for (GLuint i = 0; i < np * 2 + 1; i++)
+	{
+		mesh->vTexCoords.emplace_back(cola.front());
+		cola.pop();
+
+	}*/
+
+	// se pone antihorario.
+
+	double
+		u4 = 1 / 4, // un cuarto
+		d4 = 2 / 4, // dos cuartos
+		t4 = 3 / 4; // tres cuartos
+
+	mesh->vTexCoords.emplace_back(d4, d4); // vertice del centro.
+	
+	mesh->vTexCoords.emplace_back(d4, 1); // vertice de comienzo.
+	mesh->vTexCoords.emplace_back(u4, 1); 
+	mesh->vTexCoords.emplace_back(0, 1);
+
+	mesh->vTexCoords.emplace_back(0, t4); 
+	mesh->vTexCoords.emplace_back(0, d4); 
+	mesh->vTexCoords.emplace_back(0, u4); 
+	mesh->vTexCoords.emplace_back(0, 0);
+
+	mesh->vTexCoords.emplace_back(u4, 0); 
+	mesh->vTexCoords.emplace_back(d4, 0); 
+	mesh->vTexCoords.emplace_back(t4, 0);
+	mesh->vTexCoords.emplace_back(1, 0);
+
+	mesh->vTexCoords.emplace_back(1, u4); 
+	mesh->vTexCoords.emplace_back(1, d4); 
+	mesh->vTexCoords.emplace_back(1, t4); 
+	mesh->vTexCoords.emplace_back(1, 1);
+
+	mesh->vTexCoords.emplace_back(t4, 1);
+
 
 	return mesh;
 }

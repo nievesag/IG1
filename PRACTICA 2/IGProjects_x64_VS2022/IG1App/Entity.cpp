@@ -40,10 +40,10 @@ EntityWithColors::EntityWithColors()
 	mShader = Shader::get("vcolors");
 }
 
-void EntityWithColors::render(mat4 const& modelViewMat) const
+void EntityWithColors::render(dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		upload(aMat);
 		mMesh->render();
@@ -57,15 +57,13 @@ SingleColorEntity::SingleColorEntity(const vec4& color)
 	mShader = Shader::get("simple");
 }
 
-void SingleColorEntity::render(const glm::mat4& modelViewMat) const
+void SingleColorEntity::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("color", mColor);
 		upload(aMat);
-
-		glLineWidth(2);
 
 		glEnable(GL_CULL_FACE);
 			// CARA DE DELANTE
@@ -79,7 +77,6 @@ void SingleColorEntity::render(const glm::mat4& modelViewMat) const
 			mMesh->render();
 		glDisable(GL_CULL_FACE);
 
-		glLineWidth(1);
 	}
 }
 
@@ -90,10 +87,10 @@ EntityWithTexture::EntityWithTexture(GLboolean modulate)
 	mShader = Shader::get("texture");
 }
 
-void EntityWithTexture::render(const glm::mat4& modelViewMat) const
+void EntityWithTexture::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("modulate", mModulate);
 		upload(aMat);
@@ -133,10 +130,10 @@ RGBCube::RGBCube(GLdouble length, int s)
 	mMesh = Mesh::generateRGBCube(length);
 }
 
-void RGBCube::render(const glm::mat4& modelViewMat) const
+void RGBCube::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		upload(aMat);
 		//mShader->setUniform("modelView", aMat);
@@ -221,10 +218,10 @@ RGBTriangle::RGBTriangle(int s)
 	//mModelMat = translate(glm::dmat4(1), glm::dvec3(100, 0, 0));
 }
 
-void RGBTriangle::render(const glm::mat4& modelViewMat) const
+void RGBTriangle::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		upload(aMat);
 		glEnable(GL_CULL_FACE);
@@ -259,10 +256,10 @@ RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
 	mMesh = Mesh::generateRGBRectangle(w, h);
 }
 
-void RGBRectangle::render(const glm::mat4& modelViewMat) const
+void RGBRectangle::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		upload(aMat);
 
@@ -290,17 +287,16 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	mModelMat =rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
-
 BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
 	: EntityWithTexture(modulate)
 {
 	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }
 
-void BoxOutline::render(const glm::mat4& modelViewMat) const
+void BoxOutline::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr) {
-		mat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
 		mShader->use();
 		mShader->setUniform("modulate", mModulate);
 		upload(aMat);
@@ -335,12 +331,50 @@ void BoxOutline::render(const glm::mat4& modelViewMat) const
 }
 #pragma endregion
 
-Star3D::Star3D(GLdouble re, GLuint np, GLdouble h)
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s) : scene (s)
 {
-	mMesh = Mesh::generateStar3D(re, np, h);
+	mMesh = Mesh::generateStar3DTexCor(re, np, h);
 }
 
-void Star3D::render(const glm::mat4& modelViewMat) const
+void Star3D::render(const glm::dmat4& modelViewMat) const
 {
-	SingleColorEntity::render(modelViewMat);
+	if (mMesh != nullptr) {
+		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
+		{
+			glEnable(GL_CULL_FACE);
+
+			// Primera estrella.
+			dmat4 aMat = modelViewMat * mModelMat; 
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(aMat);
+			mTexture->bind();	 // activa la textura en la gpu
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			mMesh->render();
+			mTexture->unbind();  // desactiva la textura en la gpu
+
+			// Segunda estrella.
+			dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(bMat);
+			mTexture->bind();	 // activa la textura en la gpu
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			mMesh->render();
+			mTexture->unbind();  // desactiva la textura en la gpu
+
+			glDisable(GL_CULL_FACE);
+		}
+	}
+}
+
+void Star3D::update()
+{
+	if (scene == 3)
+	{
+		angle += 4.0;
+		// se usa la matriz de modelado porque es una rotacion
+		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0)) // rotacion sobre y
+			* rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1)); // rotacion sobre z
+	}
 }

@@ -190,7 +190,16 @@ void Scene3::init()
 	*/
 
 	// ----- ESTRELLA -----
-	Star3D* estrella = new Star3D(200.0, 8.0, 100.0);
-	gObjects.push_back(estrella);
+	// --- texturas
+	// creamos y cargamos (con load()) las texturas de los objetos de la escena
+	Texture* texD = new Texture();								// crea nueva textura
+	const std::string bp = "../assets/images/baldosaP.png";	// ruta de la textura
+	texD->load(bp, 255);										// carga la textura con su alfa
+	gTextures.push_back(texD);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
+
+	// --- entidad
+	Star3D* estrella = new Star3D(100.0, 8.0, 100.0, 3);
+	estrella->setTexture(texD);	// establece la textura de esta entidad
+	gObjects.push_back(estrella); // mete la entidad en la escena
 
 }

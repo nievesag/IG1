@@ -338,33 +338,33 @@ Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s) : scene (s)
 
 void Star3D::render(const glm::dmat4& modelViewMat) const
 {
-	if (mMesh != nullptr) {
-		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
-		{
-			glEnable(GL_CULL_FACE);
-
-			// Primera estrella.
-			dmat4 aMat = modelViewMat * mModelMat; 
+	if (mMesh != nullptr && mTexture != nullptr) 
+	{
+		glEnable(GL_CULL_FACE);
+			// ---- Primera estrella.
+			dmat4 aMat = modelViewMat * mModelMat;
 			mShader->use();
 			mShader->setUniform("modulate", mModulate);
 			upload(aMat);
+
+			// texturas
 			mTexture->bind();	 // activa la textura en la gpu
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			mMesh->render();
 			mTexture->unbind();  // desactiva la textura en la gpu
 
-			// Segunda estrella.
+			// ---- Segunda estrella.
 			dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
 			mShader->use();
 			mShader->setUniform("modulate", mModulate);
 			upload(bMat);
+
+			// texturas
 			mTexture->bind();	 // activa la textura en la gpu
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			mMesh->render();
 			mTexture->unbind();  // desactiva la textura en la gpu
-
-			glDisable(GL_CULL_FACE);
-		}
+		glDisable(GL_CULL_FACE);
 	}
 }
 
@@ -373,8 +373,7 @@ void Star3D::update()
 	if (scene == 3)
 	{
 		angle += 4.0;
-		// se usa la matriz de modelado porque es una rotacion
 		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0)) // rotacion sobre y
-			* rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1)); // rotacion sobre z
+			* rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1));		   // rotacion sobre z
 	}
 }

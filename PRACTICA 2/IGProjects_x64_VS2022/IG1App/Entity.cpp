@@ -279,12 +279,11 @@ void RGBRectangle::render(const glm::dmat4& modelViewMat) const
 #pragma endregion
 
 #pragma region PRACTICA 2
-// tiene que ser cuadrado??? PREGUNTAR A M.E.
 Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
-	mModelMat =rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
 BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
@@ -305,33 +304,26 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 
 		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
 		{
-			//mTexture->bind();	 // activa la textura en la gpu
-			//mMesh->render();
-
 			glEnable(GL_CULL_FACE);
 				// CARA DE DELANTE
 				mTexture->bind();
 				glCullFace(GL_BACK);
-				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				mMesh->render();
 				mTexture->unbind();
 
 				// CARA DE ATRAS
 				mTextureInterior->bind();
 				glCullFace(GL_FRONT);
-				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 				mMesh->render();
 				mTextureInterior->unbind();
-
 			glDisable(GL_CULL_FACE);
-
-			//mTexture->unbind();  // desactiva la textura en la gpu
 		}
 	}
 }
 #pragma endregion
 
-Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s) : scene (s)
+Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s, GLboolean modulate)
+	: EntityWithTexture(modulate), scene(s)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
 }
@@ -340,31 +332,35 @@ void Star3D::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr && mTexture != nullptr) 
 	{
-		glEnable(GL_CULL_FACE);
+		// texturas
+		mTexture->bind(); // activa la textura en la gpu
 			// ---- Primera estrella.
 			dmat4 aMat = modelViewMat * mModelMat;
 			mShader->use();
 			mShader->setUniform("modulate", mModulate);
 			upload(aMat);
 
-			// texturas
-			mTexture->bind();	 // activa la textura en la gpu
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			mMesh->render();
-			mTexture->unbind();  // desactiva la textura en la gpu
+				// culling
+				glEnable(GL_CULL_FACE);
+					// CARA DE DELANTE
+					glCullFace(GL_BACK);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					mMesh->render();
 
-			// ---- Segunda estrella.
-			dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
-			mShader->use();
-			mShader->setUniform("modulate", mModulate);
-			upload(bMat);
+					// CARA DE ATRAS
+					glCullFace(GL_FRONT);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					mMesh->render();
+				glDisable(GL_CULL_FACE);
 
-			// texturas
-			mTexture->bind();	 // activa la textura en la gpu
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			mMesh->render();
-			mTexture->unbind();  // desactiva la textura en la gpu
-		glDisable(GL_CULL_FACE);
+				// ---- Segunda estrella.
+				dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+				mShader->use();
+				mShader->setUniform("modulate", mModulate);
+				upload(bMat);
+				mMesh->render();
+
+		mTexture->unbind(); // desactiva la textura en la gpu
 	}
 }
 

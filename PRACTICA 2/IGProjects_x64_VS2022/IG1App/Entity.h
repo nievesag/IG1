@@ -185,7 +185,7 @@ protected:
 class Star3D : public EntityWithTexture
 {
 public:
-	explicit Star3D(GLdouble re, GLuint np, GLdouble h, int s);
+	explicit Star3D(GLdouble re, GLuint np, GLdouble h, int s, GLboolean modulate);
 	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
 

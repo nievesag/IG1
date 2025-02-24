@@ -198,7 +198,7 @@ void Scene3::init()
 	gTextures.push_back(texD);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
-	Star3D* estrella = new Star3D(100.0, 8.0, 100.0, 3);
+	Star3D* estrella = new Star3D(100.0, 8.0, 100.0, 3, false);
 	estrella->setTexture(texD);	// establece la textura de esta entidad
 	gObjects.push_back(estrella); // mete la entidad en la escena
 

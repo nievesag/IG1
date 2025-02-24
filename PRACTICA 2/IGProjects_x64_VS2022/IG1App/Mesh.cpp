@@ -610,7 +610,7 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 	mesh->vTexCoords.emplace_back(1, 1);
 
 	mesh->vTexCoords.emplace_back(0.75, 1);
-	mesh->vTexCoords.emplace_back(0.5, 1); // final
+	mesh->vTexCoords.emplace_back(0.5, 1); // final - cierre
 
 	/*mesh->vTexCoords.reserve(mesh->mNumVertices);
 
@@ -643,6 +643,12 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 		cola.pop();
 
 	}*/
+
+	//double
+	//	u4 = 1.0 / 4, // un cuarto
+	//	d4 = 2.0 / 4, // dos cuartos
+	//	t4 = 3.0 / 4; // tres cuartos
+	//std::cout << u4 << " " << d4 << " " << t4 << std::endl; // sin el .0 sale 0, 0, 0
 
 	return mesh;
 }

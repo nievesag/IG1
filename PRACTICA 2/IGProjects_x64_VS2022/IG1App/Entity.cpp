@@ -250,6 +250,7 @@ void RGBTriangle::update()
 	}
 }
 
+// ---- RGB RECTANGLE ----
 RGBRectangle::RGBRectangle(GLdouble w, GLdouble h)
 {
 	mShader = Shader::get("vcolors");
@@ -279,6 +280,7 @@ void RGBRectangle::render(const glm::dmat4& modelViewMat) const
 #pragma endregion
 
 #pragma region PRACTICA 2
+// ---- GROUND ----
 Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate)
 {
@@ -286,6 +288,7 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
+// ---- CAJA SIN TAPAS ----
 BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
 	: EntityWithTexture(modulate)
 {
@@ -299,8 +302,6 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 		mShader->use();
 		mShader->setUniform("modulate", mModulate);
 		upload(aMat);
-
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
 		{
@@ -320,8 +321,8 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 		}
 	}
 }
-#pragma endregion
 
+// ---- ESTRELLA ----
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s, GLboolean modulate)
 	: EntityWithTexture(modulate), scene(s)
 {
@@ -373,3 +374,54 @@ void Star3D::update()
 			* rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1));		   // rotacion sobre z
 	}
 }
+
+// ---- CRISTAL ----
+GlassParapet::GlassParapet(GLdouble length, GLboolean modulate)
+	: EntityWithTexture(modulate)
+{
+	mMesh = Mesh::generateBoxOutlineTexCor(length);
+}
+
+void GlassParapet::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(aMat);
+
+		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
+		{
+			mTexture->bind(); // activa la textura en la gpu
+
+			// culling
+			glEnable(GL_CULL_FACE);
+				// CARA DE DELANTE
+				glCullFace(GL_BACK);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMesh->render();
+
+				// CARA DE ATRAS
+				glCullFace(GL_FRONT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMesh->render();
+			glDisable(GL_CULL_FACE);
+
+			mTexture->unbind(); // activa la textura en la gpu
+		}
+	}
+}
+
+// ---- PHOTO ----
+Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
+	: EntityWithTexture(modulate)
+{
+	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
+	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+}
+
+void Photo::update()
+{
+
+}
+#pragma endregion

@@ -34,8 +34,9 @@ protected:
 
 	void reset();
 
-	std::vector<Abs_Entity*> gObjects; // Entities (graphic objects) of the scene
-	std::vector<Texture*> gTextures;   // texturas de la escena
+	std::vector<Abs_Entity*> gObjects;		// Entities (graphic objects) of the scene
+	std::vector<Abs_Entity*> gObjectsTrans; // Entidades con transparencias
+	std::vector<Texture*> gTextures;		// texturas de la escena
 };
 
 // --- ESCENAS HIJAS ---

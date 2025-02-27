@@ -22,6 +22,9 @@ void Scene::update()
 {
 	for (auto obj : gObjects)
 		obj->update();
+
+	for (auto obj : gObjectsTrans)
+		obj->update();
 }
 
 Scene::~Scene()
@@ -39,6 +42,11 @@ Scene::destroy()
 
 	gObjects.clear();
 
+	for (Abs_Entity* el : gObjectsTrans)
+		delete el;
+
+	gObjectsTrans.clear();
+
 	for (Texture* t : gTextures)
 		delete t;
 
@@ -50,12 +58,18 @@ Scene::load()
 {
 	for (Abs_Entity* obj : gObjects)
 		obj->load();
+
+	for (Abs_Entity* obj : gObjectsTrans)
+		obj->load();
 }
 
 void
 Scene::unload()
 {
 	for (Abs_Entity* obj : gObjects)
+		obj->unload();
+
+	for (Abs_Entity* obj : gObjectsTrans)
 		obj->unload();
 }
 
@@ -64,8 +78,13 @@ Scene::setGL()
 {
 	// OpenGL basic setting
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha = 1 -> opaque)
-	glEnable(GL_DEPTH_TEST);							  // enable Depth test
+	glEnable(GL_DEPTH_TEST);							  // enable Depth test -> inicialzacion
 	glEnable(GL_TEXTURE_2D);							  // activar uso de texturas
+
+	// BLENDING
+	//glDepthMask(GL_FALSE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 void
 Scene::resetGL()
@@ -73,6 +92,10 @@ Scene::resetGL()
 	glClearColor(.0, .0, .0, .0); // background color (alpha = 1 -> opaque)
 	glDisable(GL_DEPTH_TEST);					  // disable Depth test
 	glDisable(GL_TEXTURE_2D);					  // desactivar uso de texturas
+
+	// BLENDING
+	//glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
 }
 
 // Para borrar las cosas al cambiar de una escena a otra (ponerla en blanco otra vez).
@@ -88,7 +111,12 @@ Scene::render(Camera const& cam) const
 {
 	cam.upload();
 
+	// opacos       -> primero objetos sin transparencia
 	for (Abs_Entity* el : gObjects)
+		el->render(cam.viewMat());
+
+	// translucidos -> despues objetos con transparencia
+	for (Abs_Entity* el : gObjectsTrans)
 		el->render(cam.viewMat());
 }
 
@@ -161,11 +189,12 @@ void Scene3::init()
 	const std::string bal = "../assets/images/baldosaC.png";	// ruta de la textura
 	texB->load(bal, 255);										// carga la textura con su alfa
 	gTextures.push_back(texB);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
-
+	
 	// --- entidad
 	Ground* ground = new Ground(200.0, 200.0, false);
 	ground->setTexture(texB);	// establece la textura de esta entidad
 	gObjects.push_back(ground); // mete la entidad en la escena
+	*/
 
 	// ----- CUBO -----
 	// --- texturas
@@ -178,22 +207,22 @@ void Scene3::init()
 	gTextures.push_back(texC);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 	// ----> textura por dentro <---
 	Texture* texP = new Texture();								// crea nueva textura
-	const std::string pap = "../assets/images/papelE.png";	// ruta de la textura
+	const std::string pap = "../assets/images/papelE.png";		// ruta de la textura
 	texP->load(pap, 255);										// carga la textura con su alfa
 	gTextures.push_back(texP);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
-	BoxOutline* bo = new BoxOutline(200, false);
+	BoxOutline* bo = new BoxOutline(100, false);
 	bo->setTexture(texC);	// establece la textura de esta entidad
 	bo->setTextureInterior(texP); // textura para el interior
 	gObjects.push_back(bo); // mete la entidad en la escena
-	*/
 
+	/*
 	// ----- ESTRELLA -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
 	Texture* texD = new Texture();								// crea nueva textura
-	const std::string bp = "../assets/images/baldosaP.png";	// ruta de la textura
+	const std::string bp = "../assets/images/baldosaP.png";		// ruta de la textura
 	texD->load(bp, 255);										// carga la textura con su alfa
 	gTextures.push_back(texD);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
@@ -201,5 +230,22 @@ void Scene3::init()
 	Star3D* estrella = new Star3D(100.0, 8.0, 100.0, 3, false);
 	estrella->setTexture(texD);	// establece la textura de esta entidad
 	gObjects.push_back(estrella); // mete la entidad en la escena
+	*/
 
+	// ----- CRISTAL -----
+	Texture* texG = new Texture();								// crea nueva textura
+	const std::string win = "../assets/images/windowV.jpg";		// ruta de la textura
+	texG ->load(win, 100);										// carga la textura con su alfa 255 opaco
+	gTextures.push_back(texG);									// lo metemos en el vector de texturas 
+	GlassParapet* gla = new GlassParapet(200, false);			// entidad
+	gla->setTexture(texG);										// establece la textura de esta entidad
+	gObjectsTrans.push_back(gla);								// mete la entidad en la escena
+
+	// ----- FOTO -----
+	Texture* texF = new Texture();								// crea nueva textura
+	texF->loadColorBuffer(50, 50, 255);							// carga la textura con su alfa
+	gTextures.push_back(texF);									// lo metemos en el vector de texturas
+	Photo* foto = new Photo(50.0, 50.0, false);					// entidad
+	foto->setTexture(texF);										// establece la textura de esta entidad
+	gObjects.push_back(foto);									// mete la entidad en la escena
 }

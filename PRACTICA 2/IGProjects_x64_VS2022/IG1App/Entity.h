@@ -193,4 +193,18 @@ private:
 	int scene = 0;
 	double angle = 0.0;
 };
+
+class GlassParapet : public EntityWithTexture 
+{
+public:
+	explicit GlassParapet(GLdouble length, GLboolean modulate);
+	void render(const glm::dmat4& modelViewMat) const override;
+};
+
+class Photo : public EntityWithTexture 
+{
+public:
+	explicit Photo(GLdouble w, GLdouble h, GLboolean modulate);
+	void update() override;
+};
 #endif //_H_Entities_H_

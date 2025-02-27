@@ -175,6 +175,9 @@ IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clears the back buffer
 
+	// El back color buffer queda con el color de fondo en todos los pixeles, 
+	// y el Z-buffer con el valor 1 en todos los pixeles
+
 	mScenes[mCurrentScene]->render(*mCamera); // uploads the viewport and camera to the GPU
 
 	glfwSwapBuffers(mWindow); // swaps the front and back buffer

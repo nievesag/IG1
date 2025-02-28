@@ -178,7 +178,7 @@ private:
 	void openCloseRot(GLint n);
 	int scene = 0;
 	double angle = 0.0;
-	GLint openState = 0; // 0 -> abres 1-> cierras y asi
+	GLint openState = 1.0; // 0 -> abres 1-> cierras y asi
 };
 
 class BoxOutline : public EntityWithTexture

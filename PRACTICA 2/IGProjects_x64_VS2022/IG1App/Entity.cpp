@@ -296,29 +296,35 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 void Ground::update()
 {
 	std::cout << angle << std::endl;
+	std::cout << openState << std::endl;
+
 
 	// abre y cierra
-	openCloseRot(0);
+	openCloseRot(openState);
 
 	// ¡¡¡OJO!!! como hacemos angle/2 para que sea 180, aquí lo tenemos que hacer 360.
-	//if (angle >= 360)
-	//{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
-	//	openState++;
-	//}
-
-	//// Cuando se complete la animacion se reinicia el estado y vuelta a empezar.
-	//if (openState == 1) openState = 0;
+	if (angle >= 180)
+	{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
+		openState = 0.0;
+	}
 
 	angle++; // va iterando el angle tio
 }
 
 void Ground::openCloseRot(GLint n)
 {
+	GLdouble a;
+	if (n == 0) { // cierre
+		a = angle;
+	}
+	else { // apertura
+		a = -angle;
+	}
 
 	mModelMat =
-		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// se coloca al borde de la caja
-		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// sube
-		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// gira sobre el eje z
+		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// sube
+		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))
+		* rotate(dmat4(1), radians(a), dvec3(0.0, 0.0, 1.0))			// gira sobre el eje z
 		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// se pone con un borde sobre el eje z
 		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));       // se tumba
 }

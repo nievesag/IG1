@@ -81,10 +81,15 @@ void SingleColorEntity::render(const glm::dmat4& modelViewMat) const
 }
 
 // ---- ENTITY WITH TEXTURE ----
-EntityWithTexture::EntityWithTexture(GLboolean modulate)
-	: mModulate(modulate)
+EntityWithTexture::EntityWithTexture(GLboolean modulate, GLboolean alfaActive)
+	: mModulate(modulate), mAlfaActive(alfaActive)
 {
-	mShader = Shader::get("texture");
+	if (mAlfaActive) {
+		mShader = Shader::get("texture:texture_alpha");
+	}
+	else {
+		mShader = Shader::get("texture");
+	}
 }
 
 void EntityWithTexture::render(const glm::dmat4& modelViewMat) const
@@ -282,7 +287,7 @@ void RGBRectangle::render(const glm::dmat4& modelViewMat) const
 #pragma region PRACTICA 2
 // ---- GROUND ----
 Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
-	: EntityWithTexture(modulate)
+	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
 	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
@@ -324,7 +329,7 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 
 // ---- ESTRELLA ----
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s, GLboolean modulate)
-	: EntityWithTexture(modulate), scene(s)
+	: EntityWithTexture(modulate, false), scene(s)
 {
 	mMesh = Mesh::generateStar3DTexCor(re, np, h);
 }
@@ -377,7 +382,7 @@ void Star3D::update()
 
 // ---- CRISTAL ----
 GlassParapet::GlassParapet(GLdouble length, GLboolean modulate)
-	: EntityWithTexture(modulate)
+	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateBoxOutlineTexCor(length);
 }
@@ -412,9 +417,21 @@ void GlassParapet::render(const glm::dmat4& modelViewMat) const
 	}
 }
 
+// ---- GRASS ----
+Grass::Grass(GLdouble w, GLdouble h, GLboolean modulate)
+	: EntityWithTexture(modulate, true)
+{
+
+}
+
+void Grass::render(const glm::dmat4& modelViewMat) const
+{
+
+}
+
 // ---- PHOTO ----
 Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
-	: EntityWithTexture(modulate)
+	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
 	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));

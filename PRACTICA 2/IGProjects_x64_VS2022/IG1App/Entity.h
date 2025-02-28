@@ -100,11 +100,12 @@ private:
 class EntityWithTexture : public Abs_Entity
 {
 public:
-	explicit EntityWithTexture(GLboolean modulate = false);
+	explicit EntityWithTexture(GLboolean modulate = false, GLboolean alfaActive = false);
 	void render(const glm::dmat4& modelViewMat) const override;
 
 protected:
 	bool mModulate;
+	GLboolean mAlfaActive;
 };
 
 // -----------------
@@ -198,6 +199,13 @@ class GlassParapet : public EntityWithTexture
 {
 public:
 	explicit GlassParapet(GLdouble length, GLboolean modulate);
+	void render(const glm::dmat4& modelViewMat) const override;
+};
+
+class Grass : public EntityWithTexture 
+{
+public:
+	explicit Grass(GLdouble w, GLdouble h, GLboolean modulate);
 	void render(const glm::dmat4& modelViewMat) const override;
 };
 

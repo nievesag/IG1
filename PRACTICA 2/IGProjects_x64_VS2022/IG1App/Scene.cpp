@@ -82,9 +82,7 @@ Scene::setGL()
 	glEnable(GL_TEXTURE_2D);							  // activar uso de texturas
 
 	// BLENDING
-	//glDepthMask(GL_FALSE);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 void
 Scene::resetGL()
@@ -94,7 +92,6 @@ Scene::resetGL()
 	glDisable(GL_TEXTURE_2D);					  // desactivar uso de texturas
 
 	// BLENDING
-	//glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);
 }
 
@@ -115,9 +112,16 @@ Scene::render(Camera const& cam) const
 	for (Abs_Entity* el : gObjects)
 		el->render(cam.viewMat());
 
+	// --- blending objetos translucidos
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // activa blend func antes de renderizar objetos translucidos
+	glDepthMask(GL_FALSE);							   // 
+
 	// translucidos -> despues objetos con transparencia
-	for (Abs_Entity* el : gObjectsTrans)
+	for (Abs_Entity* el : gObjectsTrans) 
 		el->render(cam.viewMat());
+
+	glDepthMask(GL_TRUE);
+	// ---
 }
 
 // --- ESCENAS HIJAS ---

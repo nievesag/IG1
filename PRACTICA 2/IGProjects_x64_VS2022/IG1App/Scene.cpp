@@ -200,7 +200,7 @@ void Scene3::init()
 	gObjects.push_back(ground); // mete la entidad en la escena
 	*/
 
-	// ----- CUBO -----
+	/*// ----- CAJA SIN TAPAS -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
 	//
@@ -219,7 +219,7 @@ void Scene3::init()
 	BoxOutline* bo = new BoxOutline(100, false);
 	bo->setTexture(texC);	// establece la textura de esta entidad
 	bo->setTextureInterior(texP); // textura para el interior
-	gObjects.push_back(bo); // mete la entidad en la escena
+	gObjects.push_back(bo); // mete la entidad en la escena*/
 
 	/*
 	// ----- ESTRELLA -----
@@ -236,7 +236,7 @@ void Scene3::init()
 	gObjects.push_back(estrella); // mete la entidad en la escena
 	*/
 
-	// ----- CRISTAL -----
+	/*// ----- CRISTAL -----
 	Texture* texG = new Texture();								// crea nueva textura
 	const std::string win = "../assets/images/windowV.jpg";		// ruta de la textura
 	texG ->load(win, 100);										// carga la textura con su alfa 255 opaco
@@ -252,4 +252,26 @@ void Scene3::init()
 	Photo* foto = new Photo(50.0, 50.0, false);					// entidad
 	foto->setTexture(texF);										// establece la textura de esta entidad
 	gObjects.push_back(foto);									// mete la entidad en la escena
+	*/
+
+	// ----- CAJA CON TAPAS -----
+	// --- texturas
+	// creamos y cargamos (con load()) las texturas de los objetos de la escena
+	//
+	// ----> textura por fuera <----
+	Texture* texCT = new Texture();								// crea nueva textura
+	const std::string con = "../assets/images/container.jpg";	// ruta de la textura
+	texCT->load(con, 255);										// carga la textura con su alfa
+	gTextures.push_back(texCT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
+	// ----> textura por dentro <---
+	Texture* texPT = new Texture();								// crea nueva textura
+	const std::string pap = "../assets/images/papelE.png";		// ruta de la textura
+	texPT->load(pap, 255);										// carga la textura con su alfa
+	gTextures.push_back(texPT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
+
+	// --- entidad
+	Box* boT = new Box(100, false);
+	boT->setTexture(texCT);	// establece la textura de esta entidad
+	boT->setTextureInterior(texPT); // textura para el interior
+	gObjects.push_back(boT); // mete la entidad en la escena*/
 }

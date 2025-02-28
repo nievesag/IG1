@@ -177,10 +177,32 @@ class BoxOutline : public EntityWithTexture
 public:
 	explicit BoxOutline(GLdouble length, GLboolean modulate);
 	void render(const glm::dmat4& modelViewMat) const override;
+
 	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }
 
 protected:
 	Texture* mTextureInterior = nullptr; // texture
+};
+
+class Box : public EntityWithTexture
+{
+public:
+	explicit Box(GLdouble length, GLboolean modulate);
+	void render(const glm::dmat4& modelViewMat) const override;
+	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }
+
+protected:
+	Texture* mTextureInterior = nullptr; // texture
+
+	GLdouble _length; // length de la box.
+
+	// --- tapa abajo
+	Mesh* mMeshTapaAbj = nullptr;
+	glm::dmat4 mModelMatAbj;
+
+	// --- tapa arriba
+	Mesh* mMeshTapaArr = nullptr;
+	glm::dmat4 mModelMatArr;
 };
 
 class Star3D : public EntityWithTexture

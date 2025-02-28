@@ -327,6 +327,66 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 	}
 }
 
+// ---- CAJA CON TAPAS ----
+Box::Box(GLdouble length, GLboolean modulate)
+	: EntityWithTexture(modulate), _length(length)
+{
+	mMesh = Mesh::generateBoxOutlineTexCor(_length);
+	mMeshTapaAbj = Mesh::generateRectangleTexCor(_length, _length);
+	mMeshTapaArr = Mesh::generateRectangleTexCor(_length, _length);
+}
+
+void Box::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr && mTexture != nullptr)
+	{
+			// ---- Caja ----.
+			dmat4 aMat = modelViewMat * mModelMat;
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(aMat);
+
+			// culling
+			glEnable(GL_CULL_FACE);
+				// CARA DE DELANTE
+				mTexture->bind(); // activa la textura en la gpu
+				glCullFace(GL_BACK);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				mMesh->render();
+				mTexture->unbind(); // desactiva la textura en la gpu
+
+				// CARA DE ATRAS
+				mTextureInterior->bind(); // activa la textura en la gpu
+				glCullFace(GL_FRONT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				mMesh->render();
+				mTextureInterior->unbind(); // desactiva la textura en la gpu
+			glDisable(GL_CULL_FACE);
+			// ------------.
+
+			// ---- Tapa abajo.
+			dmat4 bMat = modelViewMat * mModelMatAbj
+			* translate(glm::dmat4(1), glm::dvec3(0, -_length/2, 0))
+			* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
+
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(bMat);
+			mMeshTapaAbj->render();
+
+			// ---- Tapa arriba.
+			dmat4 cMat = modelViewMat * mModelMatArr
+			* translate(glm::dmat4(1), glm::dvec3(0, _length/2, 0))
+			* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
+
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(cMat);
+			mMeshTapaArr->render();
+
+	}
+}
+
 // ---- ESTRELLA ----
 Star3D::Star3D(GLdouble re, GLuint np, GLdouble h, int s, GLboolean modulate)
 	: EntityWithTexture(modulate, false), scene(s)
@@ -442,3 +502,4 @@ void Photo::update()
 
 }
 #pragma endregion
+

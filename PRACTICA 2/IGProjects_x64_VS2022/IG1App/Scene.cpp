@@ -79,7 +79,6 @@ Scene::setGL()
 	// OpenGL basic setting
 	glClearColor(0.6, 0.7, 0.8, 1.0); // background color (alpha = 1 -> opaque)
 	glEnable(GL_DEPTH_TEST);							  // enable Depth test -> inicialzacion
-	glEnable(GL_TEXTURE_2D);							  // activar uso de texturas
 
 	// BLENDING
 	glEnable(GL_BLEND);
@@ -89,7 +88,6 @@ Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0); // background color (alpha = 1 -> opaque)
 	glDisable(GL_DEPTH_TEST);					  // disable Depth test
-	glDisable(GL_TEXTURE_2D);					  // desactivar uso de texturas
 
 	// BLENDING
 	glDisable(GL_BLEND);
@@ -133,12 +131,12 @@ void Scene0::init()
 	Scene::init();
 
 	// Triangulo cian.
-	auto triang = new RegularPolygon(3, 200);
+	RegularPolygon *triang = new RegularPolygon(3, 200);
 	triang->setColor({ 0,1,1,1 });
 	gObjects.push_back(triang);
 
 	// Circulo magenta.
-	auto circ = new RegularPolygon(40, 200);
+	RegularPolygon *circ = new RegularPolygon(40, 200);
 	circ->setColor({1,0,1,1});
 	gObjects.push_back(circ);
 }
@@ -185,7 +183,7 @@ void Scene3::init()
 	// -- llama a init del padre
 	Scene::init();
 
-	/*
+	
 	// ----- SUELO -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
@@ -198,7 +196,6 @@ void Scene3::init()
 	Ground* ground = new Ground(200.0, 200.0, false);
 	ground->setTexture(texB);	// establece la textura de esta entidad
 	gObjects.push_back(ground); // mete la entidad en la escena
-	*/
 
 	/*// ----- CAJA SIN TAPAS -----
 	// --- texturas
@@ -235,8 +232,8 @@ void Scene3::init()
 	estrella->setTexture(texD);	// establece la textura de esta entidad
 	gObjects.push_back(estrella); // mete la entidad en la escena
 	*/
-
-	/*// ----- CRISTAL -----
+	/*
+	// ----- CRISTAL -----
 	Texture* texG = new Texture();								// crea nueva textura
 	const std::string win = "../assets/images/windowV.jpg";		// ruta de la textura
 	texG ->load(win, 100);										// carga la textura con su alfa 255 opaco
@@ -245,6 +242,7 @@ void Scene3::init()
 	gla->setTexture(texG);										// establece la textura de esta entidad
 	gObjectsTrans.push_back(gla);								// mete la entidad en la escena
 
+	
 	// ----- FOTO -----
 	Texture* texF = new Texture();								// crea nueva textura
 	texF->loadColorBuffer(50, 50, 255);							// carga la textura con su alfa
@@ -254,6 +252,7 @@ void Scene3::init()
 	gObjects.push_back(foto);									// mete la entidad en la escena
 	*/
 
+	/*
 	// ----- CAJA CON TAPAS -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
@@ -270,17 +269,19 @@ void Scene3::init()
 	gTextures.push_back(texPT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
-	Box* boT = new Box(100.0, false);
+	Box* boT = new Box(100.0, false, 3);
 	boT->setTexture(texCT);	// establece la textura de esta entidad
 	boT->setTextureInterior(texPT); // textura para el interior
 	gObjects.push_back(boT); // mete la entidad en la escena*/
 
+	/*
 	// ----- HIERBA -----
 	Texture* texH = new Texture();								// crea nueva textura
 	const std::string h = "../assets/images/grass_alpha.png";	// ruta de la textura
 	texH->load(h, 255);											// carga la textura con su alfa 255 opaco
 	gTextures.push_back(texH);									// lo metemos en el vector de texturas 
-	Grass* hier = new Grass(80.0, false);					// entidad
+	Grass* hier = new Grass(80.0, false);						// entidad
 	hier->setTexture(texH);										// establece la textura de esta entidad
 	gObjects.push_back(hier);									// mete la entidad en la escena
+	*/
 }

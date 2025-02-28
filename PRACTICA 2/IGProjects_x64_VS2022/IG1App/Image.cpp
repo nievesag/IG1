@@ -160,5 +160,4 @@ Image::save(const std::string& name)
 
 	if (result == 0)
 		throw std::logic_error("Image::load(string&): ERROR: cannot save image.");
-
 }

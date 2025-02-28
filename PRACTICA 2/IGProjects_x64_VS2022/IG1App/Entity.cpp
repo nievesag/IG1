@@ -145,15 +145,15 @@ void RGBCube::render(const glm::dmat4& modelViewMat) const
 
 		// Hay que poner glFIll en los dos porque con el gl triangles se va generando un triangulo de cara, otro de culo, otro de cara... y así sucesivamente.
 		glEnable(GL_CULL_FACE);
-		// CARA DE DELANTE
-		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mMesh->render();
+			// CARA DE DELANTE
+			glCullFace(GL_BACK);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			mMesh->render();
 
-		// CARA DE ATRAS
-		glCullFace(GL_FRONT);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		mMesh->render();
+			// CARA DE ATRAS
+			glCullFace(GL_FRONT);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			mMesh->render();
 		glDisable(GL_CULL_FACE);
 
 		//mShader->setUniform("modelView", aMat);
@@ -293,6 +293,36 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
+void Ground::update()
+{
+	std::cout << angle << std::endl;
+
+	// abre y cierra
+	openCloseRot(0);
+
+	// ¡¡¡OJO!!! como hacemos angle/2 para que sea 180, aquí lo tenemos que hacer 360.
+	//if (angle >= 360)
+	//{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
+	//	openState++;
+	//}
+
+	//// Cuando se complete la animacion se reinicia el estado y vuelta a empezar.
+	//if (openState == 1) openState = 0;
+
+	angle++; // va iterando el angle tio
+}
+
+void Ground::openCloseRot(GLint n)
+{
+
+	mModelMat =
+		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// se coloca al borde de la caja
+		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// sube
+		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// gira sobre el eje z
+		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// se pone con un borde sobre el eje z
+		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));       // se tumba
+}
+
 // ---- CAJA SIN TAPAS ----
 BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
 	: EntityWithTexture(modulate)
@@ -328,8 +358,8 @@ void BoxOutline::render(const glm::dmat4& modelViewMat) const
 }
 
 // ---- CAJA CON TAPAS ----
-Box::Box(GLdouble length, GLboolean modulate)
-	: EntityWithTexture(modulate), _length(length)
+Box::Box(GLdouble length, GLboolean modulate, int s)
+	: EntityWithTexture(modulate), _length(length), scene(s)
 {
 	mMesh = Mesh::generateBoxOutlineTexCor(_length);
 	mMeshTapaAbj = Mesh::generateRectangleTexCor(_length, _length);
@@ -340,6 +370,7 @@ void Box::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr && mTexture != nullptr)
 	{
+		
 		// ---- Caja Principal ----
 		#pragma region Caja Principal
 		dmat4 aMat = modelViewMat * mModelMat;
@@ -365,15 +396,13 @@ void Box::render(const glm::dmat4& modelViewMat) const
 		glDisable(GL_CULL_FACE);
 		#pragma endregion
 		// ------------
+		
 
 		// ---- Tapa abajo ----
 		#pragma region Tapa Abajo
 		dmat4 bMat = modelViewMat * mModelMatAbj
 		* translate(glm::dmat4(1), glm::dvec3(0, -_length/2.0, 0))
 		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
-
-		mShader->use();
-		mShader->setUniform("modulate", mModulate);
 		upload(bMat);
 
 		// culling
@@ -398,11 +427,8 @@ void Box::render(const glm::dmat4& modelViewMat) const
 		// ---- Tapa arriba ----
 		#pragma region Tapa Arriba
 		dmat4 cMat = modelViewMat * mModelMatArr
-		* translate(glm::dmat4(1), glm::dvec3(0, _length/2, 0))
-		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
-
-		mShader->use();
-		mShader->setUniform("modulate", mModulate);
+			* translate(glm::dmat4(1), glm::dvec3(0, _length / 2.0, 0))
+			* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));;
 		upload(cMat);
 		mMeshTapaArr->render();
 		#pragma endregion
@@ -422,6 +448,47 @@ void Box::unload()
 	mMesh->unload();
 	mMeshTapaAbj->unload();
 	mMeshTapaArr->unload();
+}
+
+void Box::update()
+{
+	/*
+	if (scene == 3)
+	{
+		// abre y cierra
+		openCloseRot(openState);
+
+		// ¡¡¡OJO!!! como hacemos angle/2 para que sea 180, aquí lo tenemos que hacer 360.
+		//if (angle >= 360)
+		//{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
+		//	openState++;
+		//}
+
+		//// Cuando se complete la animacion se reinicia el estado y vuelta a empezar.
+		//if (openState == 1) openState = 0;
+
+		angle++; // va iterando el angle tio
+		
+	}*/
+}
+
+void Box::openCloseRot(GLint n)
+{
+	switch (n)
+	{
+	case 0: // open
+		mModelMat = translate(glm::dmat4(1), glm::dvec3(_length / 2, 0, 0))  * translate(glm::dmat4(1), glm::dvec3(0, _length / 2, 0)) * rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1)) *
+			 rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
+			
+		break;
+
+	case 1: // close
+		mModelMat = rotate(glm::dmat4(1), radians(-angle / 2), glm::dvec3(0, 0, 1)) *
+			translate(glm::dmat4(1), glm::dvec3(_length / 2, 0, 0));
+		break;
+
+	default:break;
+	}
 }
 
 // ---- ESTRELLA ----

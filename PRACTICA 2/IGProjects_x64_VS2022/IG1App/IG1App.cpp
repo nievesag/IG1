@@ -1,6 +1,7 @@
 #include "IG1App.h"
 
 #include <iostream>
+#include "Image.h"
 
 using namespace std;
 
@@ -80,16 +81,11 @@ IG1App::init()
 	mCamera = new Camera(mViewPort);
 	
 	// Crea las escenas
-	Scene0* scene0 = new Scene0();
-	Scene1* scene1 = new Scene1();
-	Scene2* scene2 = new Scene2();
-	Scene3* scene3 = new Scene3();
-
 	// Mete las escenas en el vector de escenas
-	mScenes.push_back(scene0);
-	mScenes.push_back(scene1);
-	mScenes.push_back(scene2);
-	mScenes.push_back(scene3);
+	mScenes.push_back(new Scene0());
+	mScenes.push_back(new Scene1());
+	mScenes.push_back(new Scene2());
+	mScenes.push_back(new Scene3());
 
 	mCamera->set2D();
 	
@@ -219,7 +215,7 @@ IG1App::key(unsigned int key)
 		cout << "Update toggled" << endl;
 		break;
 	case 'f':
-
+		guardaCaptura();
 		cout << "Captura" << endl;
 		break;
 	default:
@@ -275,6 +271,46 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 
 	if (need_redisplay)
 		mNeedsRedisplay = true;
+}
+
+int IG1App::guardaCaptura()
+{
+	char filename[50];
+
+	strcpy_s(filename, "screenshots/");
+	strcat_s(filename, "foto.bmp");
+
+	int saved = haceCaptura(filename);
+
+	if (saved)
+		printf("Successfully Saved Image: %s\n", filename);
+	else
+		fprintf(stderr, "Failed Saving Image: %s\n", filename);
+
+	return saved;
+}
+
+int IG1App::haceCaptura(const std::string& name)
+{
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	int x = viewport[0];
+	int y = viewport[1];
+	int width = viewport[2];
+	int height = viewport[3];
+
+	char* data = (char*)malloc((size_t)(width * height * 3)); // 3 components (R, G, B)
+
+	if (!data)
+		return 0;
+
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(x, y, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	Image* image = new Image();
+
+	image->save(name);
 }
 
 bool

@@ -85,8 +85,10 @@ Mesh::unload()
 		}
 
 		// eliminar las coordenadas de textura de la GPU
-		if (mTCO != NONE) 
+		if (mTCO != NONE) {
 			glDeleteBuffers(1, &mTCO);
+			mTCO = NONE;
+		}
 	}
 }
 

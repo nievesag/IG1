@@ -515,15 +515,60 @@ void GlassParapet::render(const glm::dmat4& modelViewMat) const
 }
 
 // ---- GRASS ----
-Grass::Grass(GLdouble w, GLdouble h, GLboolean modulate)
-	: EntityWithTexture(modulate, true)
+Grass::Grass(GLdouble l, GLboolean modulate)
+	: EntityWithTexture(modulate, true), length(l)
 {
-
+	mMesh = Mesh::generateRectangleTexCor(l, l);
 }
 
 void Grass::render(const glm::dmat4& modelViewMat) const
 {
+	if (mMesh != nullptr && mTexture != nullptr)
+	{
+		mTexture->bind();	 // activa la textura en la gpu
+			// ---- Primera hierba.
+			dmat4 aMat = modelViewMat * mModelMat 
+				* translate(glm::dmat4(1), glm::dvec3(0, length/2, 0))
+				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(aMat);
 
+				// culling
+				glEnable(GL_CULL_FACE);
+					// CARA DE DELANTE
+					glCullFace(GL_BACK);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					mMesh->render();
+
+					// CARA DE ATRAS
+					glCullFace(GL_FRONT);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					mMesh->render();
+				glDisable(GL_CULL_FACE);
+
+			// ---- Segunda hierba.
+			dmat4 bMat = modelViewMat * mModelMat 
+				* translate(glm::dmat4(1), glm::dvec3(0, length / 2, 0))
+				* rotate(dmat4(1), radians(45.0), dvec3(0.0, 1.0, 0.0))
+				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(bMat);
+			mMesh->render();
+
+			// ---- Tercera hierba.
+			dmat4 cMat = modelViewMat * mModelMat
+				* translate(glm::dmat4(1), glm::dvec3(0, length / 2, 0))
+				* rotate(dmat4(1), radians(-45.0), dvec3(0.0, 1.0, 0.0))
+				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(cMat);
+			mMesh->render();
+
+		mTexture->unbind();  // desactiva la textura en la gpu
+	}
 }
 
 // ---- PHOTO ----

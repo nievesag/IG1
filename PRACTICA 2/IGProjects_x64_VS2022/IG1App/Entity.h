@@ -229,8 +229,11 @@ public:
 class Grass : public EntityWithTexture 
 {
 public:
-	explicit Grass(GLdouble w, GLdouble h, GLboolean modulate);
+	explicit Grass(GLdouble l, GLboolean modulate);
 	void render(const glm::dmat4& modelViewMat) const override;
+
+protected:
+	GLdouble length;
 };
 
 class Photo : public EntityWithTexture 

@@ -274,4 +274,13 @@ void Scene3::init()
 	boT->setTexture(texCT);	// establece la textura de esta entidad
 	boT->setTextureInterior(texPT); // textura para el interior
 	gObjects.push_back(boT); // mete la entidad en la escena*/
+
+	// ----- HIERBA -----
+	Texture* texH = new Texture();								// crea nueva textura
+	const std::string h = "../assets/images/grass_alpha.png";	// ruta de la textura
+	texH->load(h, 255);											// carga la textura con su alfa 255 opaco
+	gTextures.push_back(texH);									// lo metemos en el vector de texturas 
+	Grass* hier = new Grass(80.0, false);					// entidad
+	hier->setTexture(texH);										// establece la textura de esta entidad
+	gObjects.push_back(hier);									// mete la entidad en la escena
 }

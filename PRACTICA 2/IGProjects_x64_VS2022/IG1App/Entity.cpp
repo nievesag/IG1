@@ -340,51 +340,88 @@ void Box::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr && mTexture != nullptr)
 	{
-			// ---- Caja ----.
-			dmat4 aMat = modelViewMat * mModelMat;
-			mShader->use();
-			mShader->setUniform("modulate", mModulate);
-			upload(aMat);
+		// ---- Caja Principal ----
+		#pragma region Caja Principal
+		dmat4 aMat = modelViewMat * mModelMat;
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(aMat);
 
-			// culling
-			glEnable(GL_CULL_FACE);
-				// CARA DE DELANTE
-				mTexture->bind(); // activa la textura en la gpu
+		// culling
+		glEnable(GL_CULL_FACE);
+			// CARA DE DELANTE
+			mTexture->bind(); // activa la textura en la gpu
 				glCullFace(GL_BACK);
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 				mMesh->render();
-				mTexture->unbind(); // desactiva la textura en la gpu
+			mTexture->unbind(); // desactiva la textura en la gpu
 
-				// CARA DE ATRAS
-				mTextureInterior->bind(); // activa la textura en la gpu
+			// CARA DE ATRAS
+			mTextureInterior->bind(); // activa la textura en la gpu
 				glCullFace(GL_FRONT);
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 				mMesh->render();
-				mTextureInterior->unbind(); // desactiva la textura en la gpu
-			glDisable(GL_CULL_FACE);
-			// ------------.
+			mTextureInterior->unbind(); // desactiva la textura en la gpu
+		glDisable(GL_CULL_FACE);
+		#pragma endregion
+		// ------------
 
-			// ---- Tapa abajo.
-			dmat4 bMat = modelViewMat * mModelMatAbj
-			* translate(glm::dmat4(1), glm::dvec3(0, -_length/2, 0))
-			* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
+		// ---- Tapa abajo ----
+		#pragma region Tapa Abajo
+		dmat4 bMat = modelViewMat * mModelMatAbj
+		* translate(glm::dmat4(1), glm::dvec3(0, -_length/2.0, 0))
+		* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 
-			mShader->use();
-			mShader->setUniform("modulate", mModulate);
-			upload(bMat);
-			mMeshTapaAbj->render();
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(bMat);
 
-			// ---- Tapa arriba.
-			dmat4 cMat = modelViewMat * mModelMatArr
-			* translate(glm::dmat4(1), glm::dvec3(0, _length/2, 0))
-			* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
+		// culling
+		glEnable(GL_CULL_FACE);
+			// CARA DE DELANTE
+			mTexture->bind(); // activa la textura en la gpu
+				glCullFace(GL_BACK);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMeshTapaAbj->render();
+			mTexture->unbind(); // desactiva la textura en la gpu
 
-			mShader->use();
-			mShader->setUniform("modulate", mModulate);
-			upload(cMat);
-			mMeshTapaArr->render();
+			// CARA DE ATRAS
+			mTextureInterior->bind(); // activa la textura en la gpu
+				glCullFace(GL_FRONT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMeshTapaAbj->render();
+			mTextureInterior->unbind(); // desactiva la textura en la gpu
+		glDisable(GL_CULL_FACE);
+		#pragma endregion
+		// ------------
 
+		// ---- Tapa arriba ----
+		#pragma region Tapa Arriba
+		dmat4 cMat = modelViewMat * mModelMatArr
+		* translate(glm::dmat4(1), glm::dvec3(0, _length/2, 0))
+		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
+
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(cMat);
+		mMeshTapaArr->render();
+		#pragma endregion
+		// ------------
 	}
+}
+
+void Box::load()
+{
+	mMesh->load();
+	mMeshTapaAbj->load();
+	mMeshTapaArr->load();
+}
+
+void Box::unload()
+{
+	mMesh->unload();
+	mMeshTapaAbj->unload();
+	mMeshTapaArr->unload();
 }
 
 // ---- ESTRELLA ----
@@ -419,12 +456,12 @@ void Star3D::render(const glm::dmat4& modelViewMat) const
 					mMesh->render();
 				glDisable(GL_CULL_FACE);
 
-				// ---- Segunda estrella.
-				dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
-				mShader->use();
-				mShader->setUniform("modulate", mModulate);
-				upload(bMat);
-				mMesh->render();
+			// ---- Segunda estrella.
+			dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+			mShader->use();
+			mShader->setUniform("modulate", mModulate);
+			upload(bMat);
+			mMesh->render();
 
 		mTexture->unbind(); // desactiva la textura en la gpu
 	}

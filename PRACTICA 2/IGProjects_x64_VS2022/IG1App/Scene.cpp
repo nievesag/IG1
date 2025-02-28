@@ -260,17 +260,17 @@ void Scene3::init()
 	//
 	// ----> textura por fuera <----
 	Texture* texCT = new Texture();								// crea nueva textura
-	const std::string con = "../assets/images/container.jpg";	// ruta de la textura
-	texCT->load(con, 255);										// carga la textura con su alfa
+		const std::string con = "../assets/images/container.jpg";	// ruta de la textura
+		texCT->load(con, 255);										// carga la textura con su alfa
 	gTextures.push_back(texCT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 	// ----> textura por dentro <---
 	Texture* texPT = new Texture();								// crea nueva textura
-	const std::string pap = "../assets/images/papelE.png";		// ruta de la textura
-	texPT->load(pap, 255);										// carga la textura con su alfa
+		const std::string pap = "../assets/images/papelE.png";		// ruta de la textura
+		texPT->load(pap, 255);										// carga la textura con su alfa
 	gTextures.push_back(texPT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
-	Box* boT = new Box(100, false);
+	Box* boT = new Box(100.0, false);
 	boT->setTexture(texCT);	// establece la textura de esta entidad
 	boT->setTextureInterior(texPT); // textura para el interior
 	gObjects.push_back(boT); // mete la entidad en la escena*/

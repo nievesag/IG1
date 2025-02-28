@@ -64,8 +64,8 @@ public:
 	void setTexture(Texture* tex) { mTexture = tex; }
 
 	// load or unload entity data into the GPU
-	void load();
-	void unload();
+	virtual void load();
+	virtual void unload();
 
 protected:
 	Mesh* mMesh = nullptr;		 // the mesh
@@ -190,6 +190,8 @@ public:
 	explicit Box(GLdouble length, GLboolean modulate);
 	void render(const glm::dmat4& modelViewMat) const override;
 	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }
+	void load() override;
+	void unload() override;
 
 protected:
 	Texture* mTextureInterior = nullptr; // texture

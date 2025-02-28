@@ -218,6 +218,10 @@ IG1App::key(unsigned int key)
 		mUpdateEnabled = !mUpdateEnabled;
 		cout << "Update toggled" << endl;
 		break;
+	case 'f':
+
+		cout << "Captura" << endl;
+		break;
 	default:
 		if (key >= '0' && key <= '9' && !changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta negado no se pone a true al cambiar
 			cout << "[NOTE] There is no scene " << char(key) << ".\n";

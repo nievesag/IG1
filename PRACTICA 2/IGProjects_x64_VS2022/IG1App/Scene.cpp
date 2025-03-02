@@ -214,7 +214,7 @@ void Scene3::init()
 	bo->setTexture(texC);	// establece la textura de esta entidad
 	bo->setTextureInterior(texP); // textura para el interior
 	// --- traslaciones, escalas y rotaciones
-	bo->setModelMat(translate(glm::dmat4(1), glm::dvec3(0, 0, 80)) * translate(glm::dmat4(1), glm::dvec3(80, 0, 0)) * translate(glm::dmat4(1), glm::dvec3(0, 30/2, 0)));
+	bo->setModelMat(translate(glm::dmat4(1), glm::dvec3(80, 30 / 2, 80)));
 	gObjects.push_back(bo); // mete la entidad en la escena
 
 	// ----- ESTRELLA -----
@@ -247,28 +247,29 @@ void Scene3::init()
 	foto->setTexture(texF);										// establece la textura de esta entidad
 	gObjects.push_back(foto);									// mete la entidad en la escena
 
-	/*
+	
 	// ----- CAJA CON TAPAS -----
 	// --- texturas
 	// creamos y cargamos (con load()) las texturas de los objetos de la escena
 	//
 	// ----> textura por fuera <----
 	Texture* texCT = new Texture();								// crea nueva textura
-		const std::string con = "../assets/images/container.jpg";	// ruta de la textura
-		texCT->load(con, 255);										// carga la textura con su alfa
+		const std::string conT = "../assets/images/container.jpg";	// ruta de la textura
+		texCT->load(conT, 255);										// carga la textura con su alfa
 	gTextures.push_back(texCT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 	// ----> textura por dentro <---
 	Texture* texPT = new Texture();								// crea nueva textura
-		const std::string pap = "../assets/images/papelE.png";		// ruta de la textura
-		texPT->load(pap, 255);										// carga la textura con su alfa
+		const std::string papT = "../assets/images/papelE.png";		// ruta de la textura
+		texPT->load(papT, 255);										// carga la textura con su alfa
 	gTextures.push_back(texPT);									// lo metemos en el vector de texturas de la escena para poder eliminarla luego
 
 	// --- entidad
-	Box* boT = new Box(100.0, false, 3);
+	Box* boT = new Box(30.0, false, 3);
 	boT->setTexture(texCT);	// establece la textura de esta entidad
 	boT->setTextureInterior(texPT); // textura para el interior
+	boT->setModelMat(translate(glm::dmat4(1), glm::dvec3(-80, 30 / 2, -80)));
 	gObjects.push_back(boT); // mete la entidad en la escena
-	*/
+	
 
 	// ----- HIERBA -----
 	Texture* texH = new Texture();								// crea nueva textura

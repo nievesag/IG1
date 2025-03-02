@@ -421,7 +421,7 @@ void Box::unload()
 
 void Box::update()
 {
-	// esto se haría solo para la tapa de arriba
+	/*// esto se haría solo para la tapa de arriba
 	mModelMat =
 		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// sube
 		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// coloca al borde de la caja
@@ -439,7 +439,7 @@ void Box::update()
 	// abriendo && angulo <= 180 -> angulo++ (abre)
 	if (angle <= 180 && openState == 0.0) angle++;
 	// cerrando && angulo >= 0	 -> angulo-- (cierra)
-	else if (angle >= 0 && openState == 1.0) angle--;
+	else if (angle >= 0 && openState == 1.0) angle--;*/
 }
 
 // ---- ESTRELLA ----

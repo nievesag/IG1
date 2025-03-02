@@ -293,28 +293,6 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
-void Ground::update()
-{
-	mModelMat =
-		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// sube
-		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// coloca al borde de la caja
-		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// gira sobre el eje z
-		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// se pone con un borde sobre el eje z
-		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));       // se tumba
-
-	// ---- gestion estado
-	// cerrando && angulo <= 0 -> abriendo
-	if (openState == 1.0 && angle <= 0.0) openState = 0.0;
-	// abriendo && angulo >= 180 -> cerrando
-	else if (openState == 0.0 && angle >= 180.0) openState = 1.0;
-
-	// ---- gestion angulo
-	// abriendo && angulo <= 180 -> angulo++ (abre)
-	if (angle <= 180 && openState == 0.0) angle++;
-	// cerrando && angulo >= 0	 -> angulo-- (cierra)
-	else if (angle >= 0 && openState == 1.0) angle--;
-}
-
 // ---- CAJA SIN TAPAS ----
 BoxOutline::BoxOutline(GLdouble length, GLboolean modulate)
 	: EntityWithTexture(modulate)
@@ -362,7 +340,6 @@ void Box::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr && mTexture != nullptr)
 	{
-		
 		// ---- Caja Principal ----
 		#pragma region Caja Principal
 		dmat4 aMat = modelViewMat * mModelMat;
@@ -444,43 +421,25 @@ void Box::unload()
 
 void Box::update()
 {
-	/*
-	if (scene == 3)
-	{
-		// abre y cierra
-		openCloseRot(openState);
+	// esto se haría solo para la tapa de arriba
+	mModelMat =
+		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// sube
+		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// coloca al borde de la caja
+		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// gira sobre el eje z
+		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// se pone con un borde sobre el eje z
+		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));       // se tumba
 
-		// ¡¡¡OJO!!! como hacemos angle/2 para que sea 180, aquí lo tenemos que hacer 360.
-		//if (angle >= 360)
-		//{ // Cuando llegue a 180 (en la animacion) se reinicia el angulo y se pasa al siguiente estado de animacion.
-		//	openState++;
-		//}
+	// ---- gestion estado
+	// cerrando && angulo <= 0 -> abriendo
+	if (openState == 1.0 && angle <= 0.0) openState = 0.0;
+	// abriendo && angulo >= 180 -> cerrando
+	else if (openState == 0.0 && angle >= 180.0) openState = 1.0;
 
-		//// Cuando se complete la animacion se reinicia el estado y vuelta a empezar.
-		//if (openState == 1) openState = 0;
-
-		angle++; // va iterando el angle tio
-		
-	}*/
-}
-
-void Box::openCloseRot(GLint n)
-{
-	switch (n)
-	{
-	case 0: // open
-		mModelMat = translate(glm::dmat4(1), glm::dvec3(_length / 2, 0, 0))  * translate(glm::dmat4(1), glm::dvec3(0, _length / 2, 0)) * rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 0, 1)) *
-			 rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));
-			
-		break;
-
-	case 1: // close
-		mModelMat = rotate(glm::dmat4(1), radians(-angle / 2), glm::dvec3(0, 0, 1)) *
-			translate(glm::dmat4(1), glm::dvec3(_length / 2, 0, 0));
-		break;
-
-	default:break;
-	}
+	// ---- gestion angulo
+	// abriendo && angulo <= 180 -> angulo++ (abre)
+	if (angle <= 180 && openState == 0.0) angle++;
+	// cerrando && angulo >= 0	 -> angulo-- (cierra)
+	else if (angle >= 0 && openState == 1.0) angle--;
 }
 
 // ---- ESTRELLA ----
@@ -516,7 +475,8 @@ void Star3D::render(const glm::dmat4& modelViewMat) const
 				glDisable(GL_CULL_FACE);
 
 			// ---- Segunda estrella.
-			dmat4 bMat = modelViewMat * mModelMat * rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
+			dmat4 bMat = modelViewMat * mModelMat 
+				* rotate(dmat4(1), radians(180.0), dvec3(0.0, 1.0, 0.0));
 			mShader->use();
 			mShader->setUniform("modulate", mModulate);
 			upload(bMat);
@@ -531,7 +491,11 @@ void Star3D::update()
 	if (scene == 3)
 	{
 		angle += 4.0;
-		mModelMat = rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0)) // rotacion sobre y
+		mModelMat = 
+			  translate(glm::dmat4(1), glm::dvec3(0, 0, 80))
+			* translate(glm::dmat4(1), glm::dvec3(80, 0, 0))
+			* translate(glm::dmat4(1), glm::dvec3(0, 80, 0))
+			* rotate(glm::dmat4(1), radians(angle / 2), glm::dvec3(0, 1, 0)) // rotacion sobre y
 			* rotate(glm::dmat4(1), radians(angle/2), glm::dvec3(0, 0, 1));		   // rotacion sobre z
 	}
 }
@@ -587,6 +551,8 @@ void Grass::render(const glm::dmat4& modelViewMat) const
 		mTexture->bind();	 // activa la textura en la gpu
 			// ---- Primera hierba.
 			dmat4 aMat = modelViewMat * mModelMat 
+				* translate(glm::dmat4(1), glm::dvec3(0, 0, -80))
+				* translate(glm::dmat4(1), glm::dvec3(80, 0, 0))
 				* translate(glm::dmat4(1), glm::dvec3(0, length/2, 0))
 				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
 			mShader->use();
@@ -608,9 +574,12 @@ void Grass::render(const glm::dmat4& modelViewMat) const
 
 			// ---- Segunda hierba.
 			dmat4 bMat = modelViewMat * mModelMat 
+				* translate(glm::dmat4(1), glm::dvec3(0, 0, -80))
+				* translate(glm::dmat4(1), glm::dvec3(80, 0, 0))
 				* translate(glm::dmat4(1), glm::dvec3(0, length / 2, 0))
 				* rotate(dmat4(1), radians(45.0), dvec3(0.0, 1.0, 0.0))
 				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
+
 			mShader->use();
 			mShader->setUniform("modulate", mModulate);
 			upload(bMat);
@@ -618,6 +587,8 @@ void Grass::render(const glm::dmat4& modelViewMat) const
 
 			// ---- Tercera hierba.
 			dmat4 cMat = modelViewMat * mModelMat
+				* translate(glm::dmat4(1), glm::dvec3(0, 0, -80))
+				* translate(glm::dmat4(1), glm::dvec3(80, 0, 0))
 				* translate(glm::dmat4(1), glm::dvec3(0, length / 2, 0))
 				* rotate(dmat4(1), radians(-45.0), dvec3(0.0, 1.0, 0.0))
 				* rotate(dmat4(1), radians(-90.0), dvec3(0.0, 0.0, 1.0));
@@ -635,7 +606,7 @@ Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
-	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+	mModelMat =	translate(glm::dmat4(1), glm::dvec3(0, 2, 0)) * rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
 void Photo::update()

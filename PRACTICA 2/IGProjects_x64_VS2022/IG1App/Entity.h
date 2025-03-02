@@ -170,13 +170,6 @@ class Ground : public EntityWithTexture
 {
 public:
 	explicit Ground(GLdouble w, GLdouble h, GLboolean modulate);
-	void update() override;
-
-private: 
-	// --- para el update.
-	int scene = 0;
-	double angle = 180.0;  // empiza en 180 grados (empieza abierta)
-	GLint openState = 1.0; // 0 -> abres 1 -> cierras
 };
 
 class BoxOutline : public EntityWithTexture
@@ -201,9 +194,6 @@ public:
 	void load() override;
 	void unload() override;
 
-private:
-	void openCloseRot(GLint n);
-
 protected:
 	Texture* mTextureInterior = nullptr; // texture
 
@@ -217,10 +207,11 @@ protected:
 	Mesh* mMeshTapaArr = nullptr;
 	glm::dmat4 mModelMatArr;
 
+private:
 	// --- para el update.
 	int scene = 0;
-	double angle = 0.0;
-	GLint openState = 0; // 0 -> abres 1-> cierras y asi
+	double angle = 180.0;  // empiza en 180 grados (empieza abierta)
+	GLint openState = 1.0; // 0 -> abres 1 -> cierras
 };
 
 class Star3D : public EntityWithTexture

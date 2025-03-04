@@ -193,6 +193,8 @@ public:
 	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }
 	void load() override;
 	void unload() override;
+	void setModelMatAbj(glm::dmat4 const& bMat) { mModelMatAbj = bMat; }
+	void setModelMatArr(glm::dmat4 const& cMat) { mModelMatArr = cMat; }
 
 protected:
 	Texture* mTextureInterior = nullptr; // texture
@@ -201,11 +203,11 @@ protected:
 
 	// --- tapa abajo
 	Mesh* mMeshTapaAbj = nullptr;
-	glm::dmat4 mModelMatAbj;
+	glm::dmat4 mModelMatAbj = glm::dmat4(1.0);
 
 	// --- tapa arriba
 	Mesh* mMeshTapaArr = nullptr;
-	glm::dmat4 mModelMatArr;
+	glm::dmat4 mModelMatArr = glm::dmat4(1.0);
 
 private:
 	// --- para el update.

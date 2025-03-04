@@ -246,7 +246,6 @@ void Scene3::init()
 	Photo* foto = new Photo(50.0, 50.0, false);					// entidad
 	foto->setTexture(texF);										// establece la textura de esta entidad
 	gObjects.push_back(foto);									// mete la entidad en la escena
-
 	
 	// ----- CAJA CON TAPAS -----
 	// --- texturas
@@ -268,8 +267,8 @@ void Scene3::init()
 	boT->setTexture(texCT);	// establece la textura de esta entidad
 	boT->setTextureInterior(texPT); // textura para el interior
 	boT->setModelMat(translate(glm::dmat4(1), glm::dvec3(-80, 30 / 2, -80)));
+	boT->setModelMatAbj(translate(glm::dmat4(1), glm::dvec3(-80, 30 / 2, -80)));
 	gObjects.push_back(boT); // mete la entidad en la escena
-	
 
 	// ----- HIERBA -----
 	Texture* texH = new Texture();								// crea nueva textura

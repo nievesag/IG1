@@ -290,7 +290,7 @@ Ground::Ground(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
-	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+	mModelMat = translate(glm::dmat4(1), glm::dvec3(0, -0.5, 0)) * rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
 // ---- CAJA SIN TAPAS ----
@@ -365,7 +365,6 @@ void Box::render(const glm::dmat4& modelViewMat) const
 		glDisable(GL_CULL_FACE);
 		#pragma endregion
 		// ------------
-		
 
 		// ---- Tapa abajo ----
 		#pragma region Tapa Abajo
@@ -396,10 +395,25 @@ void Box::render(const glm::dmat4& modelViewMat) const
 		// ---- Tapa arriba ----
 		#pragma region Tapa Arriba
 		dmat4 cMat = modelViewMat * mModelMatArr
-			* translate(glm::dmat4(1), glm::dvec3(0, _length / 2.0, 0))
-			* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));;
+			* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));;
 		upload(cMat);
-		mMeshTapaArr->render();
+
+		// culling
+		glEnable(GL_CULL_FACE);
+			// CARA DE DELANTE
+			mTexture->bind(); // activa la textura en la gpu
+				glCullFace(GL_BACK);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMeshTapaArr->render();
+			mTexture->unbind(); // desactiva la textura en la gpu
+
+			// CARA DE ATRAS
+			mTextureInterior->bind(); // activa la textura en la gpu
+				glCullFace(GL_FRONT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMeshTapaArr->render();
+			mTextureInterior->unbind(); // desactiva la textura en la gpu
+		glDisable(GL_CULL_FACE);
 		#pragma endregion
 		// ------------
 	}
@@ -421,13 +435,12 @@ void Box::unload()
 
 void Box::update()
 {
-	/*// esto se haría solo para la tapa de arriba
-	mModelMat =
-		translate(glm::dmat4(1), glm::dvec3(0, 100, 0))					// sube
-		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// coloca al borde de la caja
-		* rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// gira sobre el eje z
-		* translate(glm::dmat4(1), glm::dvec3(100, 0, 0))				// se pone con un borde sobre el eje z
-		* rotate(dmat4(1), radians(-90.0), dvec3(1.0, 0.0, 0.0));       // se tumba
+	// esto se haría solo para la tapa de arriba
+	mModelMatArr =
+		translate(glm::dmat4(1), glm::dvec3(-65, 30 / 2, -80))
+		 * translate(glm::dmat4(1), glm::dvec3(0, _length / 2, 0))				// coloca al borde de la caja
+		 * rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))			// gira sobre el eje z
+		 * translate(glm::dmat4(1), glm::dvec3(_length/2, 0, 0));				// se pone con un borde sobre el eje z
 
 	// ---- gestion estado
 	// cerrando && angulo <= 0 -> abriendo
@@ -439,7 +452,7 @@ void Box::update()
 	// abriendo && angulo <= 180 -> angulo++ (abre)
 	if (angle <= 180 && openState == 0.0) angle++;
 	// cerrando && angulo >= 0	 -> angulo-- (cierra)
-	else if (angle >= 0 && openState == 1.0) angle--;*/
+	else if (angle >= 0 && openState == 1.0) angle--;
 }
 
 // ---- ESTRELLA ----
@@ -606,7 +619,7 @@ Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate, false)
 {
 	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
-	mModelMat =	translate(glm::dmat4(1), glm::dvec3(0, 2, 0)) * rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+	mModelMat =	rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
 void Photo::update()

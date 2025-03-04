@@ -215,7 +215,7 @@ IG1App::key(unsigned int key)
 		cout << "Update toggled" << endl;
 		break;
 	case 'f':
-		guardaCaptura();
+		captura();
 		cout << "Captura" << endl;
 		break;
 	default:
@@ -273,44 +273,13 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 		mNeedsRedisplay = true;
 }
 
-int IG1App::guardaCaptura()
+void IG1App::captura()
 {
-	char filename[50];
-
-	strcpy_s(filename, "screenshots/");
-	strcat_s(filename, "foto.bmp");
-
-	int saved = haceCaptura(filename);
-
-	if (saved)
-		printf("Successfully Saved Image: %s\n", filename);
-	else
-		fprintf(stderr, "Failed Saving Image: %s\n", filename);
-
-	return saved;
-}
-
-int IG1App::haceCaptura(const std::string& name)
-{
-	GLint viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-
-	int x = viewport[0];
-	int y = viewport[1];
-	int width = viewport[2];
-	int height = viewport[3];
-
-	char* data = (char*)malloc((size_t)(width * height * 3)); // 3 components (R, G, B)
-
-	if (!data)
-		return 0;
-
-	glPixelStorei(GL_PACK_ALIGNMENT, 1);
-	glReadPixels(x, y, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+	Texture* texture = new Texture();
+	texture->loadColorBuffer(800, 600);
 
 	Image* image = new Image();
-
-	image->save(name);
+	image->save("./bmps/screenshot.bmp");
 }
 
 bool

@@ -484,6 +484,10 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	mesh->vVertices.emplace_back(r, -r, r); // 7.
 
 	// CARA 4 (PARALELO A YZ).
+	/*
+	mesh->vVertices.push_back(mesh->vVertices[0]); // 8. = 0 (misma pos que el 0).
+	mesh->vVertices.push_back(mesh->vVertices[1]); // 9. = 1 (misma pos que el 1).
+	*/
 	mesh->vVertices.emplace_back(r, r, -r); // 8.
 	mesh->vVertices.emplace_back(r, -r, -r); // 9.
 
@@ -613,44 +617,6 @@ Mesh* Mesh::generateStar3DTexCor(GLdouble re, GLuint np, GLdouble h)
 
 	mesh->vTexCoords.emplace_back(0.75, 1);
 	mesh->vTexCoords.emplace_back(0.5, 1); // final - cierre
-
-	/*mesh->vTexCoords.reserve(mesh->mNumVertices);
-
-	std:vector<pair<int, int>> v = { {0,1}, {0,0}, {1,1},{1,0} };
-
-	std::queue<int, int> cola;
-	cola.push(v[0]);
-	cola.push(v[1]);
-	cola.push(v[2]);
-	cola.push(v[3]);
-
-	mesh->vTexCoords.emplace_back(cola.front());
-	cola.pop();
-	cola.push(0, 1);
-	
-
-	//mesh->vTexCoords.emplace_back(0, 1); // 0.
-	//mesh->vTexCoords.emplace_back(0, 0); // 1.
-	//mesh->vTexCoords.emplace_back(1, 1); // 2.
-	//mesh->vTexCoords.emplace_back(1, 0); // 3.
-
-	// Se van guardando en sentido antihorario.
-	GLdouble alpha = 90.0;
-	GLdouble incremento = 90.0 / np * 2;
-	GLdouble ri = re / 2;
-	GLdouble r;
-	for (GLuint i = 0; i < np * 2 + 1; i++)
-	{
-		mesh->vTexCoords.emplace_back(cola.front());
-		cola.pop();
-
-	}*/
-
-	//double
-	//	u4 = 1.0 / 4, // un cuarto
-	//	d4 = 2.0 / 4, // dos cuartos
-	//	t4 = 3.0 / 4; // tres cuartos
-	//std::cout << u4 << " " << d4 << " " << t4 << std::endl; // sin el .0 sale 0, 0, 0
 
 	return mesh;
 }

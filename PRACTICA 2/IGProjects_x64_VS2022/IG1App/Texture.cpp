@@ -79,29 +79,7 @@ Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP_TO_EDGE, ...
 void 
 Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 {
-	/*
-	if (mId == 0)
-		init();
-
-	Texture* tex = new Texture();
-
-	mHeight = height;
-	mWidth = width;
-
-	GLint level = 0;  // Base image level
-	GLint border = 0; // No border
-
-	glBindTexture(GL_TEXTURE_2D, mId);
-	glTexImage2D(GL_TEXTURE_2D,
-		level,
-		GL_RGBA,
-		mWidth,
-		mHeight,
-		border,
-		GL_RGBA,
-		GL_UNSIGNED_BYTE,
-		image.data());
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	*/
+	// tiene que copiar el buffer de color (o el que se le pase por parametro) y lo copia como si fuera una nueva textura. 
+	// El código está en las slides. 
+	// Luego se pasa esto a un fichero, mediante Image.save (que os lo damos).
 }

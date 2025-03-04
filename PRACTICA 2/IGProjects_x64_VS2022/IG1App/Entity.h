@@ -188,6 +188,7 @@ class Box : public EntityWithTexture
 {
 public:
 	explicit Box(GLdouble length, GLboolean modulate, int s);
+	~Box() override;
 	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
 	void setTextureInterior(Texture* tex) { mTextureInterior = tex; }

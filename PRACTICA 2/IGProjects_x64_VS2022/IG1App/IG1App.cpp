@@ -99,11 +99,8 @@ IG1App::init()
 
 void IG1App::update()
 {
-	//mScenes[mCurrentScene]->unload();
-	//mScenes[mCurrentScene]->load();
 	mScenes[mCurrentScene]->update();
 	mNeedsRedisplay = true;
-	//display();
 }
 
 void
@@ -275,11 +272,13 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 
 void IG1App::captura()
 {
-	Texture* texture = new Texture();
-	texture->loadColorBuffer(800, 600);
-
 	Image* image = new Image();
-	image->save("./bmps/screenshot.bmp");
+
+	// Obtener (de GPU a CPU) la imagen de la textura activa:
+	// pixels: array donde guardar los datos (de tipo y tamanio adecuado)
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_INT, GL_RGBA, image);
+
+	image->save("./capturas/captura.bmp");
 }
 
 bool

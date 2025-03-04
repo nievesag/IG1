@@ -79,7 +79,22 @@ Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP_TO_EDGE, ...
 void 
 Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 {
+	// M.E. :
 	// tiene que copiar el buffer de color (o el que se le pase por parametro) y lo copia como si fuera una nueva textura. 
 	// El código está en las slides. 
 	// Luego se pasa esto a un fichero, mediante Image.save (que os lo damos).
+
+	if (buffer == GL_FRONT || buffer == GL_BACK) // si no se comprueba si es valido sale ERROR en consola
+	{
+		// Para modificar el buffer de lectura activo:
+		glReadBuffer(buffer);
+
+		// Los datos se copian del buffer de lectura activo: GL_FRONT o GL_BACK
+		// Copiar en la textura activa parte de la imagen del Color Buffer:
+		// (en coordenadas de pantalla, como el puerto de vista)
+		// glCopyTexImage2D(GL_TEXTURE_2D, level(0), internalFormat, xLeft, yBottom, width, height, border(0));
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, width, height, 0);
+
+		glReadBuffer(GL_BACK); // por defecto GL_BACK
+	}
 }

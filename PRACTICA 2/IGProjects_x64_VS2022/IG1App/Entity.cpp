@@ -336,6 +336,24 @@ Box::Box(GLdouble length, GLboolean modulate, int s)
 	mMeshTapaArr = Mesh::generateRectangleTexCor(_length, _length);
 }
 
+Box::~Box()
+{
+	delete mMesh;
+	mMesh = nullptr;
+
+	delete mTexture;
+	mTexture = nullptr;
+
+	delete mTextureInterior;
+	mTextureInterior = nullptr;
+
+	delete mMeshTapaAbj;
+	mMeshTapaAbj = nullptr;
+
+	delete mMeshTapaArr;
+	mMeshTapaArr = nullptr;
+}
+
 void Box::render(const glm::dmat4& modelViewMat) const
 {
 	if (mMesh != nullptr && mTexture != nullptr)

@@ -250,6 +250,7 @@ class Photo : public EntityWithTexture
 {
 public:
 	explicit Photo(GLdouble w, GLdouble h, GLboolean modulate);
+	void render(const glm::dmat4& modelViewMat) const override;
 	void update() override;
 };
 #endif //_H_Entities_H_

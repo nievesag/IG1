@@ -640,9 +640,39 @@ Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
 	mModelMat =	rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
 }
 
+void Photo::render(const glm::dmat4& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat; // glm matrix multiplication
+		mShader->use();
+		mShader->setUniform("modulate", mModulate);
+		upload(aMat);
+
+		if (mTexture != nullptr) // si la textura no es nula podemos proceder a renderizarla
+		{
+			mTexture->bind(); // activa la textura en la gpu
+
+			// culling
+			glEnable(GL_CULL_FACE);
+				// CARA DE DELANTE
+				glCullFace(GL_BACK);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMesh->render();
+
+				// CARA DE ATRAS
+				glCullFace(GL_FRONT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				mMesh->render();
+			glDisable(GL_CULL_FACE);
+
+			mTexture->unbind(); // activa la textura en la gpu
+		}
+	}
+}
+
 void Photo::update()
 {
-
+	// actualiza la textura 
+	mTexture->loadColorBuffer(50.0, 50.0, 600.0);
 }
 #pragma endregion
-

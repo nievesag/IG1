@@ -244,7 +244,7 @@ void Scene3::init()
 	texF->loadColorBuffer(50, 50, 255);							// carga la textura con su alfa
 	gTextures.push_back(texF);									// lo metemos en el vector de texturas
 	Photo* foto = new Photo(50.0, 50.0, false);					// entidad
-	foto->setTexture(texF);										// establece la textura de esta entidad
+	foto->setTexture(texF);									    // establece la textura de esta entidad
 	gObjects.push_back(foto);									// mete la entidad en la escena
 	
 	// ----- CAJA CON TAPAS -----

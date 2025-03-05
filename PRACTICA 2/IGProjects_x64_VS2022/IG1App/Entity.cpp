@@ -673,6 +673,6 @@ void Photo::render(const glm::dmat4& modelViewMat) const
 void Photo::update()
 {
 	// actualiza la textura 
-	mTexture->loadColorBuffer(50.0, 50.0, 600.0);
+	mTexture->loadColorBuffer(50.0, 50.0);
 }
 #pragma endregion

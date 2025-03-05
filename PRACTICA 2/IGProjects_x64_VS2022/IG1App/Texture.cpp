@@ -52,16 +52,15 @@ Texture::load(const std::string& name, GLubyte alpha)
 	GLint border = 0; // No border
 
 	glBindTexture(GL_TEXTURE_2D, mId);
-	glTexImage2D(GL_TEXTURE_2D,
-		level,
-		GL_RGBA,
-		mWidth,
-		mHeight,
-		border,
-		GL_RGBA,
-		GL_UNSIGNED_BYTE,
-		image.data());
-
+		glTexImage2D(GL_TEXTURE_2D,
+			level,
+			GL_RGBA,
+			mWidth,
+			mHeight,
+			border,
+			GL_RGBA,
+			GL_UNSIGNED_BYTE,
+			image.data());
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -86,6 +85,12 @@ Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
 
 	if (buffer == GL_FRONT || buffer == GL_BACK) // si no se comprueba si es valido sale ERROR en consola
 	{
+		init();
+
+		// inicializa los atributos de la textura
+		mWidth = width;
+		mHeight = height;
+
 		// Para modificar el buffer de lectura activo:
 		glReadBuffer(buffer);
 

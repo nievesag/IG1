@@ -273,7 +273,7 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 void IG1App::captura()
 {
 	Texture* tex = new Texture();
-	tex->loadColorBuffer(800, 600);
+	tex->loadColorBuffer(800.0, 600.0);
 	tex->saveScreenshot("./assets/captura.bmp");
 }
 

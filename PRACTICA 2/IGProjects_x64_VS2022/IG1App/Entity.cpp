@@ -636,8 +636,8 @@ void Grass::render(const glm::dmat4& modelViewMat) const
 Photo::Photo(GLdouble w, GLdouble h, GLboolean modulate)
 	: EntityWithTexture(modulate, false)
 {
-	mMesh = Mesh::generateRectangleTexCor(w, h, 4, 4);
-	mModelMat =	rotate(dmat4(1), radians(90.0), glm::dvec3(1, 0, 0));
+	mMesh = Mesh::generateRectangleTexCor(w, h);
+	mModelMat = rotate(dmat4(1), radians(90.0), glm::dvec3(0, 1, 0)) * rotate(dmat4(1), radians(-90.0), glm::dvec3(1, 0, 0));
 }
 
 void Photo::render(const glm::dmat4& modelViewMat) const
@@ -674,6 +674,5 @@ void Photo::update()
 {
 	// actualiza la textura 
 	mTexture->loadColorBuffer(800.0, 600.0);
-	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, mTexture);
 }
 #pragma endregion

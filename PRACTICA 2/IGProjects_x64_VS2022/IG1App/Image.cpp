@@ -106,9 +106,11 @@ Image::load(const string& filename)
 	data_ = reinterpret_cast<rgba_color*>(data);
 }
 
+
 void
 Image::load(const rgba_color* data, GLsizei width, GLsizei height)
 {
+
 	destroy(); // clean previous image
 
 	width_ = width;
@@ -158,4 +160,5 @@ Image::save(const std::string& name)
 
 	if (result == 0)
 		throw std::logic_error("Image::load(string&): ERROR: cannot save image.");
+
 }

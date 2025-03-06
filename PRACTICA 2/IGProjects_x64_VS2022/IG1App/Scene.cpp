@@ -241,7 +241,8 @@ void Scene3::init()
 
 	// ----- FOTO -----
 	Texture* texF = new Texture();								// crea nueva textura
-	texF->loadColorBuffer(50.0, 50.0);						    // carga la textura con su alfa
+	texF->loadColorBuffer(800.0, 600.0);						
+	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, texF);
 	gTextures.push_back(texF);									// lo metemos en el vector de texturas
 	Photo* foto = new Photo(50.0, 50.0, false);					// entidad
 	foto->setTexture(texF);									    // establece la textura de esta entidad

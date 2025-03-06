@@ -99,10 +99,6 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) // b
 		// glCopyTexImage2D(GL_TEXTURE_2D, level(0), internalFormat, xLeft, yBottom, width, height, border(0));
 		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, mWidth, mHeight, 0);
 
-		// Obtener (de GPU a CPU) la imagen de la textura activa:
-		// pixels: array donde guardar los datos (de tipo y tamanio adecuado)
-		//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, this);
-
 		glReadBuffer(GL_BACK); // por defecto GL_BACK
 	}
 }
@@ -110,12 +106,12 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) // b
 void Texture::saveScreenshot(const std::string& file)
 {
 	Image* img = new Image();
-	img->load(img->data(), 800, 600);
+	//img->load(img->data(), 800, 600); 
 	glBindTexture(GL_TEXTURE_2D, mId);
 
 	// Obtener (de GPU a CPU) la imagen de la textura activa:
 	// pixels: array donde guardar los datos (de tipo y tamanio adecuado)
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
+	//glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
 
 	img->save(file);
 }

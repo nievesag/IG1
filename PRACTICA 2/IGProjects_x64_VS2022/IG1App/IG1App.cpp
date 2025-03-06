@@ -274,7 +274,7 @@ void IG1App::captura()
 {
 	Texture* tex = new Texture();
 	tex->loadColorBuffer(800, 600);
-	tex->saveScreenshot("./capturas/captura.bmp");
+	tex->saveScreenshot("./assets/captura.bmp");
 }
 
 bool

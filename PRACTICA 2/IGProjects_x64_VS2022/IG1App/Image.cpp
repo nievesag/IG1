@@ -109,7 +109,6 @@ Image::load(const string& filename)
 void
 Image::load(const rgba_color* data, GLsizei width, GLsizei height)
 {
-
 	destroy(); // clean previous image
 
 	width_ = width;

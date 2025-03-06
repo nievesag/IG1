@@ -458,7 +458,7 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	// Establecemos primitiva GL_TRIANGLE_STRIP
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
 
-	mesh->mNumVertices = 15;
+	mesh->mNumVertices = 10; // !!!! PONER LOS VERTICES JUSTOS
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	/*
@@ -483,16 +483,9 @@ Mesh* Mesh::generateBoxOutline(GLdouble length)
 	mesh->vVertices.emplace_back(r, r, r); // 6.
 	mesh->vVertices.emplace_back(r, -r, r); // 7.
 
-	// CARA 4 (PARALELO A YZ).
-	/*
+	// CARA 4 (PARALELO A YZ). (vertices de cierre)
 	mesh->vVertices.push_back(mesh->vVertices[0]); // 8. = 0 (misma pos que el 0).
 	mesh->vVertices.push_back(mesh->vVertices[1]); // 9. = 1 (misma pos que el 1).
-	*/
-	mesh->vVertices.emplace_back(r, r, -r); // 8.
-	mesh->vVertices.emplace_back(r, -r, -r); // 9.
-
-	// Vertice de cierre.
-	mesh->vVertices.emplace_back(r, -r, -r); // 10.
 
 	return mesh;
 }
@@ -507,7 +500,6 @@ Mesh* Mesh::generateBoxOutlineTexCor(GLdouble length)
 	|    /    |
 	1---------3
 	*/
-
 
 	// Cara 1.
 	mesh->vTexCoords.emplace_back(0, 1); // 0.

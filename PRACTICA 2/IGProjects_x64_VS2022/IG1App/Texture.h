@@ -28,6 +28,8 @@ public:
 
 	void loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer = GL_FRONT);
 
+	void saveScreenshot(const std::string& file);
+
 protected:
 	void init();
 

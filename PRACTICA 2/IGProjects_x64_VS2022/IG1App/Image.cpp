@@ -106,7 +106,6 @@ Image::load(const string& filename)
 	data_ = reinterpret_cast<rgba_color*>(data);
 }
 
-
 void
 Image::load(const rgba_color* data, GLsizei width, GLsizei height)
 {

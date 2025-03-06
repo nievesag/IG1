@@ -413,7 +413,7 @@ void Box::render(const glm::dmat4& modelViewMat) const
 		// ---- Tapa arriba ----
 		#pragma region Tapa Arriba
 		dmat4 cMat = modelViewMat * mModelMatArr
-			* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));;
+			* rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
 		upload(cMat);
 
 		// culling
@@ -455,10 +455,10 @@ void Box::update()
 {
 	// esto se haría solo para la tapa de arriba
 	mModelMatArr =
-		translate(glm::dmat4(1), glm::dvec3(-65, 30 / 2, -80))
-		 * translate(glm::dmat4(1), glm::dvec3(0, _length / 2, 0))				// coloca al borde de la caja
-		 * rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))			// gira sobre el eje z
-		 * translate(glm::dmat4(1), glm::dvec3(_length/2, 0, 0));				// se pone con un borde sobre el eje z
+		   translate(glm::dmat4(1), glm::dvec3(-65, 30 / 2, -80))		// mueve a donde esta la caja
+		 * translate(glm::dmat4(1), glm::dvec3(0, _length / 2, 0))		// "
+		 * rotate(dmat4(1), radians(angle), dvec3(0.0, 0.0, 1.0))		// abre y cierra
+		 * translate(glm::dmat4(1), glm::dvec3(_length/2, 0, 0));		// mueve para que la visagra sea en el z
 
 	// ---- gestion estado
 	// cerrando && angulo <= 0 -> abriendo
@@ -468,9 +468,9 @@ void Box::update()
 
 	// ---- gestion angulo
 	// abriendo && angulo <= 180 -> angulo++ (abre)
-	if (angle <= 180 && openState == 0.0) angle++;
+	if (angle < 180 && openState == 0.0) angle++;
 	// cerrando && angulo >= 0	 -> angulo-- (cierra)
-	else if (angle >= 0 && openState == 1.0) angle--;
+	else if (angle > 0 && openState == 1.0) angle--;
 }
 
 // ---- ESTRELLA ----

@@ -272,13 +272,9 @@ IG1App::specialkey(int key, int scancode, int action, int mods)
 
 void IG1App::captura()
 {
-	Image* image = new Image();
-
-	// Obtener (de GPU a CPU) la imagen de la textura activa:
-	// pixels: array donde guardar los datos (de tipo y tamanio adecuado)
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_INT, GL_RGBA, image);
-
-	image->save("./capturas/captura.bmp");
+	Texture* tex = new Texture();
+	tex->loadColorBuffer(800, 600);
+	tex->saveScreenshot("./capturas/captura.bmp");
 }
 
 bool

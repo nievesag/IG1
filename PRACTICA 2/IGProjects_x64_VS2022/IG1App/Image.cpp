@@ -162,3 +162,27 @@ Image::save(const std::string& name)
 		throw std::logic_error("Image::load(string&): ERROR: cannot save image.");
 
 }
+
+void Image::reserve(GLsizei width, GLsizei height)
+{
+	if (width > width_ || height > height_)
+	{
+		try
+		{
+			auto aux = new rgba_color[width * height];
+			if (aux == nullptr) throw std::bad_alloc();
+
+			for (GLsizei i = 0; i < width_ * height_; i++)
+				aux[i] = data_[i];
+
+			delete[] data_;
+			data_ = aux;
+			width_ = width;
+			height_ = height;
+		}
+		catch (std::bad_alloc&)
+		{
+			throw std::exception("PixMap32RGBA::reserve() ERROR: Could not allocate memory (bad_alloc)");
+		}
+	}
+}

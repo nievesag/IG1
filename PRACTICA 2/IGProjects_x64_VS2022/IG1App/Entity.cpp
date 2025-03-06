@@ -341,12 +341,6 @@ Box::~Box()
 	delete mMesh;
 	mMesh = nullptr;
 
-	delete mTexture;
-	mTexture = nullptr;
-
-	delete mTextureInterior;
-	mTextureInterior = nullptr;
-
 	delete mMeshTapaAbj;
 	mMeshTapaAbj = nullptr;
 

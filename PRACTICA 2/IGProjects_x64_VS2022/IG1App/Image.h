@@ -40,6 +40,8 @@ public:
 
 	bool isNull() const { return width_ == 0 || height_ == 0; }
 
+	void reserve(GLsizei width, GLsizei height); // throw(std::exception, std::bad_alloc);
+
 	// Pixel accessors
 	const rgba_color& operator()(GLsizei x, GLsizei y) const
 	{

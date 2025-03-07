@@ -1,6 +1,15 @@
 # IG1-GDV
 Prácticas. Curso 2024-2025.
 
+PRÁCTICAS
+| Enunciado | Código |
+|:--:|:--:|
+[Práctica 1](https://github.com/nievesag/IG1/blob/main/PRACTICA%201/IG_p1.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%201/IGProjects_x64_VS2022)|
+[Práctica 2](https://github.com/nievesag/IG1/blob/main/PRACTICA%202/IG1_p2.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%202/IGProjects_x64_VS2022)|
+[Práctica 3]()|[carpeta]()|
+[Práctica 4]()|[carpeta]()|
+[Práctica 5]()|[carpeta]()|
+
 CHULETAS
 | Chuleta | Fotillo |
 |:--:|:--:|
@@ -14,15 +23,6 @@ Cubo con GL_TRIANGLE_STRIP|[fotillo](https://github.com/nievesag/IG1/blob/main/c
 Cubo con GL_TRIANGLES|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/formar%20un%20cubo%20con%20GL_TRIANGLES.png)
 Multiplicación de matrices|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/multiplicacion%20de%20matrices%20para%20rot%20y%20trans.jpg)
 Coordenadas de text|[fotillo](https://github.com/nievesag/IG1/blob/main/chuletas/coor%20de%20text.jpg)
-
-PRÁCTICAS
-| Enunciado | Código |
-|:--:|:--:|
-[Práctica 1](https://github.com/nievesag/IG1/blob/main/PRACTICA%201/IG_p1.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%201/IGProjects_x64_VS2022)|
-[Práctica 2](https://github.com/nievesag/IG1/blob/main/PRACTICA%202/IG1_p2.pdf)|[carpeta](https://github.com/nievesag/IG1/tree/main/PRACTICA%202/IGProjects_x64_VS2022)|
-[Práctica 3]()|[carpeta]()|
-[Práctica 4]()|[carpeta]()|
-[Práctica 5]()|[carpeta]()|
 
 DIAPOSITIVAS
 | PDF |

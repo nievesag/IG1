@@ -26,8 +26,9 @@ IG1App::close()
 
 	delete mViewPort;
 	delete mCamera;
-	for (auto scene : mScenes)
+	for (Scene* scene : mScenes)
 		delete scene;
+
 }
 
 void
@@ -209,14 +210,12 @@ IG1App::key(unsigned int key)
 		break;
 	case 'u':
 		mUpdateEnabled = !mUpdateEnabled;
-		cout << "Update toggled" << endl;
 		break;
 	case 'f':
 		captura();
-		cout << "Captura" << endl;
 		break;
 	default:
-		if (key >= '0' && key <= '9' && !changeScene(key - '0')) // -> por que !changeScene(key - '0') ??? si esta negado no se pone a true al cambiar
+		if (key >= '0' && key <= '9' && !changeScene(key - '0'))
 			cout << "[NOTE] There is no scene " << char(key) << ".\n";
 		else
 			need_redisplay = false;

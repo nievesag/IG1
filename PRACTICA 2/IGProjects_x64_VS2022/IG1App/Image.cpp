@@ -106,11 +106,9 @@ Image::load(const string& filename)
 	data_ = reinterpret_cast<rgba_color*>(data);
 }
 
-
 void
 Image::load(const rgba_color* data, GLsizei width, GLsizei height)
 {
-
 	destroy(); // clean previous image
 
 	width_ = width;
@@ -150,7 +148,7 @@ Image::save(const std::string& name)
 	if (extension == "png")
 		result = stbi_write_png(name.c_str(), width_, height_, 4, data_, width_ * sizeof(rgba_color));
 	else if (extension == "bmp")
-		result = stbi_write_bmp(name.c_str(), width_, height_, 4, data_);
+		result = stbi_write_bmp(name.c_str(), width_, height_, 4, data_); // *
 	else if (extension == "tga")
 		result = stbi_write_tga(name.c_str(), width_, height_, 4, data_);
 	else if (extension == "jpg")

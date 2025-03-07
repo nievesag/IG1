@@ -20,10 +20,10 @@ void Scene::init()
 
 void Scene::update()
 {
-	for (auto obj : gObjects)
+	for (Abs_Entity* obj : gObjects)
 		obj->update();
 
-	for (auto obj : gObjectsTrans)
+	for (Abs_Entity* obj : gObjectsTrans)
 		obj->update();
 }
 

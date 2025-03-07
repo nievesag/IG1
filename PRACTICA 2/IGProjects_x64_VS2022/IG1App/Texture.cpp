@@ -95,7 +95,7 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) // b
 
 	// --- Resetea
 	glBindTexture(GL_TEXTURE_2D, 0); // Bindea textura a 0
-	glReadBuffer(GL_BACK);			 // por defecto GL_BACK
+	glReadBuffer(GL_FRONT);			 // por defecto GL_FRONT
 }
 
 void Texture::saveScreenshot(const std::string& file)

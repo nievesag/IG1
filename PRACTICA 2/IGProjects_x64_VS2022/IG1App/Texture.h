@@ -34,7 +34,7 @@ protected:
 	void init();
 
 	GLuint mWidth, mHeight = 0; // dimensiones de la imagen
-	GLuint mId = 0;				//  identificador interno (GPU) de la textura
+	GLuint mId = 0;				// identificador interno (GPU) de la textura
 								// 0 significa NULL, no es un identificador valido
 };
 

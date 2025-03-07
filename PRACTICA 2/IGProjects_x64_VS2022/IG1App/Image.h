@@ -36,7 +36,7 @@ public:
 	GLsizei width() const { return width_; }
 	GLsizei height() const { return height_; }
 
-	const rgba_color* data() const { return data_; }
+	rgba_color* data() const { return data_; }
 
 	bool isNull() const { return width_ == 0 || height_ == 0; }
 

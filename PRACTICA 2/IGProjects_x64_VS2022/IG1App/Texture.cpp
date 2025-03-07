@@ -100,7 +100,6 @@ void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer) // b
 
 void Texture::saveScreenshot(const std::string& file)
 {
-	/*
 	Image* img = new Image();
 
 	img->reserve(800, 600); // Reserve
@@ -112,5 +111,4 @@ void Texture::saveScreenshot(const std::string& file)
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data());
 
 	img->save(file); // gestiona el fichero
-	*/
 }

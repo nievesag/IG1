@@ -65,9 +65,9 @@ protected:
 
 	// Atributo de la clase Camera
 	// Ejes de la cámara
-	vec3 mRight;
-	vec3 mUpward;
-	vec3 mFront;
+	glm::vec3 mRight;
+	glm::vec3 mUpward;
+	glm::vec3 mFront;
 
 	void setAxes();
 

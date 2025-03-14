@@ -63,6 +63,18 @@ protected:
 	glm::dvec3 mLook = {0.0, 0.0, 0.0};  // target's position
 	glm::dvec3 mUp = {0.0, 1.0, 0.0};    // the up vector
 
+	// Atributo de la clase Camera
+	// Ejes de la cámara
+	vec3 mRight;
+	vec3 mUpward;
+	vec3 mFront;
+
+	void setAxes();
+
+	void moveLR(GLfloat cs); // A izquierda/A derecha
+	void moveFB(GLfloat cs); // Adelante/Atrás
+	void moveUD(GLfloat cs); // Arriba/Abajo
+
 	glm::dmat4 mViewMat;   // view matrix = inverse of modeling matrix
 	void uploadVM() const; // transfers viewMat to the GPU
 

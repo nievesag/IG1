@@ -18,6 +18,35 @@ Camera::Camera(Viewport* vp)
 	setPM();
 }
 
+void Camera::setAxes()
+{
+	// para los ejes right=u, upward=v, front=-n
+	/*mRight = glm::row(mViewMat, 0);
+	mUpward = row(mViewMat, 1);
+	mFront = -row(mViewMat, 2);*/
+}
+
+void Camera::moveLR(GLfloat cs) // LEFT / RIGHT.
+{
+	mEye += mRight * cs;
+	mLook += mRight * cs;
+	setVM();
+}
+
+void Camera::moveFB(GLfloat cs) // FRONT / BACK.
+{
+	mEye += mFront * cs;
+	mLook += mFront * cs;
+	setVM();
+}
+
+void Camera::moveUD(GLfloat cs) // UP / DOWN.
+{
+	mEye += mUpward * cs;
+	mLook += mUpward * cs;
+	setVM();
+}
+
 void
 Camera::uploadVM() const
 {
@@ -28,6 +57,7 @@ void
 Camera::setVM()
 {
 	mViewMat = lookAt(mEye, mLook, mUp); // glm::lookAt defines the view matrix
+	setAxes();
 }
 
 void
